@@ -1,15 +1,15 @@
 import type { KarmaEntry, Lang, WordEntry } from "./types";
 
 export const COLORS = {
-  ink: "#08070b",
-  hair: "#3b3324",
-  gold: "#d9ae55",
-  goldHi: "#f4e3b4",
-  parch: "#efe4c8",
-  ghati: "#c97a3a",
-  aghati: "#b9ad84",
-  rust: "#b4573a",
-  mute: "#8b7f63",
+  ink: "#0a0806",
+  hair: "#4a3f2a",
+  gold: "#f0c85a",
+  goldHi: "#fff0c8",
+  parch: "#faf3e4",
+  ghati: "#e8943a",
+  aghati: "#dcc896",
+  rust: "#d46545",
+  mute: "#b8a574",
 } as const;
 
 export const KARMAS: KarmaEntry[] = [

@@ -13,11 +13,11 @@ export function GamesSelection() {
       <main className="relative z-10 mx-auto max-w-6xl px-4 pb-10 pt-4 sm:px-6 sm:pb-14 md:px-10">
         <section>
           <div className="mb-5 flex items-center gap-3">
-            <div className="section-rule-shadow flex-1" />
-            <h2 className="shrink-0 font-serif text-[11px] uppercase tracking-[0.18em] text-aghati sm:text-xs">
+            <div className="section-rule flex-1" />
+            <h2 className="shrink-0 font-serif text-[11px] uppercase tracking-[0.18em] text-gold-bright sm:text-xs">
               Challenge · Ghāti
             </h2>
-            <div className="section-rule-shadow flex-1" />
+            <div className="section-rule flex-1" />
           </div>
 
           <ul className="flex flex-col gap-3 sm:grid sm:grid-cols-2 sm:gap-4">
@@ -32,7 +32,7 @@ export function GamesSelection() {
         <section className="mt-9 sm:mt-11">
           <div className="mb-5 flex items-center gap-3">
             <div className="section-rule flex-1" />
-            <h2 className="shrink-0 font-serif text-[11px] uppercase tracking-[0.18em] text-gold-bright sm:text-xs">
+            <h2 className="shrink-0 font-serif text-[11px] uppercase tracking-[0.18em] text-aghati sm:text-xs">
               Growth · Aghāti
             </h2>
             <div className="section-rule flex-1" />

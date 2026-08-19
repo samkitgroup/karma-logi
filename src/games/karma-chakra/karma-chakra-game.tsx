@@ -647,9 +647,7 @@ export function KarmaChakraGame() {
         <div className="karma-chakra-presents">
           SHRI JAWAHAR NAGAR JAIN SANGH PRESENTS
         </div>
-        <h1 className="karma-chakra-logotype">
-          KARMA<span>-</span>LOGI
-        </h1>
+        <h1 className="karma-chakra-logotype">KARMA-LOGI</h1>
         <div className="karma-chakra-sub">THE JAIN SCIENTIFIC EXPO</div>
         <p className="karma-chakra-pitch">
           Eight karmas bind the soul. Catch each bond as it falls — and release

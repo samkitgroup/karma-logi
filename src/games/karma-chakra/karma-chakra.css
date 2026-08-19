@@ -1,15 +1,18 @@
 .karma-chakra-root {
-  --ink: #08070b;
-  --ink2: #100e0a;
-  --panel: #141109ee;
-  --hair: #3b3324;
-  --gold: #d9ae55;
-  --gold-hi: #f4e3b4;
-  --parch: #efe4c8;
-  --ghati: #c97a3a;
-  --aghati: #b9ad84;
-  --rust: #b4573a;
-  --mute: #8b7f63;
+  --ink: #0a0806;
+  --ink2: #141009;
+  --panel: #1a150eee;
+  --hair: #4a3f2a;
+  --gold: #f0c85a;
+  --gold-hi: #fff0c8;
+  --gold-dim: #c9ad6a;
+  --parch: #faf3e4;
+  --ghati: #e8943a;
+  --aghati: #dcc896;
+  --rust: #d46545;
+  --mute: #b8a574;
+  --text-muted: #d4c4a0;
+  --text-subtle: #b8a574;
   --st: env(safe-area-inset-top, 0px);
   --sb: env(safe-area-inset-bottom, 0px);
 }
@@ -128,7 +131,7 @@
   text-align: center;
   font: 400 10px/1 Georgia, serif;
   letter-spacing: 0.42em;
-  color: #6d6144;
+  color: var(--gold-dim);
   text-indent: 0.42em;
 }
 
@@ -179,7 +182,7 @@
   transform: translateX(-50%);
   font: 500 10px/1 system-ui, sans-serif;
   letter-spacing: 0.2em;
-  color: #6d6144;
+  color: var(--gold-dim);
   white-space: nowrap;
   transition: 0.5s;
 }
@@ -245,7 +248,7 @@
 .karma-chakra-fn {
   margin-top: 9px;
   font: 400 13px/1.55 system-ui, sans-serif;
-  color: #a2977a;
+  color: var(--text-muted);
 }
 
 .karma-chakra-sheet-foot {
@@ -296,9 +299,9 @@
   padding: calc(var(--st) + 26px) 24px calc(var(--sb) + 26px);
   background: radial-gradient(
     120% 70% at 50% 38%,
-    #1a1409 0%,
-    #0a0906 52%,
-    #050406 100%
+    #2a1c0c 0%,
+    #120e08 52%,
+    #080604 100%
   );
   text-align: center;
   transition: opacity 0.4s;
@@ -313,20 +316,16 @@
 .karma-chakra-presents {
   font: 500 9px/1.6 system-ui, sans-serif;
   letter-spacing: 0.3em;
-  color: #8a7a52;
+  color: var(--gold-dim);
   text-indent: 0.3em;
 }
 
 .karma-chakra-logotype {
-  font: 400 46px/1 Georgia, serif;
-  letter-spacing: 0.1em;
+  font: 400 clamp(2rem, 10vw, 46px)/1 Georgia, serif;
+  letter-spacing: 0.08em;
   color: var(--gold-hi);
   margin: 14px 0 6px;
-  text-indent: 0.1em;
-}
-
-.karma-chakra-logotype span {
-  color: var(--ghati);
+  white-space: nowrap;
 }
 
 .karma-chakra-sub {
@@ -340,7 +339,7 @@
   max-width: 330px;
   margin: 22px auto 0;
   font: 400 15px/1.65 Georgia, serif;
-  color: #b3a685;
+  color: var(--text-muted);
 }
 
 .karma-chakra-cta {
@@ -372,7 +371,7 @@
   pointer-events: auto;
   border: 1px solid var(--hair);
   background: transparent;
-  color: #7d7052;
+  color: var(--text-subtle);
   height: 36px;
   padding: 0 16px;
   border-radius: 18px;
@@ -390,17 +389,17 @@
 .karma-chakra-credit {
   margin-top: 30px;
   padding: 14px 0;
-  border-top: 1px solid #322a1b;
-  border-bottom: 1px solid #322a1b;
+  border-top: 1px solid rgba(240, 200, 90, 0.22);
+  border-bottom: 1px solid rgba(240, 200, 90, 0.22);
   max-width: 340px;
   font: 400 10px/1.85 system-ui, sans-serif;
   letter-spacing: 0.1em;
-  color: #8a7a52;
+  color: var(--gold-dim);
 }
 
 .karma-chakra-credit b {
   display: block;
-  color: #d3bc8b;
+  color: var(--gold-hi);
   font-weight: 600;
 }
 
@@ -439,7 +438,7 @@
   margin-top: 6px;
   font: 600 8px/1 system-ui, sans-serif;
   letter-spacing: 0.16em;
-  color: #7d7052;
+  color: var(--text-subtle);
 }
 
 .karma-chakra-mastery {
@@ -452,7 +451,7 @@
 .karma-chakra-mastery h3 {
   font: 600 9px/1 system-ui, sans-serif;
   letter-spacing: 0.22em;
-  color: #7d7052;
+  color: var(--text-subtle);
   margin: 0 0 10px;
 }
 
@@ -474,14 +473,14 @@
 .karma-chakra-mrow span {
   flex: 1;
   font: 400 13px/1 Georgia, serif;
-  color: #b3a685;
+  color: var(--text-muted);
 }
 
 .karma-chakra-mrow em {
   font: 600 10px/1 system-ui, sans-serif;
   letter-spacing: 0.1em;
   font-style: normal;
-  color: #5d5540;
+  color: var(--text-subtle);
 }
 
 .karma-chakra-mrow em.hit {

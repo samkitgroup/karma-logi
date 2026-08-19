@@ -59,10 +59,10 @@ export function EventDetails() {
         <li className="flex gap-3">
           <CalendarIcon />
           <div>
-            <p className="text-[10px] uppercase tracking-[0.2em] text-gold-dim">
+            <p className="text-[10px] uppercase tracking-[0.2em] text-gold">
               Date
             </p>
-            <p className="mt-1 text-sm text-foreground/85">
+            <p className="mt-1 text-sm text-foreground">
               {eventDetails.dates}
             </p>
           </div>
@@ -71,13 +71,13 @@ export function EventDetails() {
         <li className="flex gap-3">
           <ClockIcon />
           <div>
-            <p className="text-[10px] uppercase tracking-[0.2em] text-gold-dim">
+            <p className="text-[10px] uppercase tracking-[0.2em] text-gold">
               Time
             </p>
-            <p className="mt-1 text-sm text-foreground/85">
+            <p className="mt-1 text-sm text-foreground">
               {eventDetails.morningSlot}
             </p>
-            <p className="mt-1 text-sm text-foreground/85">
+            <p className="mt-1 text-sm text-foreground">
               {eventDetails.eveningSlot}
             </p>
           </div>
@@ -86,10 +86,10 @@ export function EventDetails() {
         <li className="flex gap-3">
           <MapPinIcon />
           <div>
-            <p className="text-[10px] uppercase tracking-[0.2em] text-gold-dim">
+            <p className="text-[10px] uppercase tracking-[0.2em] text-gold">
               Venue
             </p>
-            <p className="mt-1 text-sm leading-relaxed text-foreground/85">
+            <p className="mt-1 text-sm leading-relaxed text-foreground">
               {eventDetails.venue}
             </p>
           </div>

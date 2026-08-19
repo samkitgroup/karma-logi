@@ -46,21 +46,19 @@ export function IntroSplash() {
     >
       <div className="relative z-10 flex min-h-[100dvh] flex-col px-4 pb-8 pt-5 sm:px-6 sm:pt-7">
         <header className="shrink-0 text-center">
-          <p className="text-[9px] font-medium uppercase tracking-[0.3em] text-gold-dim sm:text-[10px]">
+          <p className="text-[8px] font-medium uppercase tracking-[0.28em] text-gold sm:text-[9px]">
             Shri Jawahar Nagar Jain Sangh Presents
           </p>
 
-          <div className="intro-hero mx-auto mt-2 max-w-md sm:max-w-lg">
-            <div className="intro-logotype-rule mb-4" aria-hidden />
+          <div className="intro-hero mx-auto mt-1.5 max-w-md sm:max-w-lg">
+            <div className="intro-logotype-rule mb-3" aria-hidden />
 
-            <h1 className="intro-logotype">
-              KARMA<span className="intro-logotype-dash">-</span>LOGI
-            </h1>
+            <h1 className="intro-logotype">KARMA-LOGI</h1>
 
-            <div className="intro-logotype-rule mt-4" aria-hidden />
+            <div className="intro-logotype-rule mt-3" aria-hidden />
           </div>
 
-          <p className="intro-subtitle mt-4 uppercase">
+          <p className="intro-subtitle mt-3 uppercase">
             The Jain Scientific Expo
           </p>
         </header>
@@ -73,7 +71,7 @@ export function IntroSplash() {
             </p>
           </div>
 
-          <p className="mx-auto mt-5 max-w-[15rem] text-xs leading-relaxed text-parch/45 sm:max-w-xs sm:text-sm">
+          <p className="mx-auto mt-4 max-w-[15rem] text-[11px] leading-relaxed text-text-muted sm:max-w-xs sm:text-xs">
             Eight karmas bind the soul. Witness how cause and effect shape our
             destiny.
           </p>
@@ -89,7 +87,7 @@ export function IntroSplash() {
                 style={{ width: `${progress}%` }}
               />
             </div>
-            <p className="mt-3 text-center text-[9px] uppercase tracking-[0.24em] text-gold-dim sm:text-[10px]">
+            <p className="mt-2.5 text-center text-[8px] uppercase tracking-[0.22em] text-gold-dim sm:text-[9px]">
               Entering games · tap to skip
             </p>
           </div>

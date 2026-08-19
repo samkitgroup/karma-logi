@@ -19,7 +19,7 @@ export function GameCard({ game }: GameCardProps) {
       >
         <span
           className={`font-serif text-lg font-semibold sm:text-xl ${
-            isGrowth ? "text-gold-gradient" : "text-aghati"
+            isGrowth ? "text-gold-gradient" : "text-gold-bright"
           }`}
         >
           {game.title.charAt(0)}
@@ -32,7 +32,7 @@ export function GameCard({ game }: GameCardProps) {
             className={`rounded-full px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wider ${
               isGrowth
                 ? "border border-gold/30 bg-gold/10 text-gold-bright"
-                : "border border-gold-dim/30 bg-black/20 text-aghati"
+                : "border border-gold-dim/40 bg-black/20 text-text-muted"
             }`}
           >
             {game.concept}
@@ -50,7 +50,7 @@ export function GameCard({ game }: GameCardProps) {
           {game.title}
         </h3>
 
-        <p className="mt-1.5 text-sm leading-relaxed text-parch/60">
+        <p className="mt-1.5 text-sm leading-relaxed text-text-muted">
           {game.description}
         </p>
       </div>
