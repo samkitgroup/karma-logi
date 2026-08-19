@@ -12,6 +12,9 @@ export const COLORS = {
   mute: "#b8a574",
 } as const;
 
+export const GAME_TITLE = "KARMA CHAKRA";
+export const GAME_SUBTITLE = "EIGHT KARMAS · GHĀTI & AGHĀTI";
+
 export const KARMAS: KarmaEntry[] = [
   {
     g: 1,

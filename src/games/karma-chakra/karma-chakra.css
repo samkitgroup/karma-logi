@@ -133,6 +133,7 @@
   letter-spacing: 0.42em;
   color: var(--gold-dim);
   text-indent: 0.42em;
+  white-space: nowrap;
 }
 
 .karma-chakra-streak {

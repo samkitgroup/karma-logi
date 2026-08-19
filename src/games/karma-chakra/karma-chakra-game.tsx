@@ -3,8 +3,6 @@
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { sahebjis } from "@/lib/event";
-
 import { haptic, playTone, resumeAudio } from "./audio";
 import {
   burst,
@@ -19,6 +17,8 @@ import {
 import {
   COLORS,
   formatKarmaName,
+  GAME_SUBTITLE,
+  GAME_TITLE,
   KARMAS,
   LABELS,
   WORDS,
@@ -578,7 +578,7 @@ export function KarmaChakraGame() {
         <div className="karma-chakra-track">
           <i style={{ width: `${progress}%` }} />
         </div>
-        <div className="karma-chakra-wordmark">KARMA-LOGI</div>
+        <div className="karma-chakra-wordmark">{GAME_TITLE}</div>
         <div className={`karma-chakra-streak ${streak >= 2 ? "on" : ""}`}>
           STREAK ×{streak}
         </div>
@@ -644,11 +644,8 @@ export function KarmaChakraGame() {
       </div>
 
       <div className={`karma-chakra-screen ${mode === "start" ? "" : "hide"}`}>
-        <div className="karma-chakra-presents">
-          SHRI JAWAHAR NAGAR JAIN SANGH PRESENTS
-        </div>
-        <h1 className="karma-chakra-logotype">KARMA-LOGI</h1>
-        <div className="karma-chakra-sub">THE JAIN SCIENTIFIC EXPO</div>
+        <h1 className="karma-chakra-logotype">{GAME_TITLE}</h1>
+        <div className="karma-chakra-sub">{GAME_SUBTITLE}</div>
         <p className="karma-chakra-pitch">
           Eight karmas bind the soul. Catch each bond as it falls — and release
           it before it reaches the jīva.
@@ -668,14 +665,6 @@ export function KarmaChakraGame() {
         <button type="button" className="karma-chakra-cta" onClick={startGame}>
           {labels.begin}
         </button>
-        <div className="karma-chakra-credit">
-          INSPIRATION &amp; GUIDANCE
-          {sahebjis.map((sahebji) => (
-            <b key={sahebji.id}>
-              {sahebji.title} {sahebji.name}
-            </b>
-          ))}
-        </div>
       </div>
 
       <div className={`karma-chakra-screen ${mode === "over" ? "" : "hide"}`}>
@@ -711,14 +700,6 @@ export function KarmaChakraGame() {
         <button type="button" className="karma-chakra-cta" onClick={startGame}>
           PLAY AGAIN
         </button>
-        <div className="karma-chakra-credit">
-          INSPIRATION &amp; GUIDANCE
-          {sahebjis.map((sahebji) => (
-            <b key={sahebji.id}>
-              {sahebji.title} {sahebji.name}
-            </b>
-          ))}
-        </div>
       </div>
     </div>
   );
