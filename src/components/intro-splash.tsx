@@ -3,6 +3,8 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import { SahebjiBanner } from "@/components/sahebji-banner";
+
 const INTRO_MS = 5500;
 
 export function IntroSplash() {
@@ -53,7 +55,10 @@ export function IntroSplash() {
           <p className="intro-subtitle mt-4 uppercase">The Jain Scientific Expo</p>
         </div>
 
-        <div className="mx-auto w-full max-w-[15rem] sm:max-w-xs">
+        <footer className="shrink-0">
+          <SahebjiBanner variant="compact" />
+
+          <div className="mx-auto mt-5 w-full max-w-[15rem] sm:max-w-xs">
           <div className="progress-track h-1 overflow-hidden rounded-full">
             <div
               className="progress-fill h-full rounded-full transition-[width] duration-75 ease-linear"
@@ -64,6 +69,7 @@ export function IntroSplash() {
             Entering games · tap to skip
           </p>
         </div>
+        </footer>
       </div>
     </div>
   );
