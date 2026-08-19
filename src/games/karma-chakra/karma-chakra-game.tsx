@@ -648,7 +648,7 @@ export function KarmaChakraGame() {
           SHRI JAWAHAR NAGAR JAIN SANGH PRESENTS
         </div>
         <h1 className="karma-chakra-logotype">
-          KARMA<span>·</span>LOGI
+          KARMA<span>-</span>LOGI
         </h1>
         <div className="karma-chakra-sub">THE JAIN SCIENTIFIC EXPO</div>
         <p className="karma-chakra-pitch">

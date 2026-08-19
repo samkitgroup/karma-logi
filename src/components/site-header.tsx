@@ -9,7 +9,7 @@ export function SiteHeader({ active = "home" }: SiteHeaderProps) {
     <header className="relative z-20 flex items-center justify-between gap-3 border-b border-gold/10 bg-black/20 px-4 py-3 backdrop-blur-md sm:px-6 md:px-10">
       <Link href="/" className="group flex min-w-0 flex-1 flex-col gap-0.5">
         <span className="block truncate font-serif text-base tracking-[0.12em] text-gold-gradient sm:text-lg">
-          KARMA<span className="text-ghati">·</span>LOGI
+          KARMA<span className="text-ghati">-</span>LOGI
         </span>
         <span className="hidden text-[10px] uppercase tracking-[0.18em] text-parch/40 sm:block">
           Jain Scientific Expo
