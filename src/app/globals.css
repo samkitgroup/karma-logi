@@ -164,6 +164,14 @@ body {
   text-shadow: 0 0 20px rgba(240, 200, 90, 0.35);
 }
 
+.intro-presents {
+  font-size: clamp(0.5rem, 2vw, 0.625rem);
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-indent: 0.28em;
+  color: var(--gold);
+}
+
 @keyframes intro-halo {
   0%,
   100% {

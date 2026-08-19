@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { SahebjiBanner } from "@/components/sahebji-banner";
+import { auspices } from "@/lib/event";
 
 const INTRO_MS = 5500;
 
@@ -46,6 +47,8 @@ export function IntroSplash() {
     >
       <div className="relative z-10 flex min-h-[100dvh] flex-col px-4 pb-8">
         <div className="flex flex-1 flex-col items-center justify-center text-center">
+          <p className="intro-presents mb-3 uppercase">{auspices} Presents</p>
+
           <div className="intro-hero mx-auto max-w-md sm:max-w-lg">
             <div className="intro-logotype-rule mb-3" aria-hidden />
             <h1 className="intro-logotype">KARMA-LOGI</h1>
@@ -59,16 +62,16 @@ export function IntroSplash() {
           <SahebjiBanner variant="compact" />
 
           <div className="mx-auto mt-5 w-full max-w-[15rem] sm:max-w-xs">
-          <div className="progress-track h-1 overflow-hidden rounded-full">
-            <div
-              className="progress-fill h-full rounded-full transition-[width] duration-75 ease-linear"
-              style={{ width: `${progress}%` }}
-            />
+            <div className="progress-track h-1 overflow-hidden rounded-full">
+              <div
+                className="progress-fill h-full rounded-full transition-[width] duration-75 ease-linear"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+            <p className="mt-2.5 text-center text-[8px] uppercase tracking-[0.22em] text-gold-dim sm:text-[9px]">
+              Entering games · tap to skip
+            </p>
           </div>
-          <p className="mt-2.5 text-center text-[8px] uppercase tracking-[0.22em] text-gold-dim sm:text-[9px]">
-            Entering games · tap to skip
-          </p>
-        </div>
         </footer>
       </div>
     </div>
