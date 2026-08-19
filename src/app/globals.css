@@ -164,18 +164,6 @@ body {
   text-shadow: 0 0 20px rgba(240, 200, 90, 0.35);
 }
 
-.intro-tagline {
-  font-family: var(--font-display), Georgia, serif;
-  font-size: clamp(0.9375rem, 3.6vw, 1.1875rem);
-  line-height: 1.15;
-  letter-spacing: 0.03em;
-  color: var(--text-muted);
-}
-
-.intro-tagline-accent {
-  color: var(--gold-bright);
-}
-
 @keyframes intro-halo {
   0%,
   100% {

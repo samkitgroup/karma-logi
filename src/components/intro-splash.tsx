@@ -3,8 +3,6 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { SahebjiBanner } from "@/components/sahebji-banner";
-
 const INTRO_MS = 5500;
 
 export function IntroSplash() {
@@ -41,57 +39,31 @@ export function IntroSplash() {
           skipIntro();
         }
       }}
-      className="intro-splash cosmic-vignette relative flex min-h-[100dvh] w-full cursor-pointer flex-col overflow-hidden cosmic-bg text-left outline-none"
+      className="intro-splash cosmic-vignette relative flex min-h-[100dvh] w-full cursor-pointer flex-col overflow-hidden cosmic-bg outline-none"
       aria-label="Skip intro and go to games"
     >
-      <div className="relative z-10 flex min-h-[100dvh] flex-col px-4 pb-8 pt-5 sm:px-6 sm:pt-7">
-        <header className="shrink-0 text-center">
-          <p className="text-[8px] font-medium uppercase tracking-[0.28em] text-gold sm:text-[9px]">
-            Shri Jawahar Nagar Jain Sangh Presents
-          </p>
-
-          <div className="intro-hero mx-auto mt-1.5 max-w-md sm:max-w-lg">
+      <div className="relative z-10 flex min-h-[100dvh] flex-col px-4 pb-8">
+        <div className="flex flex-1 flex-col items-center justify-center text-center">
+          <div className="intro-hero mx-auto max-w-md sm:max-w-lg">
             <div className="intro-logotype-rule mb-3" aria-hidden />
-
             <h1 className="intro-logotype">KARMA-LOGI</h1>
-
             <div className="intro-logotype-rule mt-3" aria-hidden />
           </div>
 
-          <p className="intro-subtitle mt-3 uppercase">
-            The Jain Scientific Expo
-          </p>
-        </header>
-
-        <div className="flex flex-1 flex-col items-center justify-center px-2 text-center">
-          <div className="max-w-[15rem] sm:max-w-xs">
-            <p className="intro-tagline">Why Me?</p>
-            <p className="intro-tagline intro-tagline-accent mt-1">
-              Why Always Me?
-            </p>
-          </div>
-
-          <p className="mx-auto mt-4 max-w-[15rem] text-[11px] leading-relaxed text-text-muted sm:max-w-xs sm:text-xs">
-            Eight karmas bind the soul. Witness how cause and effect shape our
-            destiny.
-          </p>
+          <p className="intro-subtitle mt-4 uppercase">The Jain Scientific Expo</p>
         </div>
 
-        <footer className="shrink-0">
-          <SahebjiBanner variant="compact" />
-
-          <div className="mx-auto mt-6 w-full max-w-[15rem] sm:max-w-xs">
-            <div className="progress-track h-1 overflow-hidden rounded-full">
-              <div
-                className="progress-fill h-full rounded-full transition-[width] duration-75 ease-linear"
-                style={{ width: `${progress}%` }}
-              />
-            </div>
-            <p className="mt-2.5 text-center text-[8px] uppercase tracking-[0.22em] text-gold-dim sm:text-[9px]">
-              Entering games · tap to skip
-            </p>
+        <div className="mx-auto w-full max-w-[15rem] sm:max-w-xs">
+          <div className="progress-track h-1 overflow-hidden rounded-full">
+            <div
+              className="progress-fill h-full rounded-full transition-[width] duration-75 ease-linear"
+              style={{ width: `${progress}%` }}
+            />
           </div>
-        </footer>
+          <p className="mt-2.5 text-center text-[8px] uppercase tracking-[0.22em] text-gold-dim sm:text-[9px]">
+            Entering games · tap to skip
+          </p>
+        </div>
       </div>
     </div>
   );
