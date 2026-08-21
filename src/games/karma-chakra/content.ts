@@ -48,75 +48,18 @@ export const GAME_SUBTITLE = "EIGHT KARMAS · GHĀTI & AGHĀTI";
 
 export const KARMAS: KarmaEntry[] = buildKarmasFromDataset();
 
-export const LABELS: Record<
-  Lang,
-  {
-    ghati: string;
-    aghati: string;
-    released: string;
-    bound: string;
-    coach: string;
-    reached: string;
-    next: string;
-    begin: string;
-    back: string;
-    score: string;
-    streak: string;
-    correct: string;
-    timeUp: string;
-    totalScore: string;
-    rules: string;
-  }
-> = {
+export const CHAKRA_COACH =
+  "Drag the prakriti to its karma petal — or tap a petal";
+
+/** Localized instructional copy only; buttons and chrome use GAME_UI. */
+export const CHAKRA_CONTENT: Record<Lang, { rules: string }> = {
   en: {
-    ghati: "GHĀTI · SOUL-HARMING",
-    aghati: "AGHĀTI · NON-HARMING",
-    released: "RELEASED",
-    bound: "BOUND",
-    coach: "Drag the prakriti to its karma petal — or tap a petal",
-    reached: "THE PRAKRITI REACHED THE JĪVA",
-    next: "NEXT",
-    begin: "BEGIN",
-    back: "← Back",
-    score: "Score",
-    streak: "Streak",
-    correct: "Correct",
-    timeUp: "TIME'S UP",
-    totalScore: "TOTAL NIRJARĀ",
     rules: "60 seconds · match each prakriti to its karma petal.",
   },
   hi: {
-    ghati: "घाती · आत्मघातक",
-    aghati: "अघाती · अघातक",
-    released: "मुक्त",
-    bound: "बंध",
-    coach: "प्रकृति को उसके कर्म पंखुड़ी तक खींचें — या स्पर्श करें",
-    reached: "प्रकृति जीव तक पहुँची",
-    next: "आगे",
-    begin: "प्रारंभ",
-    back: "← वापस",
-    score: "अंक",
-    streak: "स्ट्रीक",
-    correct: "सही",
-    timeUp: "समय समाप्त",
-    totalScore: "कुल निर्जरा",
     rules: "60 सेकंड · प्रत्येक प्रकृति को उसकी कर्म पंखुड़ी से मिलाएँ।",
   },
   gu: {
-    ghati: "ઘાતી · આત્મઘાતક",
-    aghati: "અઘાતી · અઘાતક",
-    released: "મુક્ત",
-    bound: "બંધ",
-    coach: "પ્રકૃતિને તેના કર્મ પાંખડી સુધી ખેંચો — અથવા સ્પર્શ કરો",
-    reached: "પ્રકૃતિ જીવ સુધી પહોંચી",
-    next: "આગળ",
-    begin: "શરૂ",
-    back: "← પાછા",
-    score: "સ્કોર",
-    streak: "સ્ટ્રીક",
-    correct: "સાચા",
-    timeUp: "સમય પૂરો",
-    totalScore: "કુલ નિર્જરા",
     rules: "60 સેકન્ડ · દરેક પ્રકૃતિને તેની કર્મ પાંખડી સાથે જોડો.",
   },
 };

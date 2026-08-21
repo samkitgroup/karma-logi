@@ -391,6 +391,15 @@
     0 2px 10px rgba(0, 229, 255, 0.15);
 }
 
+.karma-scramble-cta--ghost {
+  margin-top: 18px;
+  border-color: var(--hair);
+  color: var(--gold);
+  box-shadow: none;
+  letter-spacing: 0.12em;
+  text-indent: 0;
+}
+
 .karma-scramble-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

@@ -14,15 +14,17 @@ import {
 } from "./canvas-renderer";
 import {
   COLORS,
+  CHAKRA_CONTENT,
   findPrakritiById,
   GAME_SUBTITLE,
   GAME_TITLE,
-  LABELS,
+  CHAKRA_COACH,
   pickRandomPrakriti,
   getKarmaDisplayName,
 } from "./content";
 import "./karma-chakra.css";
 import { GAME_DURATION_MS, formatGameTime } from "@/lib/game-config";
+import { GAME_UI } from "@/lib/game-ui-labels";
 import type { Lang } from "@/lib/language";
 import type {
   GameMode,
@@ -175,7 +177,7 @@ export function KarmaChakraGame({
       syncUi();
 
       setResult({
-        verdict: timeUp ? LABELS[state.lang].timeUp : "ROUND COMPLETE",
+        verdict: timeUp ? GAME_UI.timeUp : GAME_UI.roundComplete,
         score: state.score,
         correct: state.hits,
         accuracy: `${state.tries ? Math.round((state.hits / state.tries) * 100) : 0}%`,
@@ -304,7 +306,7 @@ export function KarmaChakraGame({
         state.score += points;
         stream(motesRef.current, bond.x, bond.y, petal.x, petal.y, 22);
         burst(particlesRef.current, petal.x, petal.y, COLORS.goldHi, 30);
-        showToast(`${LABELS[state.lang].released} +${points}`);
+        showToast(`${GAME_UI.released} +${points}`);
         playTone("good", state.muted);
         haptic([8, 40, 14], state.reduced);
         state.bond = null;
@@ -601,13 +603,13 @@ export function KarmaChakraGame({
     }
   };
 
-  const labels = LABELS[lang];
+  const content = CHAKRA_CONTENT[lang];
 
   return (
     <div className={`karma-chakra-root ${mode === "play" ? "is-playing" : ""}`}>
       <header className="karma-chakra-top">
         <button type="button" className="karma-chakra-back" onClick={onExit}>
-          {labels.back}
+          {GAME_UI.back}
         </button>
         <div className="karma-chakra-title">{GAME_TITLE}</div>
         {mode === "play" ? (
@@ -643,13 +645,13 @@ export function KarmaChakraGame({
           </div>
           <div className="karma-chakra-score-row">
             <span>
-              {labels.score} <b>{score}</b>
+              {GAME_UI.scoreLabel} <b>{score}</b>
             </span>
             <span className={streak >= 2 ? "hot" : undefined}>
-              {labels.streak} <b>×{streak}</b>
+              {GAME_UI.streakLabel} <b>×{streak}</b>
             </span>
             <span>
-              {labels.correct} <b>{hits}</b>
+              {GAME_UI.correctLabel} <b>{hits}</b>
             </span>
           </div>
         </>
@@ -669,7 +671,7 @@ export function KarmaChakraGame({
           <div
             className={`karma-chakra-coach ${coachVisible ? "prominent" : ""}`}
           >
-            {labels.coach}
+            {CHAKRA_COACH}
           </div>
         )}
       </div>
@@ -687,10 +689,10 @@ export function KarmaChakraGame({
         {/* Grouped Instructions Card */}
         <div className="mx-auto w-full max-w-sm rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-md shadow-[0_4px_24px_rgba(0,0,0,0.2)] mb-8">
           <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-text-subtle border-b border-white/5 pb-2.5 mb-3.5 text-center">
-            How to Play
+            {GAME_UI.howToPlay}
           </p>
           <ul className="space-y-3.5 pl-1 text-left">
-            {labels.rules.split("·").map((rule, idx) => (
+            {content.rules.split("·").map((rule, idx) => (
               <li key={idx} className="flex items-start gap-3 text-[15.5px] font-bold text-foreground">
                 <span className="mt-[8px] h-1.5 w-1.5 shrink-0 rounded-full bg-gold-bright shadow-[0_0_8px_rgba(255,184,0,0.8)]" />
                 <span className="leading-normal">{rule.trim()}</span>
@@ -702,7 +704,7 @@ export function KarmaChakraGame({
         {/* CTA Play Button */}
         <div className="flex justify-center">
           <button type="button" className="karma-chakra-cta" onClick={startGame}>
-            {labels.begin}
+            {GAME_UI.begin}
           </button>
         </div>
       </div>
@@ -710,23 +712,23 @@ export function KarmaChakraGame({
       <div className={`karma-chakra-screen ${mode === "over" ? "" : "hide"}`}>
         <div className="karma-chakra-sub">{result.verdict}</div>
         <h1 className="karma-chakra-logotype karma-chakra-score">{result.score}</h1>
-        <div className="karma-chakra-presents">{labels.totalScore}</div>
+        <div className="karma-chakra-presents">{GAME_UI.totalScore}</div>
         <div className="karma-chakra-stats karma-chakra-stats--over">
           <div className="karma-chakra-stat">
             <u>{result.correct}</u>
-            <s>{labels.correct.toUpperCase()}</s>
+            <s>{GAME_UI.correctLabel.toUpperCase()}</s>
           </div>
           <div className="karma-chakra-stat">
             <u>{result.accuracy}</u>
-            <s>ACCURACY</s>
+            <s>{GAME_UI.accuracy}</s>
           </div>
           <div className="karma-chakra-stat">
             <u>{result.bestStreak}</u>
-            <s>BEST STREAK</s>
+            <s>{GAME_UI.bestStreak}</s>
           </div>
         </div>
         <button type="button" className="karma-chakra-cta karma-chakra-cta--ghost" onClick={onExit}>
-          {labels.back}
+          {GAME_UI.back}
         </button>
       </div>
     </div>

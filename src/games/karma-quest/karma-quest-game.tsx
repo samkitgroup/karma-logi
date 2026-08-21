@@ -3,9 +3,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { haptic, playTone, resumeAudio } from "@/games/karma-chakra/audio";
-import { QUEST_LABELS } from "./labels";
+import { QUEST_CONTENT } from "./labels";
 import "./karma-quest.css";
 import { GAME_DURATION_MS, formatGameTime } from "@/lib/game-config";
+import { GAME_TITLES, GAME_UI } from "@/lib/game-ui-labels";
 import {
   buildQuestDeck,
   buildQuestionOptions,
@@ -85,7 +86,7 @@ export function KarmaQuestGame({
   lang: Lang;
   onComplete?: (score: number) => void;
 }) {
-  const labels = QUEST_LABELS[lang];
+  const content = QUEST_CONTENT[lang];
   const deckRef = useRef<QuestQuestion[]>([]);
   const deckIndexRef = useRef(0);
   const endsAtRef = useRef(0);
@@ -247,11 +248,11 @@ export function KarmaQuestGame({
     setGrading(true);
     setTries((value) => value + 1);
     setStreak(0);
-    showToast(labels.skipped, false);
+    showToast(GAME_UI.skipped, false);
     playTone("tick", mutedRef.current);
     haptic(6, reducedRef.current);
     advanceAfter(420);
-  }, [advanceAfter, grading, labels.skipped, mode, round, showToast]);
+  }, [advanceAfter, grading, mode, round, showToast]);
 
   const answer = useCallback(
     (selectedId: KarmaQuestId) => {
@@ -271,7 +272,7 @@ export function KarmaQuestGame({
           setSolved((value) => value + 1);
           setBestStreak((value) => Math.max(value, nextStreak));
           setFeedbackCorrect(correctId);
-          showToast(`${labels.solved} +${points}`, true);
+          showToast(`${GAME_UI.solved} +${points}`, true);
           playTone("good", mutedRef.current);
           haptic([8, 40, 14], reducedRef.current);
           advanceAfter(520);
@@ -297,7 +298,7 @@ export function KarmaQuestGame({
       haptic(90, reducedRef.current);
       advanceAfter(1600); // Give user enough time to see correct/wrong highlights and toast message
     },
-    [advanceAfter, grading, labels.solved, lang, mode, round, showToast],
+    [advanceAfter, grading, lang, mode, round, showToast],
   );
 
   useEffect(() => {
@@ -327,9 +328,9 @@ export function KarmaQuestGame({
     <div className="karma-quest-root">
       <header className="karma-quest-top">
         <button type="button" className="karma-quest-back" onClick={onExit}>
-          {labels.back}
+          {GAME_UI.back}
         </button>
-        <div className="karma-quest-title">{labels.title}</div>
+        <div className="karma-quest-title">{GAME_TITLES.quest}</div>
         <div className="karma-quest-pill karma-quest-timer">
           <b>{formatGameTime(timeLeftMs)}</b>
         </div>
@@ -353,24 +354,24 @@ export function KarmaQuestGame({
         <main className="karma-quest-main">
           <div className="karma-quest-score-row">
             <span>
-              {labels.scoreLabel} <b>{score}</b>
+              {GAME_UI.scoreLabel} <b>{score}</b>
             </span>
             <span className={streak >= 2 ? "hot" : undefined}>
-              {labels.streakLabel} <b>×{streak}</b>
+              {GAME_UI.streakLabel} <b>×{streak}</b>
             </span>
             <span>
-              {labels.correctLabel} <b>{solved}</b>
+              {GAME_UI.correctLabel} <b>{solved}</b>
             </span>
           </div>
 
           <section className={`karma-quest-card ${shake ? "shake" : ""}`}>
-            <span className="karma-quest-badge">{labels.badge}</span>
+            <span className="karma-quest-badge">{GAME_UI.badgeQuest}</span>
             <p className="karma-quest-situation">
               {round.question.situation[lang]}
             </p>
           </section>
 
-          <p className="karma-quest-prompt">{labels.prompt}</p>
+          <p className="karma-quest-prompt">{GAME_UI.prompt}</p>
 
           <div className="karma-quest-grid">
             {round.options.map((option) => {
@@ -418,7 +419,7 @@ export function KarmaQuestGame({
             onClick={skipRound}
             disabled={grading}
           >
-            {labels.skip} →
+            {GAME_UI.skip} →
           </button>
         </main>
       )}
@@ -434,19 +435,19 @@ export function KarmaQuestGame({
       <div className={`karma-quest-screen ${mode === "start" ? "" : "hide"}`}>
         {/* Title Group */}
         <div className="text-center mb-6">
-          <h1 className="karma-quest-logotype">{labels.title}</h1>
+          <h1 className="karma-quest-logotype">{GAME_TITLES.quest}</h1>
           <p className="mt-2 text-sm font-semibold tracking-wide text-gold-dim">
-            {labels.subtitle}
+            {content.subtitle}
           </p>
         </div>
 
         {/* Grouped Instructions Card */}
         <div className="mx-auto w-full max-w-sm rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-md shadow-[0_4px_24px_rgba(0,0,0,0.2)] mb-8">
           <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-text-subtle border-b border-white/5 pb-2.5 mb-3.5 text-center">
-            How to Play
+            {GAME_UI.howToPlay}
           </p>
           <ul className="space-y-3.5 pl-1 text-left">
-            {labels.rules.split("·").map((rule, idx) => (
+            {content.rules.split("·").map((rule, idx) => (
               <li key={idx} className="flex items-start gap-3 text-[15.5px] font-bold text-foreground">
                 <span className="mt-[8px] h-1.5 w-1.5 shrink-0 rounded-full bg-gold-bright shadow-[0_0_8px_rgba(255,184,0,0.8)]" />
                 <span className="leading-normal">{rule.trim()}</span>
@@ -458,31 +459,31 @@ export function KarmaQuestGame({
         {/* CTA Play Button */}
         <div className="flex justify-center">
           <button type="button" className="karma-quest-cta" onClick={startGame}>
-            {labels.begin}
+            {GAME_UI.begin}
           </button>
         </div>
       </div>
 
       <div className={`karma-quest-screen ${mode === "over" ? "" : "hide"}`}>
-        <p className="karma-quest-sub">{labels.timeUp}</p>
+        <p className="karma-quest-sub">{GAME_UI.timeUp}</p>
         <h1 className="karma-quest-logotype">{result.score}</h1>
-        <p className="karma-quest-sub">{labels.score}</p>
+        <p className="karma-quest-sub">{GAME_UI.score}</p>
         <div className="karma-quest-stats">
           <div className="karma-quest-stat">
             <u>{result.solved}</u>
-            <s>{labels.solvedCount}</s>
+            <s>{GAME_UI.solvedCount}</s>
           </div>
           <div className="karma-quest-stat">
             <u>{result.tries ? Math.round((result.solved / result.tries) * 100) : 0}%</u>
-            <s>{labels.accuracy}</s>
+            <s>{GAME_UI.accuracy}</s>
           </div>
           <div className="karma-quest-stat">
             <u>{result.bestStreak}</u>
-            <s>{labels.bestStreak}</s>
+            <s>{GAME_UI.bestStreak}</s>
           </div>
         </div>
         <button type="button" className="karma-quest-cta karma-quest-cta--ghost" onClick={onExit}>
-          {labels.back}
+          {GAME_UI.back}
         </button>
       </div>
     </div>

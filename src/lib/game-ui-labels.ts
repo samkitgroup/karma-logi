@@ -1,0 +1,37 @@
+/** English-only chrome for games (buttons, stats, toasts, navigation). */
+export const GAME_UI = {
+  back: "← Back",
+  begin: "BEGIN",
+  skip: "Skip",
+  clear: "Clear selection",
+  timeUp: "TIME'S UP",
+  roundComplete: "ROUND COMPLETE",
+  score: "TOTAL SCORE",
+  scoreLabel: "Score",
+  streakLabel: "Streak",
+  correctLabel: "Correct",
+  solvedCount: "CORRECT",
+  solvedCountScramble: "SOLVED",
+  accuracy: "ACCURACY",
+  bestStreak: "BEST STREAK",
+  totalScore: "TOTAL NIRJARĀ",
+  solved: "Correct!",
+  wrong: "Wrong",
+  skipped: "Skipped",
+  tapLetters: "Tap letters below",
+  prompt: "Choose the karma",
+  badgeQuest: "Which karma is at work?",
+  badgeScramble: "Unscramble this Jain concept",
+  kindKarma: "Eight karmas",
+  kindPrakriti: "Prakriti",
+  released: "RELEASED",
+  bound: "BOUND",
+  reached: "THE PRAKRITI REACHED THE JĪVA",
+  howToPlay: "How to Play",
+} as const;
+
+export const GAME_TITLES = {
+  quest: "Karma Quest",
+  chakra: "KARMA CHAKRA",
+  scramble: "Karma Scramble",
+} as const;

@@ -9,9 +9,10 @@ import {
   type LetterTile,
 } from "./scramble-engine";
 import { haptic, playTone, resumeAudio } from "@/games/karma-chakra/audio";
-import { SCRAMBLE_LABELS } from "./labels";
+import { SCRAMBLE_CONTENT } from "./labels";
 import "./karma-scramble.css";
 import { GAME_DURATION_MS, formatGameTime } from "@/lib/game-config";
+import { GAME_TITLES, GAME_UI } from "@/lib/game-ui-labels";
 import {
   buildSessionDeck,
   getAnswerUnits,
@@ -55,7 +56,7 @@ export function KarmaScrambleGame({
   lang: Lang;
   onComplete?: (score: number) => void;
 }) {
-  const labels = SCRAMBLE_LABELS[lang];
+  const content = SCRAMBLE_CONTENT[lang];
   const deckRef = useRef<ScrambleItem[]>([]);
   const deckIndexRef = useRef(0);
   const endsAtRef = useRef(0);
@@ -228,11 +229,11 @@ export function KarmaScrambleGame({
     setGrading(true);
     setTries((value) => value + 1);
     setStreak(0);
-    showToast(labels.skipped, false);
+    showToast(GAME_UI.skipped, false);
     playTone("tick", mutedRef.current);
     haptic(6, reducedRef.current);
     advanceAfter(420);
-  }, [advanceAfter, grading, labels.skipped, mode, puzzle, showToast]);
+  }, [advanceAfter, grading, mode, puzzle, showToast]);
 
   const submitSelection = useCallback(
     (selection: LetterTile[], current: PuzzleState) => {
@@ -248,7 +249,7 @@ export function KarmaScrambleGame({
           setBestStreak((value) => Math.max(value, nextStreak));
           setSlotTone("ok");
           const answerLabel = getDisplayAnswer(current.item, lang);
-          showToast(`${answerLabel} — ${labels.solved} +${points}`, true);
+          showToast(`${answerLabel} — ${GAME_UI.solved} +${points}`, true);
           playTone("good", mutedRef.current);
           haptic([8, 40, 14], reducedRef.current);
           advanceAfter(520);
@@ -260,7 +261,7 @@ export function KarmaScrambleGame({
       setStreak(0);
       setSlotTone("bad");
       setShake(true);
-      showToast(labels.wrong, false);
+      showToast(GAME_UI.wrong, false);
       playTone("bad", mutedRef.current);
       haptic(90, reducedRef.current);
       advanceRef.current = window.setTimeout(() => {
@@ -272,7 +273,7 @@ export function KarmaScrambleGame({
         );
       }, 700);
     },
-    [advanceAfter, labels.solved, labels.wrong, lang, showToast],
+    [advanceAfter, lang, showToast],
   );
 
   const pickLetter = useCallback(
@@ -308,8 +309,8 @@ export function KarmaScrambleGame({
 
   const kindLabel =
     puzzle?.item.kind === "karma"
-      ? labels.kindKarma
-      : `${labels.kindPrakriti} · ${puzzle?.item.karmaName[lang] ?? ""}`;
+      ? GAME_UI.kindKarma
+      : `${GAME_UI.kindPrakriti} · ${puzzle?.item.karmaName[lang] ?? ""}`;
 
   const description = puzzle?.item.description[lang] ?? "";
 
@@ -328,9 +329,9 @@ export function KarmaScrambleGame({
     <div className="karma-scramble-root">
       <header className="karma-scramble-top">
         <button type="button" className="karma-scramble-back" onClick={onExit}>
-          {labels.back}
+          {GAME_UI.back}
         </button>
-        <div className="karma-scramble-title">{labels.title}</div>
+        <div className="karma-scramble-title">{GAME_TITLES.scramble}</div>
         <div className="karma-scramble-pill karma-scramble-timer">
           <b>{formatGameTime(timeLeftMs)}</b>
         </div>
@@ -365,7 +366,7 @@ export function KarmaScrambleGame({
           </div>
 
           <section className={`karma-scramble-card ${shake ? "shake" : ""}`}>
-            <span className="karma-scramble-badge">{labels.badge}</span>
+            <span className="karma-scramble-badge">{GAME_UI.badgeScramble}</span>
 
             <div className="karma-scramble-slots" aria-live="polite">
               {puzzle.answer.map((_, index) => {
@@ -389,7 +390,7 @@ export function KarmaScrambleGame({
 
             <p className="karma-scramble-kind">{kindLabel}</p>
             <p className="karma-scramble-hint">{description}</p>
-            <div className="karma-scramble-prompt">{labels.tapLetters}</div>
+            <div className="karma-scramble-prompt">{GAME_UI.tapLetters}</div>
           </section>
 
           <div className="karma-scramble-tiles">
@@ -413,7 +414,7 @@ export function KarmaScrambleGame({
               onClick={clearSelection}
               disabled={grading || puzzle.selection.length === 0}
             >
-              ↺ {labels.clear}
+              ↺ {GAME_UI.clear}
             </button>
             <button
               type="button"
@@ -421,7 +422,7 @@ export function KarmaScrambleGame({
               onClick={skipPuzzle}
               disabled={grading}
             >
-              {labels.skip} →
+              {GAME_UI.skip} →
             </button>
           </div>
         </main>
@@ -438,19 +439,19 @@ export function KarmaScrambleGame({
       <div className={`karma-scramble-screen ${mode === "start" ? "" : "hide"}`}>
         {/* Title Group */}
         <div className="text-center mb-6">
-          <h1 className="karma-scramble-logotype">{labels.title}</h1>
+          <h1 className="karma-scramble-logotype">{GAME_TITLES.scramble}</h1>
           <p className="mt-2 text-sm font-semibold tracking-wide text-gold-dim">
-            {labels.subtitle}
+            {content.subtitle}
           </p>
         </div>
 
         {/* Grouped Instructions Card */}
         <div className="mx-auto w-full max-w-sm rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-md shadow-[0_4px_24px_rgba(0,0,0,0.2)] mb-8">
           <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-text-subtle border-b border-white/5 pb-2.5 mb-3.5 text-center">
-            How to Play
+            {GAME_UI.howToPlay}
           </p>
           <ul className="space-y-3.5 pl-1 text-left">
-            {labels.rules.split("·").map((rule, idx) => (
+            {content.rules.split("·").map((rule, idx) => (
               <li key={idx} className="flex items-start gap-3 text-[15.5px] font-bold text-foreground">
                 <span className="mt-[8px] h-1.5 w-1.5 shrink-0 rounded-full bg-gold-bright shadow-[0_0_8px_rgba(255,184,0,0.8)]" />
                 <span className="leading-normal">{rule.trim()}</span>
@@ -462,29 +463,32 @@ export function KarmaScrambleGame({
         {/* CTA Play Button */}
         <div className="flex justify-center">
           <button type="button" className="karma-scramble-cta" onClick={startGame}>
-            {labels.begin}
+            {GAME_UI.begin}
           </button>
         </div>
       </div>
 
       <div className={`karma-scramble-screen ${mode === "over" ? "" : "hide"}`}>
-        <p className="karma-scramble-sub">{labels.timeUp}</p>
+        <p className="karma-scramble-sub">{GAME_UI.timeUp}</p>
         <h1 className="karma-scramble-logotype">{result.score}</h1>
-        <p className="karma-scramble-sub">{labels.score}</p>
+        <p className="karma-scramble-sub">{GAME_UI.score}</p>
         <div className="karma-scramble-stats">
           <div className="karma-scramble-stat">
             <u>{result.solved}</u>
-            <s>{labels.solvedCount}</s>
+            <s>{GAME_UI.solvedCountScramble}</s>
           </div>
           <div className="karma-scramble-stat">
             <u>{result.tries ? Math.round((result.solved / result.tries) * 100) : 0}%</u>
-            <s>{labels.accuracy}</s>
+            <s>{GAME_UI.accuracy}</s>
           </div>
           <div className="karma-scramble-stat">
             <u>{result.bestStreak}</u>
-            <s>{labels.bestStreak}</s>
+            <s>{GAME_UI.bestStreak}</s>
           </div>
         </div>
+        <button type="button" className="karma-scramble-cta karma-scramble-cta--ghost" onClick={onExit}>
+          {GAME_UI.back}
+        </button>
       </div>
     </div>
   );
