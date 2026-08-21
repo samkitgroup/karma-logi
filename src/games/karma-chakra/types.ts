@@ -119,8 +119,7 @@ export type LearnState = {
 export type ResultState = {
   verdict: string;
   score: number;
+  correct: number;
   accuracy: string;
   bestStreak: number;
-  metCount: string;
-  mastery: Array<{ name: string; met: boolean; glyph: string; ghati: boolean }>;
 };

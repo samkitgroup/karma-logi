@@ -59,6 +59,12 @@ export const LABELS: Record<
     reached: string;
     next: string;
     begin: string;
+    back: string;
+    score: string;
+    streak: string;
+    correct: string;
+    timeUp: string;
+    totalScore: string;
   }
 > = {
   en: {
@@ -66,30 +72,48 @@ export const LABELS: Record<
     aghati: "AGHĀTI · NON-HARMING",
     released: "RELEASED",
     bound: "BOUND",
-    coach: "DRAG THE PRAKRITI TO ITS KARMA — OR TAP",
+    coach: "Drag the prakriti to its karma petal — or tap a petal",
     reached: "THE PRAKRITI REACHED THE JĪVA",
     next: "NEXT",
     begin: "BEGIN",
+    back: "← Back",
+    score: "Score",
+    streak: "Streak",
+    correct: "Correct",
+    timeUp: "TIME'S UP",
+    totalScore: "TOTAL NIRJARĀ",
   },
   hi: {
     ghati: "घाती · आत्मघातक",
     aghati: "अघाती · अघातक",
     released: "मुक्त",
     bound: "बंध",
-    coach: "प्रकृति को उसके कर्म तक खींचें — या स्पर्श करें",
+    coach: "प्रकृति को उसके कर्म पंखुड़ी तक खींचें — या स्पर्श करें",
     reached: "प्रकृति जीव तक पहुँची",
     next: "आगे",
     begin: "प्रारंभ",
+    back: "← वापस",
+    score: "अंक",
+    streak: "स्ट्रीक",
+    correct: "सही",
+    timeUp: "समय समाप्त",
+    totalScore: "कुल निर्जरा",
   },
   gu: {
     ghati: "ઘાતી · આત્મઘાતક",
     aghati: "અઘાતી · અઘાતક",
     released: "મુક્ત",
     bound: "બંધ",
-    coach: "પ્રકૃતિને તેના કર્મ સુધી ખેંચો — અથવા સ્પર્શ કરો",
+    coach: "પ્રકૃતિને તેના કર્મ પાંખડી સુધી ખેંચો — અથવા સ્પર્શ કરો",
     reached: "પ્રકૃતિ જીવ સુધી પહોંચી",
     next: "આગળ",
     begin: "શરૂ",
+    back: "← પાછા",
+    score: "સ્કોર",
+    streak: "સ્ટ્રીક",
+    correct: "સાચા",
+    timeUp: "સમય પૂરો",
+    totalScore: "કુલ નિર્જરા",
   },
 };
 

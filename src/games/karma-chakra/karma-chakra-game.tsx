@@ -7,7 +7,6 @@ import {
   burst,
   computeLayout,
   createStars,
-  drawMasteryGlyph,
   nearestPetal,
   petalPos,
   renderFrame,
@@ -18,8 +17,6 @@ import {
   findPrakritiById,
   GAME_SUBTITLE,
   GAME_TITLE,
-  getKarmaDisplayName,
-  KARMAS,
   LABELS,
   pickRandomPrakriti,
 } from "./content";
@@ -75,6 +72,10 @@ export function KarmaChakraGame({
   onComplete?: (score: number) => void;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
+  const fontFamilyRef = useRef("Georgia, serif");
+  const timerTextRef = useRef<HTMLSpanElement>(null);
+  const timerBarRef = useRef<HTMLElement>(null);
   const stateRef = useRef<GameState>(
     createInitialState(
       typeof window !== "undefined" &&
@@ -97,31 +98,41 @@ export function KarmaChakraGame({
   const [lang, setLang] = useState<Lang>("en");
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
-  const [timeLeftMs, setTimeLeftMs] = useState(GAME_DURATION_MS);
-  const [timeProgress, setTimeProgress] = useState(100);
+  const [hits, setHits] = useState(0);
   const [toast, setToast] = useState({ text: "", bad: false, visible: false });
   const [coachVisible, setCoachVisible] = useState(true);
   const [muted, setMuted] = useState(false);
   const [result, setResult] = useState<ResultState>({
     verdict: "JOURNEY COMPLETE",
     score: 0,
+    correct: 0,
     accuracy: "0%",
     bestStreak: 0,
-    metCount: "0/8",
-    mastery: [],
   });
+
+  const updateTimerDisplay = useCallback((remainingMs: number) => {
+    const clamped = Math.max(0, remainingMs);
+    const progress = (clamped / GAME_DURATION_MS) * 100;
+    if (timerTextRef.current) {
+      timerTextRef.current.textContent = formatGameTime(clamped);
+    }
+    if (timerBarRef.current) {
+      timerBarRef.current.style.width = `${progress}%`;
+    }
+  }, []);
 
   const syncUi = useCallback(() => {
     const state = stateRef.current;
-    const remaining = Math.max(0, state.endsAt - Date.now());
     setMode(state.mode);
     setLang(state.lang);
     setScore(state.score);
     setStreak(state.streak);
-    setTimeLeftMs(remaining);
-    setTimeProgress(state.endsAt ? (remaining / GAME_DURATION_MS) * 100 : 100);
+    setHits(state.hits);
     setMuted(state.muted);
-  }, []);
+    if (state.mode === "play" && state.endsAt > 0) {
+      updateTimerDisplay(state.endsAt - Date.now());
+    }
+  }, [updateTimerDisplay]);
 
   useEffect(() => {
     stateRef.current.lang = langProp;
@@ -162,20 +173,12 @@ export function KarmaChakraGame({
       }
       syncUi();
 
-      const mastery = KARMAS.map((karma, index) => ({
-        name: getKarmaDisplayName(index, state.lang),
-        met: state.met.has(index),
-        glyph: karma.glyph,
-        ghati: karma.g === 1,
-      }));
-
       setResult({
-        verdict: timeUp ? "TIME'S UP" : "ROUND COMPLETE",
+        verdict: timeUp ? LABELS[state.lang].timeUp : "ROUND COMPLETE",
         score: state.score,
+        correct: state.hits,
         accuracy: `${state.tries ? Math.round((state.hits / state.tries) * 100) : 0}%`,
         bestStreak: state.best,
-        metCount: `${state.met.size}/8`,
-        mastery,
       });
 
       onComplete?.(state.score);
@@ -359,6 +362,7 @@ export function KarmaChakraGame({
     state.feedbackCorrect = -1;
     state.feedbackUntil = 0;
     state.endsAt = Date.now() + GAME_DURATION_MS;
+    updateTimerDisplay(GAME_DURATION_MS);
     syncUi();
     setCoachVisible(true);
     if (coachTimerRef.current) {
@@ -369,7 +373,7 @@ export function KarmaChakraGame({
     }, 6000);
     spawn();
     playTone("tick", state.muted);
-  }, [spawn, syncUi]);
+  }, [spawn, syncUi, updateTimerDisplay]);
 
   const resize = useCallback(() => {
     const canvas = canvasRef.current;
@@ -382,14 +386,16 @@ export function KarmaChakraGame({
     const height = window.innerHeight;
     canvas.width = Math.round(width * dpr);
     canvas.height = Math.round(height * dpr);
-    const context = canvas.getContext("2d");
+    const context = canvas.getContext("2d", { alpha: false });
     if (context) {
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctxRef.current = context;
     }
     layoutRef.current = computeLayout(width, height);
   }, []);
 
   useEffect(() => {
+    fontFamilyRef.current = getComputedStyle(document.body).fontFamily;
     resize();
     window.addEventListener("resize", resize);
     window.addEventListener("orientationchange", () => {
@@ -410,7 +416,8 @@ export function KarmaChakraGame({
       }
 
       const layout = layoutRef.current;
-      const { x, y } = event;
+      const x = event.clientX;
+      const y = event.clientY;
       if (
         Math.hypot(x - state.bond.x, y - state.bond.y) <
         Math.max(64, layout.pw * 1.1)
@@ -436,12 +443,15 @@ export function KarmaChakraGame({
 
       state.bond.x = event.clientX;
       state.bond.y = event.clientY;
-      const index = nearestPetal(layoutRef.current, event.clientX, event.clientY);
+      const index = nearestPetal(
+        layoutRef.current,
+        event.clientX,
+        event.clientY,
+      );
       if (index !== state.target) {
         state.target = index;
         if (index >= 0) {
           haptic(4, state.reduced);
-          playTone("tick", state.muted);
         }
       }
     };
@@ -466,12 +476,16 @@ export function KarmaChakraGame({
     canvas.addEventListener("pointerup", release);
     canvas.addEventListener("pointercancel", release);
 
-    const loop = (now: number) => {
-      const dt = Math.min((now - lastFrameRef.current) / 16.667, 3);
-      lastFrameRef.current = now;
+    const loop = (frameTime: number) => {
+      if (lastFrameRef.current === 0) {
+        lastFrameRef.current = frameTime;
+      }
+      const dt = Math.min((frameTime - lastFrameRef.current) / 16.667, 3);
+      const deltaSec = Math.min((frameTime - lastFrameRef.current) / 1000, 0.05);
+      lastFrameRef.current = frameTime;
       const state = stateRef.current;
       const layout = layoutRef.current;
-      const context = canvas.getContext("2d");
+      const context = ctxRef.current;
 
       if (state.mode === "play" && state.bond && !state.grading) {
         const bond = state.bond;
@@ -496,26 +510,25 @@ export function KarmaChakraGame({
         state.pulse = Math.max(0, 1 - (distance - layout.jiva) / (layout.r * 0.9));
 
         if (state.pulse > 0.55 && !state.drag) {
-          if (!bond.warned || now - bond.warned > 620) {
-            bond.warned = now;
+          if (!bond.warned || frameTime - bond.warned > 620) {
+            bond.warned = frameTime;
             playTone("warn", state.muted);
           }
         }
 
-        if (distance < layout.jiva + 14) {
+        if (distance < layout.jiva + 14 && !state.grading) {
           missed();
         }
       }
 
-      if (state.mode === "play" && state.endsAt > 0 && now >= state.endsAt) {
-        finish(true);
-      }
-
-      if (now - lastUiSyncRef.current > 100 && state.mode === "play") {
-        lastUiSyncRef.current = now;
-        const remaining = Math.max(0, state.endsAt - now);
-        setTimeLeftMs(remaining);
-        setTimeProgress((remaining / GAME_DURATION_MS) * 100);
+      if (state.mode === "play" && state.endsAt > 0) {
+        const wallNow = Date.now();
+        if (wallNow >= state.endsAt) {
+          finish(true);
+        } else if (frameTime - lastUiSyncRef.current > 100) {
+          lastUiSyncRef.current = frameTime;
+          updateTimerDisplay(state.endsAt - wallNow);
+        }
       }
 
       if (context) {
@@ -530,8 +543,9 @@ export function KarmaChakraGame({
           starsRef.current,
           particlesRef.current,
           motesRef.current,
-          now,
-          getComputedStyle(document.body).fontFamily,
+          frameTime,
+          fontFamilyRef.current,
+          deltaSec,
         );
         context.restore();
       }
@@ -560,7 +574,7 @@ export function KarmaChakraGame({
         window.clearTimeout(coachTimerRef.current);
       }
     };
-  }, [finish, grade, missed, resize]);
+  }, [finish, grade, missed, resize, updateTimerDisplay]);
 
   const toggleMuted = () => {
     stateRef.current.muted = !stateRef.current.muted;
@@ -574,42 +588,59 @@ export function KarmaChakraGame({
 
   return (
     <div className={`karma-chakra-root ${mode === "play" ? "is-playing" : ""}`}>
-      <button
-        type="button"
-        className="karma-chakra-pill karma-chakra-back"
-        onClick={onExit}
-      >
-        ← Back
-      </button>
-
-      <canvas ref={canvasRef} className="karma-chakra-canvas" />
-
-      <div className="karma-chakra-hud">
-        <div className="karma-chakra-bar">
-          <div className="karma-chakra-pill">
-            <b>{score}</b>
-          </div>
-          <div className="karma-chakra-spacer" />
-          <div className="karma-chakra-pill karma-chakra-timer">
-            <b>{formatGameTime(timeLeftMs)}</b>
-          </div>
+      <header className="karma-chakra-top">
+        <button type="button" className="karma-chakra-back" onClick={onExit}>
+          {labels.back}
+        </button>
+        <div className="karma-chakra-title">{GAME_TITLE}</div>
+        {mode === "play" ? (
+          <>
+            <div className="karma-chakra-pill karma-chakra-timer">
+              <b ref={timerTextRef}>{formatGameTime(GAME_DURATION_MS)}</b>
+            </div>
+            <button
+              type="button"
+              className="karma-chakra-pill"
+              onClick={toggleMuted}
+              aria-label="Toggle sound"
+            >
+              {muted ? "✕" : "♪"}
+            </button>
+          </>
+        ) : (
           <button
             type="button"
-            className="karma-chakra-pill"
+            className="karma-chakra-pill karma-chakra-mute"
             onClick={toggleMuted}
             aria-label="Toggle sound"
           >
             {muted ? "✕" : "♪"}
           </button>
-        </div>
+        )}
+      </header>
 
-        <div className="karma-chakra-track">
-          <i style={{ width: `${timeProgress}%` }} />
-        </div>
-        <div className="karma-chakra-wordmark">{GAME_TITLE}</div>
-        <div className={`karma-chakra-streak ${streak >= 2 ? "on" : ""}`}>
-          STREAK ×{streak}
-        </div>
+      {mode === "play" && (
+        <>
+          <div className="karma-chakra-track" aria-hidden>
+            <i ref={timerBarRef} style={{ width: "100%" }} />
+          </div>
+          <div className="karma-chakra-score-row">
+            <span>
+              {labels.score} <b>{score}</b>
+            </span>
+            <span className={streak >= 2 ? "hot" : undefined}>
+              {labels.streak} <b>×{streak}</b>
+            </span>
+            <span>
+              {labels.correct} <b>{hits}</b>
+            </span>
+          </div>
+        </>
+      )}
+
+      <canvas ref={canvasRef} className="karma-chakra-canvas" />
+
+      <div className="karma-chakra-hud">
         <div
           className={`karma-chakra-toast ${toast.visible ? "on" : ""} ${
             toast.bad ? "bad" : ""
@@ -617,12 +648,13 @@ export function KarmaChakraGame({
         >
           {toast.text}
         </div>
-        <div
-          className="karma-chakra-coach"
-          style={{ opacity: coachVisible && mode === "play" ? 1 : 0.25 }}
-        >
-          {labels.coach}
-        </div>
+        {mode === "play" && (
+          <div
+            className={`karma-chakra-coach ${coachVisible ? "prominent" : ""}`}
+          >
+            {labels.coach}
+          </div>
+        )}
       </div>
 
       <div className={`karma-chakra-screen ${mode === "start" ? "" : "hide"}`}>
@@ -639,11 +671,13 @@ export function KarmaChakraGame({
 
       <div className={`karma-chakra-screen ${mode === "over" ? "" : "hide"}`}>
         <div className="karma-chakra-sub">{result.verdict}</div>
-        <h1 className="karma-chakra-logotype" style={{ fontSize: 34, margin: "12px 0 0" }}>
-          {result.score}
-        </h1>
-        <div className="karma-chakra-presents">TOTAL NIRJARĀ</div>
-        <div className="karma-chakra-stats">
+        <h1 className="karma-chakra-logotype karma-chakra-score">{result.score}</h1>
+        <div className="karma-chakra-presents">{labels.totalScore}</div>
+        <div className="karma-chakra-stats karma-chakra-stats--over">
+          <div className="karma-chakra-stat">
+            <u>{result.correct}</u>
+            <s>{labels.correct.toUpperCase()}</s>
+          </div>
           <div className="karma-chakra-stat">
             <u>{result.accuracy}</u>
             <s>ACCURACY</s>
@@ -652,55 +686,11 @@ export function KarmaChakraGame({
             <u>{result.bestStreak}</u>
             <s>BEST STREAK</s>
           </div>
-          <div className="karma-chakra-stat">
-            <u>{result.metCount}</u>
-            <s>KARMAS MET</s>
-          </div>
         </div>
-        <div className="karma-chakra-mastery">
-          <h3>THE EIGHT KARMAS</h3>
-          {result.mastery.map((row) => (
-            <div key={row.name} className="karma-chakra-mrow">
-              <MasteryIcon glyph={row.glyph} ghati={row.ghati} met={row.met} />
-              <span>{row.name}</span>
-              <em className={row.met ? "hit" : undefined}>{row.met ? "MET" : "—"}</em>
-            </div>
-          ))}
-        </div>
-        <button type="button" className="karma-chakra-cta" onClick={startGame}>
-          PLAY AGAIN
+        <button type="button" className="karma-chakra-cta karma-chakra-cta--ghost" onClick={onExit}>
+          {labels.back}
         </button>
       </div>
     </div>
   );
-}
-
-function MasteryIcon({
-  glyph,
-  ghati,
-  met,
-}: {
-  glyph: string;
-  ghati: boolean;
-  met: boolean;
-}) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) {
-      return;
-    }
-
-    const context = canvas.getContext("2d");
-    if (!context) {
-      return;
-    }
-
-    context.setTransform(2, 0, 0, 2, 0, 0);
-    context.clearRect(0, 0, 20, 20);
-    drawMasteryGlyph(context, glyph, ghati, met);
-  }, [glyph, ghati, met]);
-
-  return <canvas ref={canvasRef} width={40} height={40} aria-hidden />;
 }

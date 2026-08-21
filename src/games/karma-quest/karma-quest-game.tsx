@@ -30,7 +30,7 @@ type ResultState = {
   bestStreak: number;
 };
 
-const FEEDBACK_MS = 750;
+const FEEDBACK_MS = 900;
 
 function buildRound(question: QuestQuestion): RoundState {
   return {
@@ -41,20 +41,39 @@ function buildRound(question: QuestQuestion): RoundState {
 
 function optionClass(
   karmaId: KarmaQuestId,
-  option: KarmaOption,
   feedbackWrong: KarmaQuestId | null,
   feedbackCorrect: KarmaQuestId | null,
+  grading: boolean,
 ): string {
-  const classes = [
-    "karma-quest-option",
-    option.ghati ? "ghati" : "aghati",
-  ];
+  const classes = ["karma-quest-option"];
+
   if (feedbackWrong === karmaId) {
-    classes.push("selected-wrong");
+    classes.push("is-wrong");
   } else if (feedbackCorrect === karmaId) {
-    classes.push(feedbackWrong ? "reveal-correct" : "selected-correct");
+    classes.push(feedbackWrong ? "is-correct-reveal" : "is-correct");
+  } else if (grading) {
+    classes.push("is-dimmed");
   }
+
   return classes.join(" ");
+}
+
+function optionStatus(
+  karmaId: KarmaQuestId,
+  feedbackWrong: KarmaQuestId | null,
+  feedbackCorrect: KarmaQuestId | null,
+  grading: boolean,
+): "wrong" | "correct" | null {
+  if (!grading) {
+    return null;
+  }
+  if (feedbackWrong === karmaId) {
+    return "wrong";
+  }
+  if (feedbackCorrect === karmaId) {
+    return "correct";
+  }
+  return null;
 }
 
 export function KarmaQuestGame({
@@ -252,10 +271,7 @@ export function KarmaQuestGame({
           setSolved((value) => value + 1);
           setBestStreak((value) => Math.max(value, nextStreak));
           setFeedbackCorrect(correctId);
-          const karmaName = round.options.find((o) => o.id === correctId)?.name[
-            lang
-          ];
-          showToast(`${karmaName ?? ""} — ${labels.solved} +${points}`, true);
+          showToast(`${labels.solved} +${points}`, true);
           playTone("good", mutedRef.current);
           haptic([8, 40, 14], reducedRef.current);
           advanceAfter(520);
@@ -273,7 +289,7 @@ export function KarmaQuestGame({
       haptic(90, reducedRef.current);
       advanceAfter(FEEDBACK_MS);
     },
-    [advanceAfter, grading, labels.solved, labels.wrong, lang, mode, round, showToast],
+    [advanceAfter, grading, labels.solved, labels.wrong, mode, round, showToast],
   );
 
   useEffect(() => {
@@ -329,13 +345,13 @@ export function KarmaQuestGame({
         <main className="karma-quest-main">
           <div className="karma-quest-score-row">
             <span>
-              Score <b>{score}</b>
+              {labels.scoreLabel} <b>{score}</b>
+            </span>
+            <span className={streak >= 2 ? "hot" : undefined}>
+              {labels.streakLabel} <b>×{streak}</b>
             </span>
             <span>
-              Streak <b>×{streak}</b>
-            </span>
-            <span>
-              Correct <b>{solved}</b>
+              {labels.correctLabel} <b>{solved}</b>
             </span>
           </div>
 
@@ -344,31 +360,48 @@ export function KarmaQuestGame({
             <p className="karma-quest-situation">
               {round.question.situation[lang]}
             </p>
-            <p className="karma-quest-prompt">{labels.prompt}</p>
           </section>
 
+          <p className="karma-quest-prompt">{labels.prompt}</p>
+
           <div className="karma-quest-grid">
-            {round.options.map((option) => (
-              <button
-                key={option.id}
-                type="button"
-                className={optionClass(
-                  option.id,
-                  option,
-                  feedbackWrong,
-                  feedbackCorrect,
-                )}
-                disabled={grading}
-                onClick={() => answer(option.id)}
-              >
-                <span className="karma-quest-option-name">
-                  {option.name[lang]}
-                </span>
-                <span className="karma-quest-option-tag">
-                  {option.ghati ? labels.ghati : labels.aghati}
-                </span>
-              </button>
-            ))}
+            {round.options.map((option) => {
+              const status = optionStatus(
+                option.id,
+                feedbackWrong,
+                feedbackCorrect,
+                grading,
+              );
+
+              return (
+                <button
+                  key={option.id}
+                  type="button"
+                  className={optionClass(
+                    option.id,
+                    feedbackWrong,
+                    feedbackCorrect,
+                    grading,
+                  )}
+                  disabled={grading}
+                  onClick={() => answer(option.id)}
+                >
+                  <span className="karma-quest-option-name">
+                    {option.name[lang]}
+                  </span>
+                  {status === "wrong" && (
+                    <span className="karma-quest-option-status is-wrong">
+                      ✕
+                    </span>
+                  )}
+                  {status === "correct" && (
+                    <span className="karma-quest-option-status is-correct">
+                      ✓
+                    </span>
+                  )}
+                </button>
+              );
+            })}
           </div>
 
           <button
@@ -417,8 +450,8 @@ export function KarmaQuestGame({
             <s>{labels.bestStreak}</s>
           </div>
         </div>
-        <button type="button" className="karma-quest-cta" onClick={startGame}>
-          {labels.playAgain}
+        <button type="button" className="karma-quest-cta karma-quest-cta--ghost" onClick={onExit}>
+          {labels.back}
         </button>
       </div>
     </div>

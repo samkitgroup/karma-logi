@@ -224,7 +224,10 @@ export function renderFrame(
   motes: Mote[],
   time: number,
   fontFamily: string,
+  deltaSec = 1 / 60,
 ) {
+  ctx.clearRect(0, 0, width, height);
+
   if (state.shake > 0 && !state.reduced) {
     const shake = state.shake;
     ctx.translate(
@@ -245,9 +248,9 @@ export function renderFrame(
   }
   drawJiva(ctx, layout, state, time, fontFamily);
   if (state.bond) {
-    drawBondWord(ctx, layout, state);
+    drawBondWord(ctx, layout, state, deltaSec);
   }
-  drawFx(ctx, particles, motes);
+  drawFx(ctx, particles, motes, deltaSec);
 }
 
 function drawBackground(
@@ -561,13 +564,14 @@ function drawBondWord(
   ctx: CanvasRenderingContext2D,
   layout: Layout,
   state: GameState,
+  deltaSec: number,
 ) {
   const bond = state.bond;
   if (!bond) {
     return;
   }
 
-  bond.t += 1 / 60;
+  bond.t += deltaSec;
   ctx.save();
   ctx.translate(bond.x, bond.y);
 
@@ -626,14 +630,15 @@ function drawFx(
   ctx: CanvasRenderingContext2D,
   particles: Particle[],
   motes: Mote[],
+  deltaSec: number,
 ) {
   for (let i = particles.length - 1; i >= 0; i--) {
     const particle = particles[i];
-    particle.x += particle.vx;
-    particle.y += particle.vy;
-    particle.vx *= 0.975;
-    particle.vy *= 0.975;
-    particle.life -= 0.016;
+    particle.x += particle.vx * deltaSec * 60;
+    particle.y += particle.vy * deltaSec * 60;
+    particle.vx *= 0.975 ** (deltaSec * 60);
+    particle.vy *= 0.975 ** (deltaSec * 60);
+    particle.life -= deltaSec * 0.96;
     if (particle.life <= 0) {
       particles.splice(i, 1);
       continue;
@@ -647,7 +652,7 @@ function drawFx(
 
   for (let i = motes.length - 1; i >= 0; i--) {
     const mote = motes[i];
-    mote.p += 0.016 * mote.sp;
+    mote.p += deltaSec * mote.sp;
     if (mote.p >= 1) {
       motes.splice(i, 1);
       continue;
@@ -709,10 +714,14 @@ export function stream(
 }
 
 export function computeLayout(width: number, height: number): Layout {
-  const radius = Math.min(width * 0.355, height * 0.235, 168);
+  const hudHeight = 118;
+  const radius = Math.min(width * 0.355, height * 0.22, 168);
   const petalOut = radius * 0.34;
   const petalIn = radius * 0.3;
-  const cy = Math.min(height - (radius + petalOut + 26), height * 0.72);
+  const cy = Math.min(
+    height - (radius + petalOut + 32),
+    hudHeight + radius * 1.55,
+  );
   const layout: Layout = {
     r: radius,
     cx: width / 2,
@@ -720,11 +729,11 @@ export function computeLayout(width: number, height: number): Layout {
     pw: radius * 0.335,
     out: petalOut,
     into: petalIn,
-    top: 96,
-    spawnY: Math.max(120, cy - radius - petalOut - 76),
+    top: hudHeight,
+    spawnY: Math.max(hudHeight + 36, cy - radius - petalOut - 72),
     jiva: Math.max(22, radius * 0.19),
   };
-  layout.spawnY = Math.min(layout.spawnY, cy - radius * 1.1);
+  layout.spawnY = Math.min(layout.spawnY, cy - radius * 1.05);
   return layout;
 }
 

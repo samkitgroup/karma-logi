@@ -462,9 +462,6 @@ export function KarmaScrambleGame({
             <s>{labels.bestStreak}</s>
           </div>
         </div>
-        <button type="button" className="karma-scramble-cta" onClick={startGame}>
-          {labels.playAgain}
-        </button>
       </div>
     </div>
   );

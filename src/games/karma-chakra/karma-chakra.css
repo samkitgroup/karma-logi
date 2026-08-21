@@ -21,6 +21,7 @@
 .karma-chakra-root {
   position: fixed;
   inset: 0;
+  z-index: 50;
   overflow: hidden;
   background: var(--ink);
   color: var(--parch);
@@ -37,24 +38,17 @@
   display: block;
 }
 
-.karma-chakra-hud {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.karma-chakra-bar {
-  position: absolute;
-  top: calc(var(--st) + 10px);
-  left: 0;
-  right: 0;
+.karma-chakra-top {
+  position: relative;
+  z-index: 12;
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 0 14px;
+  padding: calc(var(--st) + 10px) 14px 8px;
+  pointer-events: none;
 }
 
+.karma-chakra-back,
 .karma-chakra-pill {
   pointer-events: auto;
   height: 40px;
@@ -69,19 +63,37 @@
   background: var(--glass);
   backdrop-filter: blur(8px);
   font-size: 11px;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   color: var(--gold);
   cursor: pointer;
   transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
+.karma-chakra-back {
+  padding: 0 14px;
+  font-weight: 600;
+}
+
+.karma-chakra-back:active,
 .karma-chakra-pill:active {
   transform: scale(0.96);
 }
 
+.karma-chakra-back:focus-visible,
 .karma-chakra-pill:focus-visible {
   outline: 2px solid rgba(34, 211, 238, 0.55);
   outline-offset: 2px;
+}
+
+.karma-chakra-title {
+  flex: 1;
+  text-align: center;
+  font: 700 11px/1 system-ui, sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-shadow: 0 0 18px rgba(0, 229, 255, 0.35);
+  pointer-events: none;
 }
 
 .karma-chakra-pill b {
@@ -91,39 +103,19 @@
   font-variant-numeric: tabular-nums;
 }
 
-.karma-chakra-spacer {
-  flex: 1;
-}
-
-.karma-chakra-dots {
-  display: flex;
-  gap: 3px;
-  align-items: center;
-}
-
-.karma-chakra-dots i {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--gold);
-  transition: 0.25s;
-  display: block;
-}
-
-.karma-chakra-dots i.off {
-  background: rgba(30, 41, 59, 0.85);
-  transform: scale(0.7);
+.karma-chakra-mute {
+  margin-left: auto;
 }
 
 .karma-chakra-track {
-  position: absolute;
-  top: calc(var(--st) + 52px);
-  left: 14px;
-  right: 14px;
+  position: relative;
+  z-index: 11;
   height: 2px;
+  margin: 0 14px 6px;
   background: rgba(15, 23, 42, 0.95);
   border-radius: 2px;
   overflow: hidden;
+  pointer-events: none;
 }
 
 .karma-chakra-timer b {
@@ -134,83 +126,102 @@
 .karma-chakra-track i {
   display: block;
   height: 100%;
-  width: 0;
+  width: 100%;
   margin-left: auto;
   transform-origin: right;
   background: linear-gradient(270deg, var(--rust), var(--gold));
   box-shadow: 0 0 12px rgba(0, 229, 255, 0.55);
-  transition: width 0.1s linear;
+  will-change: width;
 }
 
-.karma-chakra-wordmark {
-  position: absolute;
-  top: calc(var(--st) + 62px);
-  left: 0;
-  right: 0;
-  text-align: center;
-  font: 400 10px/1 Georgia, serif;
-  letter-spacing: 0.42em;
+.karma-chakra-score-row {
+  position: relative;
+  z-index: 11;
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  padding: 0 14px 8px;
+  font: 600 10px/1 system-ui, sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: var(--gold-dim);
-  text-indent: 0.42em;
-  white-space: nowrap;
+  pointer-events: none;
 }
 
-.karma-chakra-streak {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: calc(var(--st) + 84px);
-  text-align: center;
-  font: 600 11px/1 system-ui, sans-serif;
-  letter-spacing: 0.18em;
+.karma-chakra-score-row b {
   color: var(--gold-hi);
-  opacity: 0;
-  transition: 0.2s;
+  font-size: 13px;
+  letter-spacing: 0.04em;
 }
 
-.karma-chakra-streak.on {
-  opacity: 1;
-  text-shadow: 0 0 18px rgba(255, 77, 166, 0.45), 0 0 12px rgba(0, 229, 255, 0.4);
+.karma-chakra-score-row span.hot b {
+  color: #ff4da6;
+  text-shadow: 0 0 14px rgba(255, 77, 166, 0.45);
+}
+
+.karma-chakra-hud {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
 }
 
 .karma-chakra-toast {
   position: absolute;
   left: 50%;
-  top: 38%;
-  transform: translate(-50%, -50%) scale(0.94);
+  top: calc(var(--st) + 118px);
+  transform: translate(-50%, 0) scale(0.96);
   max-width: min(calc(100vw - 2rem), 20rem);
-  font: 400 17px/1.3 Georgia, serif;
-  letter-spacing: 0.14em;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(56, 189, 248, 0.22);
+  background: rgba(9, 11, 30, 0.82);
+  backdrop-filter: blur(10px);
+  font: 600 12px/1.35 system-ui, sans-serif;
+  letter-spacing: 0.08em;
   color: var(--gold-hi);
   text-align: center;
   opacity: 0;
-  transition: 0.22s;
+  transition: opacity 0.2s ease, transform 0.2s ease;
   white-space: normal;
   text-wrap: balance;
 }
 
 .karma-chakra-toast.on {
   opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
+  transform: translate(-50%, 0) scale(1);
 }
 
 .karma-chakra-toast.bad {
   color: var(--rust);
+  border-color: rgba(255, 99, 99, 0.35);
 }
 
 .karma-chakra-coach {
   position: absolute;
   left: 50%;
-  bottom: calc(var(--sb) + 14px);
+  bottom: calc(var(--sb) + 16px);
   transform: translateX(-50%);
   max-width: calc(100vw - 2rem);
-  font: 500 10px/1.35 system-ui, sans-serif;
-  letter-spacing: 0.16em;
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(56, 189, 248, 0.16);
+  background: rgba(9, 11, 30, 0.72);
+  backdrop-filter: blur(8px);
+  font: 500 11px/1.45 system-ui, sans-serif;
+  letter-spacing: 0.04em;
   color: var(--gold-dim);
   white-space: normal;
   text-align: center;
   text-wrap: balance;
-  transition: 0.5s;
+  opacity: 0.72;
+  transition: opacity 0.35s ease, border-color 0.35s ease;
+}
+
+.karma-chakra-coach.prominent {
+  opacity: 1;
+  border-color: rgba(0, 229, 255, 0.28);
+  color: var(--gold);
 }
 
 .karma-chakra-sheet {
@@ -419,6 +430,16 @@
   animation: none;
 }
 
+.karma-chakra-cta--ghost {
+  margin-top: 18px;
+  border-color: var(--hair);
+  color: var(--gold);
+  box-shadow: none;
+  animation: none;
+  letter-spacing: 0.12em;
+  text-indent: 0;
+}
+
 @keyframes karma-cta-pulse {
   0%,
   100% {
@@ -434,7 +455,7 @@
   }
 }
 
-.karma-chakra-root.is-playing .karma-chakra-coach {
+.karma-chakra-root.is-playing .karma-chakra-coach.prominent {
   animation: coach-breathe 2.4s ease-in-out infinite;
 }
 
@@ -466,10 +487,7 @@
 }
 
 .karma-chakra-back {
-  position: absolute;
-  top: calc(var(--st) + 10px);
-  left: 14px;
-  z-index: 9;
+  position: static;
 }
 
 .karma-chakra-stats {
@@ -507,62 +525,24 @@
   color: var(--text-subtle);
 }
 
-.karma-chakra-mastery {
-  width: 100%;
-  max-width: 360px;
-  margin-top: 18px;
-  text-align: left;
+.karma-chakra-score {
+  font-size: clamp(2.75rem, 14vw, 56px);
+  margin: 16px 0 8px;
 }
 
-.karma-chakra-mastery h3 {
-  font: 600 9px/1 system-ui, sans-serif;
-  letter-spacing: 0.22em;
-  color: var(--text-subtle);
-  margin: 0 0 10px;
-}
-
-.karma-chakra-mrow {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  padding: 7px 0;
-  border-bottom: 1px solid rgba(56, 189, 248, 0.12);
-}
-
-.karma-chakra-mrow canvas {
-  position: static;
-  width: 20px;
-  height: 20px;
-  flex: none;
-}
-
-.karma-chakra-mrow span {
-  flex: 1;
-  font: 400 13px/1 Georgia, serif;
-  color: var(--text-muted);
-}
-
-.karma-chakra-mrow em {
-  font: 600 10px/1 system-ui, sans-serif;
-  letter-spacing: 0.1em;
-  font-style: normal;
-  color: var(--text-subtle);
-}
-
-.karma-chakra-mrow em.hit {
-  color: var(--gold);
+.karma-chakra-stats--over {
+  margin: 28px 0 24px;
 }
 
 @media (max-width: 380px) {
-  .karma-chakra-wordmark {
-    font-size: 9px;
-    letter-spacing: 0.28em;
-    text-indent: 0.28em;
+  .karma-chakra-top {
+    gap: 6px;
+    padding-inline: 10px;
   }
 
-  .karma-chakra-bar {
-    gap: 6px;
-    padding: 0 10px;
+  .karma-chakra-score-row {
+    gap: 12px;
+    font-size: 9px;
   }
 
   .karma-chakra-logotype {
@@ -598,7 +578,7 @@
 
   .karma-chakra-cta,
   .karma-chakra-screen-glow,
-  .karma-chakra-root.is-playing .karma-chakra-coach {
+  .karma-chakra-root.is-playing .karma-chakra-coach.prominent {
     animation: none;
   }
 }

@@ -35,27 +35,16 @@ export function IntroSplash({ onComplete }: IntroSplashProps) {
   }
 
   return (
-    <div
-      role="button"
-      tabIndex={0}
-      onClick={skipIntro}
-      onKeyDown={(event) => {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          skipIntro();
-        }
-      }}
-      className="intro-splash cosmic-vignette relative flex min-h-[100dvh] w-full cursor-pointer flex-col overflow-hidden cosmic-bg outline-none"
-      aria-label="Skip intro and go to games"
-    >
-      <div className="pointer-events-none absolute left-1/2 top-[38%] z-0 -translate-x-1/2 -translate-y-1/2 opacity-70">
-        <ChakraMotif size={320} />
-      </div>
-
+    <div className="intro-splash cosmic-vignette relative flex min-h-[100dvh] w-full flex-col overflow-hidden cosmic-bg outline-none">
       <div className="safe-x safe-bottom relative z-10 flex min-h-[100dvh] flex-col px-4 pb-8">
         <div className="flex flex-1 flex-col items-center justify-center px-1 text-center">
-          <div className="intro-brand-mark animate-float touch-target" aria-hidden>
-            K
+          <div className="intro-brand-wrap">
+            <div className="intro-chakra-backdrop" aria-hidden>
+              <ChakraMotif size={118} />
+            </div>
+            <div className="intro-brand-mark animate-float touch-target" aria-hidden>
+              K
+            </div>
           </div>
 
           <p className="intro-presents mb-3 mt-4 uppercase">{auspices} Presents</p>
@@ -72,7 +61,11 @@ export function IntroSplash({ onComplete }: IntroSplashProps) {
         <footer className="safe-bottom shrink-0">
           <SahebjiBanner variant="compact" />
 
-          <div className="mx-auto mt-5 w-full max-w-[15rem] sm:max-w-xs">
+          <button
+            type="button"
+            className="intro-skip mx-auto mt-5 block w-full max-w-[15rem] border-0 bg-transparent p-0 sm:max-w-xs"
+            onClick={skipIntro}
+          >
             <div className="progress-track h-1 overflow-hidden rounded-full">
               <div
                 className="progress-fill h-full rounded-full transition-[width] duration-75 ease-linear"
@@ -82,7 +75,7 @@ export function IntroSplash({ onComplete }: IntroSplashProps) {
             <p className="mt-2.5 text-center text-[8px] uppercase tracking-[0.22em] text-gold-dim sm:text-[9px]">
               Entering games · tap to skip
             </p>
-          </div>
+          </button>
         </footer>
       </div>
     </div>

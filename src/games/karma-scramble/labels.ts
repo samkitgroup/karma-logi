@@ -20,7 +20,6 @@ export const SCRAMBLE_LABELS: Record<
     accuracy: string;
     bestStreak: string;
     timeUp: string;
-    playAgain: string;
     back: string;
   }
 > = {
@@ -42,7 +41,6 @@ export const SCRAMBLE_LABELS: Record<
     accuracy: "ACCURACY",
     bestStreak: "BEST STREAK",
     timeUp: "TIME'S UP",
-    playAgain: "PLAY AGAIN",
     back: "← Back",
   },
   hi: {
@@ -63,7 +61,6 @@ export const SCRAMBLE_LABELS: Record<
     accuracy: "शुद्धता",
     bestStreak: "सर्वश्रेष्ठ स्ट्रीक",
     timeUp: "समय समाप्त",
-    playAgain: "फिर खेलें",
     back: "← वापस",
   },
   gu: {
@@ -84,7 +81,6 @@ export const SCRAMBLE_LABELS: Record<
     accuracy: "ચોકસાઈ",
     bestStreak: "શ્રેષ્ઠ સ્ટ્રીક",
     timeUp: "સમય પૂરો",
-    playAgain: "ફરી રમો",
     back: "← પાછા",
   },
 };

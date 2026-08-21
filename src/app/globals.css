@@ -88,13 +88,13 @@ body {
 
 .intro-brand-mark {
   position: relative;
+  z-index: 2;
   isolation: isolate;
   display: grid;
   place-items: center;
   width: 3.75rem;
   height: 3.75rem;
   margin-inline: auto;
-  margin-bottom: 1rem;
   border-radius: 1rem;
   background: linear-gradient(145deg, #7c3aed 0%, #00b4d8 45%, #00e5ff 100%);
   box-shadow:
@@ -104,6 +104,27 @@ body {
   font-size: 1.625rem;
   font-weight: 700;
   color: #041018;
+}
+
+.intro-brand-wrap {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 7.5rem;
+  height: 7.5rem;
+  margin-inline: auto;
+  margin-bottom: 1rem;
+}
+
+.intro-chakra-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: grid;
+  place-items: center;
+  opacity: 0.42;
+  pointer-events: none;
+  user-select: none;
 }
 
 .intro-brand-mark::before {
@@ -117,6 +138,7 @@ body {
 
 .intro-hero {
   position: relative;
+  z-index: 2;
   isolation: isolate;
   padding: 0.75rem 0 0.625rem;
 }
@@ -125,46 +147,51 @@ body {
   content: "";
   position: absolute;
   left: 50%;
-  top: 52%;
+  top: 50%;
   z-index: -1;
   width: min(88vw, 18rem);
-  height: 6.5rem;
+  height: 5rem;
   transform: translate(-50%, -50%);
   border-radius: 9999px;
   background: radial-gradient(
     ellipse at center,
-    rgba(0, 229, 255, 0.32) 0%,
-    rgba(168, 85, 247, 0.14) 38%,
+    rgba(0, 229, 255, 0.22) 0%,
+    rgba(168, 85, 247, 0.1) 38%,
     transparent 72%
   );
   animation: intro-halo 4.5s ease-in-out infinite;
+  pointer-events: none;
 }
 
 .intro-hero::after {
   content: "";
   position: absolute;
   left: 50%;
-  top: 52%;
+  top: 50%;
   z-index: -2;
   width: min(94vw, 22rem);
-  height: 8rem;
+  height: 6rem;
   transform: translate(-50%, -50%);
   border-radius: 9999px;
   background: radial-gradient(
     ellipse at center,
-    rgba(236, 72, 153, 0.12) 0%,
-    rgba(0, 240, 181, 0.08) 40%,
+    rgba(236, 72, 153, 0.08) 0%,
+    rgba(0, 240, 181, 0.05) 40%,
     transparent 68%
   );
+  pointer-events: none;
 }
 
 .intro-logotype {
+  position: relative;
+  z-index: 1;
   font-family: var(--font-display), Georgia, serif;
   font-size: clamp(1.75rem, 8vw, 3.25rem);
   font-weight: 700;
   line-height: 1;
   letter-spacing: 0.07em;
   white-space: nowrap;
+  user-select: text;
   background: linear-gradient(
     135deg,
     #f0feff 0%,
@@ -178,6 +205,12 @@ body {
   filter:
     drop-shadow(0 0 22px rgba(0, 229, 255, 0.6))
     drop-shadow(0 0 44px rgba(168, 85, 247, 0.35));
+}
+
+.intro-logotype::selection {
+  -webkit-text-fill-color: var(--gold-bright);
+  color: var(--gold-bright);
+  background: rgba(0, 229, 255, 0.28);
 }
 
 .intro-logotype-rule {
@@ -195,20 +228,36 @@ body {
 }
 
 .intro-subtitle {
+  position: relative;
+  z-index: 2;
   font-size: clamp(0.5625rem, 2.2vw, 0.6875rem);
   font-weight: 600;
   letter-spacing: 0.32em;
   text-indent: 0.32em;
   color: var(--gold-bright);
   text-shadow: 0 0 22px rgba(0, 229, 255, 0.45);
+  user-select: text;
 }
 
 .intro-presents {
+  position: relative;
+  z-index: 2;
   font-size: clamp(0.5rem, 2vw, 0.625rem);
   font-weight: 600;
   letter-spacing: 0.28em;
   text-indent: 0.28em;
   color: var(--gold-dim);
+  user-select: text;
+}
+
+.intro-skip {
+  cursor: pointer;
+}
+
+.intro-skip:focus-visible {
+  outline: 2px solid rgba(34, 211, 238, 0.55);
+  outline-offset: 4px;
+  border-radius: 9999px;
 }
 
 @keyframes intro-halo {
