@@ -3,7 +3,7 @@
     "id": "q01",
     "karmaId": "jnanavaraniya",
     "situation": {
-      "en": "A student forgets a scripture verse moments after hearing it, though they listened with full attention.",
+      "en": "A student listens to a shlok with full dhyaan, but forgets it within a few minutes.",
       "hi": "एक विद्यार्थी श्लोक सुनने के कुछ क्षण बाद ही भूल जाता है, यद्यपि उसने पूरा ध्यान दिया था।",
       "gu": "વિદ્યાર્થી શ્લોક સાંભળ્યા પછી થોડી જ વારમાં ભૂલી જાય છે, ભલે તેને પૂરું ધ્યાન આપ્યું હોય."
     }
@@ -12,7 +12,7 @@
     "id": "q02",
     "karmaId": "jnanavaraniya",
     "situation": {
-      "en": "During a heated argument, a clear moral insight disappears and the mind becomes confused.",
+      "en": "During a heated argument, clear thinking goes away and the mind gets fully confused.",
       "hi": "तर्क-वितर्क के दौरान स्पष्ट नैतिक बोध गायब हो जाता है और मन भ्रमित हो जाता है।",
       "gu": "ચર્ચા દરમિયાન સ્પષ્ટ નૈતિક સમજ ઓછી થઈ જાય છે અને મન ગૂંચવાઈ જાય છે."
     }
@@ -21,7 +21,7 @@
     "id": "q03",
     "karmaId": "jnanavaraniya",
     "situation": {
-      "en": "A person cannot grasp a simple truth about non-violence even after it is explained several times.",
+      "en": "Even after explaining ahimsa many times, the person still cannot grasp this simple truth.",
       "hi": "कई बार समझाने पर भी व्यक्ति अहिंसा के सरल सत्य को नहीं समझ पाता।",
       "gu": "અનેક વાર સમજાવ્યા પછી પણ વ્યક્તિ અહિંસાનું સરળ સત્ય સમજી શકતો નથી."
     }
@@ -30,7 +30,7 @@
     "id": "q04",
     "karmaId": "jnanavaraniya",
     "situation": {
-      "en": "Ordinary sensory knowledge fails: one cannot tell safe food from harmful food without mistake.",
+      "en": "Simple sense knowledge fails — one keeps mixing up safe food and harmful food.",
       "hi": "साधारण इंद्रिय ज्ञान विफल हो जाता है: सुरक्षित और हानिकारक भोजन में भूल होती है।",
       "gu": "સામાન્ય ઇન્દ્રિય જ્ઞાન નિષ્ફળ થાય છે: સુરક્ષિત અને હાનિકારક ભોજન વચ્ચે ભૂલ થાય છે."
     }
@@ -39,7 +39,7 @@
     "id": "q05",
     "karmaId": "darshanavaraniya",
     "situation": {
-      "en": "In deep sleep, the soul has no awareness of the outer world at all.",
+      "en": "In deep sleep, the soul has no awareness of the outside world at all.",
       "hi": "गहरी निद्रा में आत्मा को बाहरी संसार का कोई बोध नहीं रहता।",
       "gu": "ઊંડી નિદ્રામાં આત્માને બાહ્ય સંસારનો કોઈ બોધ રહતો નથી."
     }
@@ -48,7 +48,7 @@
     "id": "q06",
     "karmaId": "darshanavaraniya",
     "situation": {
-      "en": "Heavy drowsiness during meditation prevents any perception of inner clarity.",
+      "en": "Heavy neend during meditation stops any inner clarity from coming.",
       "hi": "ध्यान के दौरान भारी झपकी आंतरिक स्पष्टता के किसी भी दर्शन को रोकती है।",
       "gu": "ધ્યાન દરમિયાન ભારે ઝંખાવ આંતરિક સ્પષ્ટતાનું કોઈ દર્શન અટકાવે છે."
     }
@@ -57,7 +57,7 @@
     "id": "q07",
     "karmaId": "darshanavaraniya",
     "situation": {
-      "en": "A habit of wrong viewpoint blocks seeing the soul as distinct from the body.",
+      "en": "Wrong thinking (mithya darshan) stops one from seeing that soul and body are different.",
       "hi": "मिथ्या दृष्टि की आदत आत्मा को शरीर से अलग देखने से रोकती है।",
       "gu": "મિથ્યા દૃષ્ટિની આદત આત્માને શરીરથી અલગ જોવાથી રોકે છે."
     }
@@ -66,7 +66,7 @@
     "id": "q08",
     "karmaId": "darshanavaraniya",
     "situation": {
-      "en": "Perception through the eyes is veiled, so what is visible still cannot be truly seen.",
+      "en": "Even what the eyes see is not truly understood — like inner vision is covered.",
       "hi": "चक्षु दर्शन आवृत हो जाता है, इसलिए दृश्य वस्तु भी वास्तव में नहीं देखी जाती।",
       "gu": "ચક્ષુ દર્શન આવૃત થાય છે, તેથી દૃશ્ય પણ ખરેખર જોવાતું નથી."
     }
@@ -75,7 +75,7 @@
     "id": "q09",
     "karmaId": "mohaniya",
     "situation": {
-      "en": "When insulted in public, a person erupts in rage that lasts the whole day.",
+      "en": "When insulted in public, the person gets so angry (krodh) that it lasts the whole day.",
       "hi": "सार्वजनिक अपमान पर व्यक्ति पूरे दिन तक क्रोध से भड़क उठता है।",
       "gu": "જાહેર અપમાન પર વ્યક્તિ આખો દિવસ ક્રોધમાં બળે છે."
     }
@@ -84,7 +84,7 @@
     "id": "q10",
     "karmaId": "mohaniya",
     "situation": {
-      "en": "Someone firmly believes that harming others is acceptable if it brings profit.",
+      "en": "Someone firmly believes it is OK to hurt others if they get profit from it.",
       "hi": "कोई दृढ़ता से मानता है कि लाभ के लिए दूसरों को हानि पहुँचाना ठीक है।",
       "gu": "કોઈ ખરેખર માને છે કે લાભ માટે બીજાને હાનિ પહોંચાડવી યોગ્ય છે."
     }
@@ -93,7 +93,7 @@
     "id": "q11",
     "karmaId": "mohaniya",
     "situation": {
-      "en": "After losing a loved one, grief overwhelms all reason and spiritual practice stops.",
+      "en": "After losing a loved one, grief takes over fully and sadhana stops.",
       "hi": "प्रिय के वियोग के बाद शोक सारा विवेक ढक लेता है और साधना रुक जाती है।",
       "gu": "પ્રિયના વિયોગ પછી શોક બધું તર્ક ઢાંકી દે છે અને સાધના બંધ થાય છે."
     }
@@ -102,7 +102,7 @@
     "id": "q12",
     "karmaId": "mohaniya",
     "situation": {
-      "en": "Praise for success fills the person with pride, and they look down on others.",
+      "en": "Praise for success fills them with ahankar and they look down on others.",
       "hi": "सफलता की प्रशंसा से अहंकार भर जाता है और वे दूसरों को नीचा समझते हैं।",
       "gu": "સફળતાની પ્રશંસાથી અહંકાર ભરાય છે અને તેઓ બીજાને નીચા ગણે છે."
     }
@@ -111,7 +111,7 @@
     "id": "q13",
     "karmaId": "antaraya",
     "situation": {
-      "en": "Ready to give charity, the person suddenly feels an inner block and walks away.",
+      "en": "Ready to give daan, the person suddenly feels blocked inside and walks away.",
       "hi": "दान देने को तैयार व्यक्ति अचानक आंतरिक रुकावट महसूस कर लौट जाता है।",
       "gu": "દાન આપવા તૈયાર વ્યક્તિ અચાનક આંતરિક અવરોધ અનુભવી પાછો ફરે છે."
     }
@@ -120,7 +120,7 @@
     "id": "q14",
     "karmaId": "antaraya",
     "situation": {
-      "en": "Intending to study scriptures daily, constant distractions always win over the resolve.",
+      "en": "They decide to read scriptures daily, but every time distractions win over their resolve.",
       "hi": "प्रतिदिन शास्त्र पढ़ने का संकल्प होता है, पर बाधाएँ हमेशा जीत जाती हैं।",
       "gu": "રોજ શાસ્ત્ર વાંચવાનો નિશ્ચય હોય છે, પણ અવરોધો હંમેશા જીતી જાય છે."
     }
@@ -129,7 +129,7 @@
     "id": "q15",
     "karmaId": "antaraya",
     "situation": {
-      "en": "A vow to fast is abandoned when the smell of favorite food arises.",
+      "en": "An upvas vow is broken as soon as the smell of favourite food comes.",
       "hi": "उपवास का व्रत पसंदीदा भोजन की महक आते ही त्याग दिया जाता है।",
       "gu": "મનપસંદ ભોજનની સુગંધ આવતાં ઉપવાસનો નિશ્ચય છોડી દેવાય છે."
     }
@@ -138,7 +138,7 @@
     "id": "q16",
     "karmaId": "antaraya",
     "situation": {
-      "en": "Wanting to forgive an enemy, spite rises and the merciful act never happens.",
+      "en": "They want to forgive an enemy, but dwesh rises and the forgiving act never happens.",
       "hi": "शत्रु को क्षमा करना चाहते हैं, पर द्वेष उठता है और क्षमा नहीं हो पाती।",
       "gu": "શત્રુને માફ કરવા ઇચ્છે છે, પણ દ્વેષ ઊઠે છે અને ક્ષમા થતી નથી."
     }
@@ -147,7 +147,7 @@
     "id": "q17",
     "karmaId": "vedaniya",
     "situation": {
-      "en": "Sharp illness pain dominates every thought for hours.",
+      "en": "Sharp illness pain takes over every thought for hours.",
       "hi": "तीव्र रोग का दर्द घंटों तक हर विचार पर हावी रहता है।",
       "gu": "તીવ્ર રોગનો દુઃખ કલાકો સુધી દરેક વિચાર પર હાવી રહે છે."
     }
@@ -156,7 +156,7 @@
     "id": "q18",
     "karmaId": "vedaniya",
     "situation": {
-      "en": "Public applause brings a wave of intense pleasant feeling through the body.",
+      "en": "Public applause brings a wave of happy feeling through the whole body.",
       "hi": "सार्वजनिक प्रशंसा से शरीर में तीव्र सुखद अनुभूति की लहर उठती है।",
       "gu": "જાહેર પ્રશંસાથી શરીરમાં તીવ્ર સુખદ અનુભૂતિની લહેર ઊઠે છે."
     }
@@ -165,7 +165,7 @@
     "id": "q19",
     "karmaId": "vedaniya",
     "situation": {
-      "en": "Harsh words from a friend leave a sting of unpleasant feeling for days.",
+      "en": "Harsh words from a friend leave a painful, unhappy feeling for days.",
       "hi": "मित्र के कटु वचन दिनों तक असुखद अनुभूति का दर्द देते हैं।",
       "gu": "મિત્રના કઠોર શબ્દો દિવસો સુધી અસુખદ અનુભૂતિનો દુઃખ આપે છે."
     }
@@ -174,7 +174,7 @@
     "id": "q20",
     "karmaId": "vedaniya",
     "situation": {
-      "en": "Comfortable warmth on a cold day feels deeply satisfying to the senses.",
+      "en": "Warm comfort on a cold day feels deeply satisfying to the senses.",
       "hi": "ठंडे दिन में आरामदायक गर्माहट इंद्रियों को गहरा सुख देती है।",
       "gu": "ઠંડા દિવસે આરામદાયક ગરમાહટ ઇન્દ્રિયોને ઊંડું સુખ આપે છે."
     }
@@ -183,7 +183,7 @@
     "id": "q21",
     "karmaId": "nama",
     "situation": {
-      "en": "At birth the being receives a tall stature and well-proportioned limbs.",
+      "en": "At birth, the being gets a tall height and well-shaped body parts.",
       "hi": "जन्म पर प्राणी को लंबा कद और सुसंतुलित अंग प्राप्त होते हैं।",
       "gu": "જન્મે જીવને ઊંચો કદ અને સુસંતુલિત અંગો મળે છે."
     }
@@ -192,7 +192,7 @@
     "id": "q22",
     "karmaId": "nama",
     "situation": {
-      "en": "The soul takes birth with a female body and related bodily attributes.",
+      "en": "The soul takes birth in a female body with its related bodily qualities.",
       "hi": "आत्मा स्त्री शरीर और संबंधित शारीरिक गुणों के साथ जन्म लेती है।",
       "gu": "આત્મા સ્ત્રી શરીર અને સંબંધિત શારીરિક ગુણો સાથે જન્મ લે છે."
     }
@@ -201,7 +201,7 @@
     "id": "q23",
     "karmaId": "nama",
     "situation": {
-      "en": "One is born with a naturally harsh voice that others find unpleasant.",
+      "en": "Born with a harsh voice that others find unpleasant to hear.",
       "hi": "जन्म से ही कठोर स्वर होता है जिसे दूसरे अप्रिय पाते हैं।",
       "gu": "જન્મથી જ કઠોર સ્વર હોય છે જે બીજાને અપ્રિય લાગે છે."
     }
@@ -210,7 +210,7 @@
     "id": "q24",
     "karmaId": "nama",
     "situation": {
-      "en": "The body is born delicate and tires quickly with little exertion.",
+      "en": "The body is born nazuk (delicate) and gets tired quickly with little work.",
       "hi": "शरीर नाज़ुक जन्मा है और थोड़े परिश्रम से थक जाता है।",
       "gu": "શરીર નાજુક જન્મે છે અને થોડા પરિશ્રમથી થાકી જાય છે."
     }
@@ -219,7 +219,7 @@
     "id": "q25",
     "karmaId": "gotra",
     "situation": {
-      "en": "Born into a celebrated family widely honored for virtue and status.",
+      "en": "Born in a respected family famous for good values and high status.",
       "hi": "गुण और प्रतिष्ठा के लिए व्यापक सम्मानित कुल में जन्म।",
       "gu": "ગુણ અને પ્રતિષ્ઠા માટે વ્યાપક સન્માનિત કુટુંબમાં જન્મ."
     }
@@ -228,7 +228,7 @@
     "id": "q26",
     "karmaId": "gotra",
     "situation": {
-      "en": "Born into humble circumstances with little fame or worldly standing.",
+      "en": "Born in a simple, humble family with little fame or worldly standing.",
       "hi": "निम्न परिस्थितियों में जन्म, बहुत कम यश या लौकिक स्थिति के साथ।",
       "gu": "નમ્ર પરિસ્થિતિમાં જન્મ, ઓછું યશ અથવા સાંસારિક સ્થિતિ સાથે."
     }
@@ -237,7 +237,7 @@
     "id": "q27",
     "karmaId": "gotra",
     "situation": {
-      "en": "Family reputation opens every door; respect is given before any deed is known.",
+      "en": "Family naam opens every door — respect comes even before your deeds are known.",
       "hi": "कुल की प्रतिष्ठा हर द्वार खोलती है; कर्म जाने पहले ही सम्मान मिलता है।",
       "gu": "કુટુંબની પ્રતિષ્ઠા દરેક દ્વાર ખોલે છે; કર્મ જાણ્યા પહેલાં જ સન્માન મળે છે."
     }
@@ -246,7 +246,7 @@
     "id": "q28",
     "karmaId": "ayushya",
     "situation": {
-      "en": "In animal birth, lifespan is fixed short by the nature of that realm.",
+      "en": "In animal yoni, lifespan is fixed short by the nature of that birth.",
       "hi": "पशु योनि में आयु उस योनि की प्रकृति से संक्षिप्त निर्धारित होती है।",
       "gu": "પશુ યોનિમાં આયુષ્ય તે યોનિની પ્રકૃતિથી ટૂંકું નક્કી થાય છે."
     }
@@ -255,7 +255,7 @@
     "id": "q29",
     "karmaId": "ayushya",
     "situation": {
-      "en": "A human life span is determined at birth, neither endless nor random.",
+      "en": "Human lifespan is fixed at birth — not endless, not random.",
       "hi": "मानव जीवन की आयु जन्म पर निर्धारित होती है, न अनंत न यादृच्छिक।",
       "gu": "માનવ જીવનની આયુષ્ય જન્મે નક્કી થાય છે, ન તો અનંત ન તો રેન્ડમ."
     }
@@ -264,7 +264,7 @@
     "id": "q30",
     "karmaId": "ayushya",
     "situation": {
-      "en": "Celestial beings enjoy a long fixed lifespan suited to the deva realm.",
+      "en": "Deva beings enjoy a long fixed lifespan suited to the dev lok.",
       "hi": "देव योनि के प्राणी देव लोक के अनुकूल लंबी निश्चित आयु भोगते हैं।",
       "gu": "દેવ યોનિના જીવો દેવ લોક મુજબ લાંબી નિશ્ચિત આયુષ્ય ભોગે છે."
     }
