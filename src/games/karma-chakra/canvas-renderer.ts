@@ -1,4 +1,4 @@
-import { COLORS, KARMAS } from "./content";
+import { COLORS, KARMAS, LABELS, getKarmaDisplayName } from "./content";
 import type {
   GameState,
   Lang,
@@ -7,6 +7,8 @@ import type {
   Particle,
   Star,
 } from "./types";
+
+const HINT_MS = 5000;
 
 type GlyphFn = (ctx: CanvasRenderingContext2D) => void;
 
@@ -183,6 +185,29 @@ export function drawGlyph(
   ctx.globalAlpha = 1;
 }
 
+function bondHintFade(bond: GameState["bond"], now: number): number {
+  if (!bond) {
+    return 0;
+  }
+  return Math.max(0, 1 - (now - bond.spawnedAt) / HINT_MS);
+}
+
+function isBondHintActive(state: GameState, now: number): boolean {
+  return (
+    state.mode === "play" &&
+    !!state.bond &&
+    !state.drag &&
+    bondHintFade(state.bond, now) > 0
+  );
+}
+
+function karmaHintText(bond: NonNullable<GameState["bond"]>, lang: Lang): string {
+  const labels = LABELS[lang];
+  const karma = KARMAS[bond.k];
+  const category = karma.g ? labels.ghatiShort : labels.aghatiShort;
+  return `${category} · ${getKarmaDisplayName(bond.k, lang)}`;
+}
+
 function petalPath(
   ctx: CanvasRenderingContext2D,
   hw: number,
@@ -201,10 +226,11 @@ function fitFont(
   lines: string[],
   maxWidth: number,
   fontFamily: string,
+  minSize = 7.5,
 ) {
-  let fontSize = 12;
-  for (; fontSize >= 7.5; fontSize -= 0.5) {
-    ctx.font = `600 ${fontSize}px ${fontFamily}`;
+  let fontSize = 13;
+  for (; fontSize >= minSize; fontSize -= 0.5) {
+    ctx.font = `700 ${fontSize}px ${fontFamily}`;
     if (lines.every((line) => ctx.measureText(line).width <= maxWidth)) {
       break;
     }
@@ -241,14 +267,18 @@ export function renderFrame(
   }
 
   drawBackground(ctx, width, height, layout, state, stars, time);
+  if (state.mode === "play") {
+    drawNameLane(ctx, width, layout);
+  }
   drawMandala(ctx, layout, state, time, fontFamily);
-  drawPetals(ctx, layout, state, lang, fontFamily);
+  drawPetals(ctx, layout, state, lang, fontFamily, time);
   if (state.bond) {
+    drawHintGuide(ctx, layout, state, time);
     drawThread(ctx, layout, state);
   }
   drawJiva(ctx, layout, state, time, fontFamily);
   if (state.bond) {
-    drawBondWord(ctx, layout, state, deltaSec, fontFamily);
+    drawBondWord(ctx, layout, state, deltaSec, fontFamily, lang);
   }
   drawFx(ctx, particles, motes, deltaSec);
 }
@@ -302,6 +332,24 @@ function drawBackground(
   }
 }
 
+function drawNameLane(ctx: CanvasRenderingContext2D, width: number, layout: Layout) {
+  const laneTop = layout.top + 2;
+  const laneBottom = layout.top + 48;
+  ctx.save();
+  ctx.fillStyle = "rgba(0, 229, 255, 0.04)";
+  ctx.strokeStyle = "rgba(0, 229, 255, 0.1)";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  if (typeof ctx.roundRect === "function") {
+    ctx.roundRect(12, laneTop, width - 24, laneBottom - laneTop, 10);
+  } else {
+    ctx.rect(12, laneTop, width - 24, laneBottom - laneTop);
+  }
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+}
+
 function drawMandala(
   ctx: CanvasRenderingContext2D,
   layout: Layout,
@@ -344,12 +392,13 @@ function drawMandala(
   ctx.arc(0, 0, r * 1.45, Math.PI * 0.06, Math.PI * 0.94);
   ctx.stroke();
   ctx.globalAlpha = 0.75;
-  ctx.font = `600 8px ${fontFamily}`;
+  const labelSize = Math.max(8, layout.r * 0.048);
+  ctx.font = `700 ${labelSize}px ${fontFamily}`;
   ctx.textAlign = "center";
   ctx.fillStyle = COLORS.ghati;
-  ctx.fillText("GHĀTI", 0, -r * 1.45 - 7);
+  ctx.fillText("GHĀTI", 0, -r * 1.45 - 8);
   ctx.fillStyle = COLORS.aghati;
-  ctx.fillText("AGHĀTI", 0, r * 1.45 + 13);
+  ctx.fillText("AGHĀTI", 0, r * 1.45 + labelSize + 5);
   ctx.restore();
   ctx.globalAlpha = 1;
 }
@@ -360,8 +409,13 @@ function drawPetals(
   state: GameState,
   lang: Lang,
   fontFamily: string,
+  time: number,
 ) {
   const { pw, out, into } = layout;
+  const now = performance.now();
+  const hintFade = state.bond ? bondHintFade(state.bond, now) : 0;
+  const hintIndex =
+    isBondHintActive(state, now) && state.bond ? state.bond.k : -1;
 
   for (let i = 0; i < 8; i++) {
     const petal = petalPos(layout, i);
@@ -369,6 +423,7 @@ function drawPetals(
     const isTarget = state.target === i && state.feedbackWrong < 0;
     const isWrong = state.feedbackWrong === i;
     const isCorrect = state.feedbackCorrect === i;
+    const isHint = hintIndex === i;
     const accent = karma.g ? COLORS.ghati : COLORS.aghati;
 
     ctx.save();
@@ -391,28 +446,40 @@ function drawPetals(
       ctx.strokeStyle = COLORS.correct;
       ctx.lineWidth = 2.2;
     } else {
-      ctx.fillStyle = isTarget
+      ctx.fillStyle = isTarget || isHint
         ? COLORS.petalActive
         : karma.g
           ? COLORS.petalGhati
           : COLORS.petalAghati;
-      ctx.lineWidth = isTarget ? 1.6 : 1;
-      ctx.strokeStyle = isTarget ? COLORS.goldHi : accent;
+      ctx.lineWidth = isTarget || isHint ? 1.6 : 1;
+      ctx.strokeStyle = isTarget || isHint ? COLORS.goldHi : accent;
     }
 
     ctx.fill();
-    ctx.globalAlpha = isWrong || isCorrect || isTarget ? 1 : 0.62;
+    ctx.globalAlpha = isWrong || isCorrect || isTarget || isHint ? 1 : 0.78;
     ctx.stroke();
     ctx.globalAlpha = 1;
     ctx.restore();
 
+    if (isHint && !state.reduced) {
+      const pulse = 0.55 + 0.45 * Math.sin(time / 220);
+      ctx.save();
+      ctx.strokeStyle = accent;
+      ctx.lineWidth = 2.2;
+      ctx.globalAlpha = hintFade * 0.7 * pulse;
+      ctx.beginPath();
+      ctx.arc(petal.x, petal.y, pw * 1.05, 0, 7);
+      ctx.stroke();
+      ctx.restore();
+    }
+
     const lines = karma.n[lang];
-    const glyphY = petal.y - (lines.length > 1 ? pw * 0.52 : pw * 0.42);
+    const glyphY = petal.y - (lines.length > 1 ? pw * 0.5 : pw * 0.4);
     const glyphColor = isWrong
       ? COLORS.rust
       : isCorrect
         ? COLORS.correct
-        : isTarget
+        : isTarget || isHint
           ? COLORS.goldHi
           : accent;
     drawGlyph(
@@ -432,18 +499,47 @@ function drawPetals(
       ? COLORS.rust
       : isCorrect
         ? COLORS.correct
-        : isTarget
+        : isTarget || isHint
           ? COLORS.goldHi
           : COLORS.parch;
-    ctx.globalAlpha = isWrong || isCorrect || isTarget ? 1 : 0.88;
-    const fontSize = fitFont(ctx, lines, pw * 1.78, fontFamily);
-    const base = petal.y + (lines.length > 1 ? pw * 0.1 : pw * 0.2);
+    ctx.globalAlpha = isWrong || isCorrect || isTarget || isHint ? 1 : 0.92;
+    const fontSize = fitFont(ctx, lines, pw * 1.85, fontFamily, 7);
+    const base = petal.y + (lines.length > 1 ? pw * 0.08 : pw * 0.18);
     lines.forEach((line, index) => {
-      ctx.font = `600 ${fontSize}px ${fontFamily}`;
-      ctx.fillText(line, petal.x, base + index * (fontSize + 2));
+      ctx.font = `700 ${fontSize}px ${fontFamily}`;
+      ctx.fillText(line, petal.x, base + index * (fontSize + 1.5));
     });
     ctx.globalAlpha = 1;
   }
+}
+
+function drawHintGuide(
+  ctx: CanvasRenderingContext2D,
+  layout: Layout,
+  state: GameState,
+  time: number,
+) {
+  const bond = state.bond;
+  if (!bond || !isBondHintActive(state, time)) {
+    return;
+  }
+
+  const petal = petalPos(layout, bond.k);
+  const karma = KARMAS[bond.k];
+  const accent = karma.g ? COLORS.ghati : COLORS.aghati;
+  const fade = bondHintFade(bond, time);
+
+  ctx.save();
+  ctx.setLineDash([5, 7]);
+  ctx.strokeStyle = accent;
+  ctx.globalAlpha = fade * 0.42;
+  ctx.lineWidth = 1.6;
+  ctx.beginPath();
+  ctx.moveTo(bond.x, bond.y);
+  ctx.lineTo(petal.x, petal.y);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.restore();
 }
 
 function drawJiva(
@@ -522,8 +618,9 @@ function drawJiva(
   ctx.globalAlpha = 1;
   ctx.fillStyle = COLORS.mute;
   ctx.textAlign = "center";
-  ctx.font = `600 8px ${fontFamily}`;
-  ctx.fillText("JĪVA", cx, cy + radius + 16);
+  const jivaLabelSize = Math.max(9, layout.r * 0.052);
+  ctx.font = `700 ${jivaLabelSize}px ${fontFamily}`;
+  ctx.fillText("JĪVA", cx, cy + radius + jivaLabelSize + 6);
 }
 
 function drawThread(
@@ -566,6 +663,7 @@ function drawBondWord(
   state: GameState,
   deltaSec: number,
   fontFamily: string,
+  lang: Lang,
 ) {
   const bond = state.bond;
   if (!bond) {
@@ -587,26 +685,53 @@ function drawBondWord(
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   const fontSize = Math.min(
-    30,
-    Math.max(16, ((layout.cx * 2 * 0.62) / Math.max(7, bond.text.length)) * 1.5),
+    26,
+    Math.max(16, ((layout.cx * 2 * 0.58) / Math.max(7, bond.text.length)) * 1.5),
   );
-  ctx.font = `${fontSize}px ${fontFamily}`;
+  const hintSize = Math.max(11, fontSize * 0.52);
+  const hintText = karmaHintText(bond, lang);
+  const karma = KARMAS[bond.k];
+  const hintColor = karma.g ? COLORS.ghati : COLORS.aghati;
+
+  ctx.font = `700 ${fontSize}px ${fontFamily}`;
   const textWidth = ctx.measureText(bond.text).width;
-  const pad = 16;
-  const halfWidth = textWidth / 2 + pad;
-  const halfHeight = fontSize * 0.86;
+  ctx.font = `700 ${hintSize}px ${fontFamily}`;
+  const hintWidth = ctx.measureText(hintText).width;
+  const padX = 18;
+  const padY = 12;
+  const halfWidth = Math.max(textWidth, hintWidth) / 2 + padX;
+  const halfHeight = fontSize * 0.72 + hintSize * 0.72 + padY;
 
   ctx.beginPath();
   if (typeof ctx.roundRect === "function") {
-    ctx.roundRect(-halfWidth, -halfHeight, halfWidth * 2, halfHeight * 2, halfHeight);
+    ctx.roundRect(-halfWidth, -halfHeight, halfWidth * 2, halfHeight * 2, 14);
   } else {
     ctx.rect(-halfWidth, -halfHeight, halfWidth * 2, halfHeight * 2);
   }
   ctx.fillStyle = COLORS.panel;
   ctx.fill();
-  ctx.strokeStyle = state.drag ? COLORS.goldHi : COLORS.panelBorder;
-  ctx.lineWidth = state.drag ? 1.5 : 1;
+  ctx.strokeStyle = state.drag ? COLORS.goldHi : hintColor;
+  ctx.lineWidth = state.drag ? 2 : 1.4;
   ctx.stroke();
+
+  if (state.drag) {
+    ctx.save();
+    ctx.strokeStyle = COLORS.goldHi;
+    ctx.globalAlpha = 0.35;
+    ctx.lineWidth = 6;
+    ctx.beginPath();
+    if (typeof ctx.roundRect === "function") {
+      ctx.roundRect(
+        -halfWidth - 3,
+        -halfHeight - 3,
+        halfWidth * 2 + 6,
+        halfHeight * 2 + 6,
+        17,
+      );
+    }
+    ctx.stroke();
+    ctx.restore();
+  }
 
   if (bond.fx === "bars") {
     ctx.save();
@@ -623,7 +748,11 @@ function drawBondWord(
   }
 
   ctx.fillStyle = COLORS.parch;
-  ctx.fillText(bond.text, 0, 0);
+  ctx.font = `700 ${fontSize}px ${fontFamily}`;
+  ctx.fillText(bond.text, 0, -hintSize * 0.55);
+  ctx.fillStyle = hintColor;
+  ctx.font = `700 ${hintSize}px ${fontFamily}`;
+  ctx.fillText(hintText, 0, fontSize * 0.48);
   ctx.restore();
 }
 
@@ -714,28 +843,45 @@ export function stream(
   }
 }
 
-export function computeLayout(width: number, height: number): Layout {
-  const hudHeight = 118;
-  const radius = Math.min(width * 0.355, height * 0.22, 168);
-  const petalOut = radius * 0.34;
-  const petalIn = radius * 0.3;
-  const cy = Math.min(
-    height - (radius + petalOut + 32),
-    hudHeight + radius * 1.55,
+export function computeLayout(
+  width: number,
+  height: number,
+  hudHeight = 118,
+): Layout {
+  const bottomReserve = 68;
+  const nameLaneH = 46;
+  const sidePad = 14;
+  const wheelTop = hudHeight + nameLaneH + 6;
+  const wheelBottom = height - bottomReserve;
+  const wheelH = Math.max(120, wheelBottom - wheelTop);
+  const innerW = width - sidePad * 2;
+
+  // Mandala outer arc is r * 1.45 plus label padding
+  const r = Math.min(
+    innerW * 0.34,
+    wheelH / 3.08,
+    150,
   );
-  const layout: Layout = {
-    r: radius,
+  const petalOut = r * 0.36;
+  const petalIn = r * 0.32;
+  const halfExtent = r * 1.45 + 16;
+  const cy = Math.min(
+    wheelBottom - halfExtent - 4,
+    Math.max(wheelTop + halfExtent + 4, wheelTop + wheelH / 2),
+  );
+  const spawnY = hudHeight + nameLaneH / 2 + 4;
+
+  return {
+    r,
     cx: width / 2,
     cy,
-    pw: radius * 0.335,
+    pw: r * 0.34,
     out: petalOut,
     into: petalIn,
     top: hudHeight,
-    spawnY: Math.max(hudHeight + 36, cy - radius - petalOut - 72),
-    jiva: Math.max(22, radius * 0.19),
+    spawnY,
+    jiva: Math.max(22, r * 0.19),
   };
-  layout.spawnY = Math.min(layout.spawnY, cy - radius * 1.05);
-  return layout;
 }
 
 export function drawMasteryGlyph(

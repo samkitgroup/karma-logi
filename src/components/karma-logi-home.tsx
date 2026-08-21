@@ -183,55 +183,37 @@ export function KarmaLogiHome({ locationRequired = false }: KarmaLogiHomeProps) 
   return (
     <div className="cosmic-vignette relative min-h-[100dvh] overflow-x-hidden cosmic-bg flex flex-col">
       <main className="safe-x safe-bottom relative z-10 mx-auto w-full max-w-2xl px-4 pb-8 pt-5 sm:px-6 sm:pb-12 sm:pt-8 flex-1 flex flex-col justify-between gap-6">
-        <header className="shrink-0">
-          {/* Unified Player Profile & Score Card */}
-          <div className="game-card game-card-stripe-gold glass-panel relative mb-6 w-full overflow-hidden rounded-2xl p-4 text-left transition duration-300">
-            {/* Top Deck: Profile Greeting & Scorecard Button */}
-            <div className="flex items-center justify-between gap-3 pb-3.5 border-b border-white/5 relative z-10">
-              <div className="flex items-center gap-3">
-                <div className="flex h-8.5 w-8.5 items-center justify-center rounded-full bg-gold/15 border border-gold/30 text-[12px] font-bold text-gold uppercase shadow-[0_0_10px_rgba(0,229,255,0.15)]">
+        <header className="shrink-0 space-y-4">
+          <div className="home-profile glass-panel rounded-2xl p-4 sm:p-5">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex min-w-0 items-center gap-3">
+                <div className="home-avatar" aria-hidden>
                   {player.name.charAt(0)}
                 </div>
-                <div className="text-left">
-                  <p className="text-[9.5px] font-bold uppercase tracking-wider text-text-subtle leading-none">
-                    Player
-                  </p>
-                  <p className="text-sm sm:text-base font-extrabold text-foreground leading-tight mt-1">
+                <div className="min-w-0">
+                  <p className="truncate text-lg font-bold text-foreground sm:text-xl">
                     {player.name}
+                  </p>
+                  <p className="mt-1 text-sm text-text-subtle">
+                    Total{" "}
+                    <span className="font-semibold tabular-nums text-amber-400">
+                      {totalScore}
+                    </span>{" "}
+                    pts
                   </p>
                 </div>
               </div>
-
-              <Link
-                href="/scorecard"
-                className="rounded-xl bg-white/5 border border-white/10 px-3.5 py-1.5 text-[9.5px] font-bold uppercase tracking-[0.12em] text-gold-bright transition duration-200 hover:bg-gold/10 hover:border-gold/30 hover:shadow-[0_0_10px_rgba(0,229,255,0.12)] active:scale-[0.97]"
-              >
+              <Link href="/scorecard" className="home-scorecard-link">
                 Scorecard
               </Link>
             </div>
-
-            {/* Bottom Deck: Score Readout */}
-            <div className="flex items-center justify-between gap-4 pt-3.5 pl-1 relative z-10">
-              <div className="text-left">
-                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-text-subtle">
-                  Total Score
-                </p>
-                <p className="text-[9px] font-medium uppercase tracking-[0.1em] text-gold-dim mt-0.5">
-                  Cumulative Performance
-                </p>
-              </div>
-              <div className="flex items-baseline gap-1">
-                <span className="text-3xl font-black tracking-wider text-gold-bright drop-shadow-[0_0_12px_rgba(255,184,0,0.35)]">
-                  {totalScore}
-                </span>
-                <span className="text-xs font-bold uppercase text-gold/60">pts</span>
-              </div>
-            </div>
           </div>
+
+          <LanguageSelector value={lang} onChange={setLang} />
         </header>
 
         {notice ? (
-          <p className="mb-4 rounded-xl border border-gold/20 bg-gold/10 px-4 py-3 text-center text-sm text-gold-bright shrink-0">
+          <p className="rounded-xl border border-gold/20 bg-gold/10 px-4 py-3 text-center text-sm text-gold-bright shrink-0">
             {notice}
           </p>
         ) : locationRequired ? (
@@ -240,18 +222,11 @@ export function KarmaLogiHome({ locationRequired = false }: KarmaLogiHomeProps) 
           </p>
         ) : null}
 
-        {/* Center Games List Container */}
-        <div className="flex-1 flex flex-col justify-center py-2 sm:py-4 gap-5">
-          {/* Centered Language Selector grouped with games */}
-          <div className="flex justify-center shrink-0">
-            <LanguageSelector
-              value={lang}
-              onChange={setLang}
-              className="mx-auto"
-            />
-          </div>
-
-          <ul className="flex flex-col gap-5 sm:gap-6 w-full">
+        <div className="flex-1 flex flex-col gap-4 py-1 sm:py-2">
+          <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-text-subtle px-1">
+            Choose a game
+          </p>
+          <ul className="flex flex-col gap-3 sm:gap-4 w-full">
             {karmaGames.map((game) => (
               <li key={game.id}>
                 <GameCard
@@ -268,8 +243,7 @@ export function KarmaLogiHome({ locationRequired = false }: KarmaLogiHomeProps) 
           </ul>
         </div>
 
-        {/* Bottom Site Footer */}
-        <div className="mt-auto pt-6 border-t border-white/5 shrink-0">
+        <div className="mt-auto pt-4 border-t border-white/5 shrink-0">
           <SiteFooter />
         </div>
       </main>

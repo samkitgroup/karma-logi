@@ -24,6 +24,7 @@ export type Bond = {
   t: number;
   speed: number;
   y0toC: number;
+  spawnedAt: number;
   ret?: boolean;
   warned?: number;
 };

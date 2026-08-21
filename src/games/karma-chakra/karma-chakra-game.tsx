@@ -14,17 +14,16 @@ import {
 } from "./canvas-renderer";
 import {
   COLORS,
-  CHAKRA_CONTENT,
   findPrakritiById,
   GAME_SUBTITLE,
   GAME_TITLE,
-  CHAKRA_COACH,
+  LABELS,
   pickRandomPrakriti,
   getKarmaDisplayName,
 } from "./content";
+import { GameInstructionsCard } from "@/components/game-instructions-card";
 import "./karma-chakra.css";
 import { GAME_DURATION_MS, formatGameTime } from "@/lib/game-config";
-import { GAME_UI } from "@/lib/game-ui-labels";
 import type { Lang } from "@/lib/language";
 import type {
   GameMode,
@@ -75,6 +74,8 @@ export function KarmaChakraGame({
   onComplete?: (score: number) => void;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const chromeRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
   const fontFamilyRef = useRef("Georgia, serif");
   const timerTextRef = useRef<HTMLSpanElement>(null);
@@ -86,12 +87,12 @@ export function KarmaChakraGame({
       langProp,
     ),
   );
-  const layoutRef = useRef(computeLayout(390, 844));
+  const layoutRef = useRef(computeLayout(390, 844, 118));
+  const chromeHeightRef = useRef(118);
   const starsRef = useRef<Star[]>(createStars());
   const particlesRef = useRef<Particle[]>([]);
   const motesRef = useRef<Mote[]>([]);
   const toastTimerRef = useRef<number | null>(null);
-  const coachTimerRef = useRef<number | null>(null);
   const spawnTimerRef = useRef<number | null>(null);
   const frameRef = useRef<number | null>(null);
   const lastFrameRef = useRef(0);
@@ -103,7 +104,6 @@ export function KarmaChakraGame({
   const [streak, setStreak] = useState(0);
   const [hits, setHits] = useState(0);
   const [toast, setToast] = useState({ text: "", bad: false, visible: false });
-  const [coachVisible, setCoachVisible] = useState(true);
   const [muted, setMuted] = useState(false);
   const [result, setResult] = useState<ResultState>({
     verdict: "JOURNEY COMPLETE",
@@ -177,7 +177,7 @@ export function KarmaChakraGame({
       syncUi();
 
       setResult({
-        verdict: timeUp ? GAME_UI.timeUp : GAME_UI.roundComplete,
+        verdict: timeUp ? LABELS[state.lang].timeUp : LABELS[state.lang].roundComplete,
         score: state.score,
         correct: state.hits,
         accuracy: `${state.tries ? Math.round((state.hits / state.tries) * 100) : 0}%`,
@@ -206,7 +206,8 @@ export function KarmaChakraGame({
 
     const karmaIndex = (Math.random() * 8) | 0;
     const prakriti = pickRandomPrakriti(karmaIndex);
-    const speed = 46 + Math.min(state.round, 24) * 2.2;
+    const speed =
+      state.round < 3 ? 38 : 46 + Math.min(state.round, 24) * 2.2;
 
     state.bond = {
       text: prakriti.names[state.lang],
@@ -217,9 +218,10 @@ export function KarmaChakraGame({
       y: layout.spawnY,
       t: 0,
       speed,
+      spawnedAt: performance.now(),
       y0toC: Math.max(
         60,
-        Math.hypot(layout.cx - layout.cx, layout.spawnY - layout.cy) - layout.jiva,
+        layout.cy - layout.spawnY - layout.jiva,
       ),
     };
     state.round += 1;
@@ -301,12 +303,12 @@ export function KarmaChakraGame({
         state.hits += 1;
         state.streak += 1;
         state.best = Math.max(state.best, state.streak);
-        const fast = bond.y < layout.cy - layout.r * 0.75 ? 2 : 1;
+        const fast = bond.y < layout.cy - layout.r * 0.55 ? 2 : 1;
         const points = (100 + (state.streak - 1) * 25) * fast;
         state.score += points;
         stream(motesRef.current, bond.x, bond.y, petal.x, petal.y, 22);
         burst(particlesRef.current, petal.x, petal.y, COLORS.goldHi, 30);
-        showToast(`${GAME_UI.released} +${points}`);
+        showToast(`${LABELS[state.lang].released} +${points}`);
         playTone("good", state.muted);
         haptic([8, 40, 14], state.reduced);
         state.bond = null;
@@ -383,16 +385,22 @@ export function KarmaChakraGame({
     state.endsAt = Date.now() + GAME_DURATION_MS;
     updateTimerDisplay(GAME_DURATION_MS);
     syncUi();
-    setCoachVisible(true);
-    if (coachTimerRef.current) {
-      window.clearTimeout(coachTimerRef.current);
-    }
-    coachTimerRef.current = window.setTimeout(() => {
-      setCoachVisible(false);
-    }, 6000);
     spawn();
     playTone("tick", state.muted);
   }, [spawn, syncUi, updateTimerDisplay]);
+
+  const measureChrome = useCallback(() => {
+    const chrome = chromeRef.current;
+    const root = rootRef.current;
+    if (!chrome || !root) {
+      return chromeHeightRef.current;
+    }
+
+    const height = Math.ceil(chrome.getBoundingClientRect().height);
+    chromeHeightRef.current = height;
+    root.style.setProperty("--chrome-h", `${height}px`);
+    return height;
+  }, []);
 
   const resize = useCallback(() => {
     const canvas = canvasRef.current;
@@ -400,6 +408,7 @@ export function KarmaChakraGame({
       return;
     }
 
+    const hudHeight = measureChrome();
     const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
     const width = window.innerWidth;
     const height = window.innerHeight;
@@ -410,12 +419,30 @@ export function KarmaChakraGame({
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctxRef.current = context;
     }
-    layoutRef.current = computeLayout(width, height);
-  }, []);
+    layoutRef.current = computeLayout(width, height, hudHeight);
+  }, [measureChrome]);
+
+  useEffect(() => {
+    if (mode === "play") {
+      requestAnimationFrame(() => {
+        resize();
+      });
+    }
+  }, [mode, resize]);
 
   useEffect(() => {
     fontFamilyRef.current = getComputedStyle(document.body).fontFamily;
     resize();
+
+    const chrome = chromeRef.current;
+    const observer =
+      chrome && typeof ResizeObserver !== "undefined"
+        ? new ResizeObserver(() => {
+            resize();
+          })
+        : null;
+    observer?.observe(chrome!);
+
     window.addEventListener("resize", resize);
     window.addEventListener("orientationchange", () => {
       window.setTimeout(resize, 120);
@@ -439,7 +466,7 @@ export function KarmaChakraGame({
       const y = event.clientY;
       if (
         Math.hypot(x - state.bond.x, y - state.bond.y) <
-        Math.max(64, layout.pw * 1.1)
+        Math.max(72, layout.pw * 1.25)
       ) {
         state.drag = true;
         canvas.setPointerCapture(event.pointerId);
@@ -448,7 +475,7 @@ export function KarmaChakraGame({
         return;
       }
 
-      const index = nearestPetal(layout, x, y, layout.pw * 1.35);
+      const index = nearestPetal(layout, x, y, layout.pw * 1.5);
       if (index >= 0) {
         grade(index);
       }
@@ -512,10 +539,13 @@ export function KarmaChakraGame({
 
         if (!state.drag) {
           if (bond.ret) {
-            bond.x += (cx - bond.x) * 0.14 * dt;
-            bond.y += (bond.speed / 60) * dt;
-            if (Math.abs(bond.x - cx) < 1.5) {
-              bond.x = cx;
+            bond.x += (layout.cx - bond.x) * 0.14 * dt;
+            bond.y += (layout.spawnY - bond.y) * 0.14 * dt;
+            if (
+              Math.hypot(bond.x - layout.cx, bond.y - layout.spawnY) < 4
+            ) {
+              bond.x = layout.cx;
+              bond.y = layout.spawnY;
               bond.ret = false;
             }
           } else {
@@ -575,6 +605,7 @@ export function KarmaChakraGame({
     frameRef.current = window.requestAnimationFrame(loop);
 
     return () => {
+      observer?.disconnect();
       window.removeEventListener("resize", resize);
       canvas.removeEventListener("pointerdown", onPointerDown);
       canvas.removeEventListener("pointermove", onPointerMove);
@@ -589,9 +620,6 @@ export function KarmaChakraGame({
       if (toastTimerRef.current) {
         window.clearTimeout(toastTimerRef.current);
       }
-      if (coachTimerRef.current) {
-        window.clearTimeout(coachTimerRef.current);
-      }
     };
   }, [finish, grade, missed, resize, updateTimerDisplay]);
 
@@ -603,78 +631,83 @@ export function KarmaChakraGame({
     }
   };
 
-  const content = CHAKRA_CONTENT[lang];
+  const labels = LABELS[lang];
 
   return (
-    <div className={`karma-chakra-root ${mode === "play" ? "is-playing" : ""}`}>
-      <header className="karma-chakra-top">
-        <button type="button" className="karma-chakra-back" onClick={onExit}>
-          {GAME_UI.back}
-        </button>
-        <div className="karma-chakra-title">{GAME_TITLE}</div>
-        {mode === "play" ? (
-          <>
-            <div className="karma-chakra-pill karma-chakra-timer">
-              <b ref={timerTextRef}>{formatGameTime(GAME_DURATION_MS)}</b>
-            </div>
-            <button
-              type="button"
-              className="karma-chakra-pill"
-              onClick={toggleMuted}
-              aria-label="Toggle sound"
-            >
-              {muted ? "✕" : "♪"}
-            </button>
-          </>
-        ) : (
+    <div
+      ref={rootRef}
+      className={`karma-chakra-root ${mode === "play" ? "is-playing" : ""}`}
+    >
+      <div ref={chromeRef} className="karma-chakra-chrome">
+        <header
+          className={`karma-chakra-nav ${mode === "play" ? "karma-chakra-nav--play" : ""}`}
+        >
+          <button type="button" className="karma-chakra-back" onClick={onExit}>
+            {labels.back}
+          </button>
+          {mode !== "play" && (
+            <div className="karma-chakra-title">{GAME_TITLE}</div>
+          )}
           <button
             type="button"
-            className="karma-chakra-pill karma-chakra-mute"
+            className="karma-chakra-icon-btn"
             onClick={toggleMuted}
-            aria-label="Toggle sound"
+            aria-label={muted ? "Unmute sound" : "Mute sound"}
           >
             {muted ? "✕" : "♪"}
           </button>
-        )}
-      </header>
+        </header>
 
-      {mode === "play" && (
-        <>
-          <div className="karma-chakra-track" aria-hidden>
-            <i ref={timerBarRef} style={{ width: "100%" }} />
-          </div>
-          <div className="karma-chakra-score-row">
-            <span>
-              {GAME_UI.scoreLabel} <b>{score}</b>
-            </span>
-            <span className={streak >= 2 ? "hot" : undefined}>
-              {GAME_UI.streakLabel} <b>×{streak}</b>
-            </span>
-            <span>
-              {GAME_UI.correctLabel} <b>{hits}</b>
-            </span>
-          </div>
-        </>
-      )}
-
-      <canvas ref={canvasRef} className="karma-chakra-canvas" />
-
-      <div className="karma-chakra-hud">
-        <div
-          className={`karma-chakra-toast ${toast.visible ? "on" : ""} ${
-            toast.bad ? "bad" : ""
-          }`}
-        >
-          {toast.text}
-        </div>
         {mode === "play" && (
-          <div
-            className={`karma-chakra-coach ${coachVisible ? "prominent" : ""}`}
-          >
-            {CHAKRA_COACH}
+          <div className="karma-chakra-play-hud">
+            <div className="karma-chakra-timer-block">
+              <div className="karma-chakra-timer-head">
+                <span className="karma-chakra-timer-label">
+                  {labels.timeLeft}
+                </span>
+                <span className="karma-chakra-timer-value">
+                  <b ref={timerTextRef}>{formatGameTime(GAME_DURATION_MS)}</b>
+                </span>
+              </div>
+              <div className="karma-chakra-track" aria-hidden>
+                <i ref={timerBarRef} style={{ width: "100%" }} />
+              </div>
+            </div>
+
+            <div className="karma-chakra-stats-bar" aria-label="Game stats">
+              <div className="karma-chakra-stat karma-chakra-stat--score">
+                <s>{labels.score}</s>
+                <u>{score}</u>
+              </div>
+              <div className="karma-chakra-stat-sep" aria-hidden />
+              <div
+                className={`karma-chakra-stat karma-chakra-stat--streak ${streak >= 2 ? "hot" : ""}`}
+              >
+                <s>{labels.streak}</s>
+                <u>×{streak}</u>
+              </div>
+              <div className="karma-chakra-stat-sep" aria-hidden />
+              <div className="karma-chakra-stat karma-chakra-stat--correct">
+                <s>{labels.correct}</s>
+                <u>{hits}</u>
+              </div>
+            </div>
+
+            {toast.visible && (
+              <div
+                className={`karma-chakra-toast on ${toast.bad ? "bad" : ""}`}
+                role="status"
+                aria-live="polite"
+                aria-atomic="true"
+              >
+                {toast.text}
+              </div>
+            )}
           </div>
         )}
       </div>
+
+      <canvas ref={canvasRef} className="karma-chakra-canvas" />
 
       <div className={`karma-chakra-screen ${mode === "start" ? "" : "hide"}`}>
         <div className="karma-chakra-screen-glow" aria-hidden />
@@ -686,25 +719,16 @@ export function KarmaChakraGame({
           </p>
         </div>
 
-        {/* Grouped Instructions Card */}
-        <div className="mx-auto w-full max-w-sm rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-md shadow-[0_4px_24px_rgba(0,0,0,0.2)] mb-8">
-          <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-text-subtle border-b border-white/5 pb-2.5 mb-3.5 text-center">
-            {GAME_UI.howToPlay}
-          </p>
-          <ul className="space-y-3.5 pl-1 text-left">
-            {content.rules.split("·").map((rule, idx) => (
-              <li key={idx} className="flex items-start gap-3 text-[15.5px] font-bold text-foreground">
-                <span className="mt-[8px] h-1.5 w-1.5 shrink-0 rounded-full bg-gold-bright shadow-[0_0_8px_rgba(255,184,0,0.8)]" />
-                <span className="leading-normal">{rule.trim()}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <GameInstructionsCard
+          howToPlay={labels.howToPlay}
+          steps={labels.steps}
+          timerNote={labels.timerNote}
+        />
 
         {/* CTA Play Button */}
         <div className="flex justify-center">
           <button type="button" className="karma-chakra-cta" onClick={startGame}>
-            {GAME_UI.begin}
+            {labels.begin}
           </button>
         </div>
       </div>
@@ -712,23 +736,23 @@ export function KarmaChakraGame({
       <div className={`karma-chakra-screen ${mode === "over" ? "" : "hide"}`}>
         <div className="karma-chakra-sub">{result.verdict}</div>
         <h1 className="karma-chakra-logotype karma-chakra-score">{result.score}</h1>
-        <div className="karma-chakra-presents">{GAME_UI.totalScore}</div>
+        <div className="karma-chakra-presents">{labels.totalScore}</div>
         <div className="karma-chakra-stats karma-chakra-stats--over">
           <div className="karma-chakra-stat">
             <u>{result.correct}</u>
-            <s>{GAME_UI.correctLabel.toUpperCase()}</s>
+            <s>{labels.correct.toUpperCase()}</s>
           </div>
           <div className="karma-chakra-stat">
             <u>{result.accuracy}</u>
-            <s>{GAME_UI.accuracy}</s>
+            <s>{labels.accuracy.toUpperCase()}</s>
           </div>
           <div className="karma-chakra-stat">
             <u>{result.bestStreak}</u>
-            <s>{GAME_UI.bestStreak}</s>
+            <s>{labels.bestStreak.toUpperCase()}</s>
           </div>
         </div>
         <button type="button" className="karma-chakra-cta karma-chakra-cta--ghost" onClick={onExit}>
-          {GAME_UI.back}
+          {labels.back}
         </button>
       </div>
     </div>
