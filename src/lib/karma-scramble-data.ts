@@ -1,5 +1,6 @@
 import { KARMA_DATASET } from "@/lib/karma-chakra-data";
 import { buildScrambleDescription } from "@/lib/karma-scramble-descriptions";
+import { splitTextUnits } from "@/lib/text-units";
 import type { Lang } from "@/lib/language";
 
 export type ScrambleKind = "karma" | "prakriti";
@@ -15,14 +16,7 @@ export type ScrambleItem = {
 };
 
 function scrambleUnits(name: string, lang: Lang): string[] {
-  if (lang === "en") {
-    return name
-      .replace(/[^a-zA-Z]/g, "")
-      .toUpperCase()
-      .split("");
-  }
-
-  return [...name.replace(/[\s\-–—]/g, "")].filter(Boolean);
+  return splitTextUnits(name, lang);
 }
 
 function difficultyFor(name: string, lang: Lang): number {

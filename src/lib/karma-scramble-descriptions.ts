@@ -4,42 +4,42 @@ export type LocalizedText = Record<Lang, string>;
 
 const KARMA_DESCRIPTIONS: Record<string, LocalizedText> = {
   "jnanavaraniya": {
-    "en": "Ghāti karma that obscures knowledge (jñāna) of the soul.",
+    "en": "Ghati karma — covers gyan (knowledge) of the soul.",
     "hi": "घाती कर्म जो आत्मा के ज्ञान को आवृत करता है।",
     "gu": "ઘાતી કર્મ જે આત્માના જ્ઞાનને આવૃત કરે છે."
   },
   "darshanavaraniya": {
-    "en": "Ghāti karma that obscures perception (darśana) of reality.",
+    "en": "Ghati karma — covers darshan (seeing truth) of the soul.",
     "hi": "घाती कर्म जो वास्तविकता के दर्शन को आवृत करता है।",
     "gu": "ઘાતી કર્મ જે વાસ્તવિકતાના દર્શનને આવૃત કરે છે."
   },
   "mohaniya": {
-    "en": "Ghāti karma that deludes the soul through passions and wrong belief.",
+    "en": "Ghati karma — deludes the soul through kashaya and mithyatva.",
     "hi": "घाती कर्म जो कषाय और मिथ्यात्व से आत्मा को मोहित करता है।",
     "gu": "ઘાતી કર્મ જે કષાય અને મિથ્યાત્વથી આત્માને મોહિત કરે છે."
   },
   "antaraya": {
-    "en": "Ghāti karma that obstructs meritorious spiritual effort.",
+    "en": "Ghati karma — creates antaraya in punya sadhana and good deeds.",
     "hi": "घाती कर्म जो पुण्य की आध्यात्मिक साधना में अन्तराय करता है।",
     "gu": "ઘાતી કર્મ જે પુણ્યની આધ્યાત્મિક સાધનામાં અંતરાય કરે છે."
   },
   "vedaniya": {
-    "en": "Aghāti karma that determines pleasant or painful experience.",
+    "en": "Aghati karma — brings sata or asata feeling in the soul.",
     "hi": "अघाती कर्म जो साता या असाता अनुभव निर्धारित करता है।",
     "gu": "અઘાતી કર્મ જે સાતા અથવા અસાતા અનુભવ નક્કી કરે છે."
   },
   "ayushya": {
-    "en": "Aghāti karma that fixes the lifespan in a given realm.",
+    "en": "Aghati karma — fixes ayushya (lifespan) in a yoni.",
     "hi": "अघाती कर्म जो किसी योनि में आयु निर्धारित करता है।",
     "gu": "અઘાતી કર્મ જે કોઈ યોનિમાં આయુષ્ય નક્કી કરે છે."
   },
   "nama": {
-    "en": "Aghāti karma that shapes the body, senses, and worldly status.",
+    "en": "Aghati karma — shapes sharir, indriya, and worldly status.",
     "hi": "अघाती कर्म जो शरीर, इन्द्रिय और लौकिक स्थिति बनाता है।",
     "gu": "અઘાતી કર્મ જે શરીર, ઇન્દ્રિય અને સાંસારિક સ્થિતિ બનાવે છે."
   },
   "gotra": {
-    "en": "Aghāti karma that determines high or low worldly status.",
+    "en": "Aghati karma — fixes high or low gotra (worldly status).",
     "hi": "अघाती कर्म जो उच्च या नीच गोत्र (स्थिति) निर्धारित करता है।",
     "gu": "અઘાતી કર્મ જે ઉચ્ચ અથવા નીચ ગોત્ર (સ્થિતિ) નક્કી કરે છે."
   }
@@ -195,6 +195,67 @@ const PRAKRITI_DESCRIPTIONS_EN: Record<string, string> = {
   "virya_antaraya": "Obstructs spiritual vigor and effort."
 };
 
+function simplifyIndianEnglish(text: string): string {
+  const exact: Record<string, string> = {
+    "Obscures mati (ordinary sensory) knowledge.":
+      "Blocks mati gyan — simple everyday knowledge.",
+    "Obscures śruta (scriptural) knowledge.":
+      "Blocks shruta gyan — knowledge from scriptures.",
+    "Obscures avadhi (clairvoyant) knowledge.":
+      "Blocks avadhi gyan — far-seeing knowledge.",
+    "Obscures manahparyaya (mind-reading) knowledge.":
+      "Blocks manahparyaya gyan — knowing others' thoughts.",
+    "Obscures kevala (omniscient) knowledge.":
+      "Blocks keval gyan — full omniscient knowledge.",
+    "Obscures chakṣu (ocular) perception.":
+      "Blocks chakshu darshan — seeing through the eyes.",
+    "Obscures perception without eyes.":
+      "Blocks darshan without using the eyes.",
+    "Obscures avadhi (clairvoyant) perception.":
+      "Blocks avadhi darshan — far-seeing vision.",
+    "Obscures kevala (omniscient) perception.":
+      "Blocks keval darshan — full omniscient vision.",
+    "Light sleep that veils perception.":
+      "Light nidra — sleep that covers darshan a little.",
+    "Deep sleep that heavily veils perception.":
+      "Deep nidra — sleep that fully covers darshan.",
+    "Drowsiness that disturbs perception.":
+      "Prachala (drowsiness) — neend that disturbs darshan.",
+    "Heavy drowsiness that disturbs perception.":
+      "Heavy prachala — strong neend that disturbs darshan.",
+    "Causes pleasant (sāta) feeling.":
+      "Brings sata vedaniya — happy, pleasant feeling.",
+    "Causes unpleasant (asāta) feeling.":
+      "Brings asata vedaniya — painful, unhappy feeling.",
+    "Wrong belief (mithyātva) that deludes the soul.":
+      "Mithyatva — wrong belief that deludes the soul.",
+    "Intense anger bound for an entire life.":
+      "Anantanubandhi krodh — anger bound for full life.",
+    "Intense pride bound for an entire life.":
+      "Anantanubandhi man — pride bound for full life.",
+    "Obstructs giving and charity.":
+      "Creates antaraya in daan — blocks giving charity.",
+    "Obstructs gain of merit or wealth.":
+      "Creates antaraya in labh — blocks gaining punya or wealth.",
+  };
+
+  if (exact[text]) {
+    return exact[text];
+  }
+
+  return text
+    .replace(/^Obscures /, "Blocks ")
+    .replace(/^Determines /, "Fixes ")
+    .replace(/^Causes /, "Brings ")
+    .replace(/^Aggregates /, "Joins ")
+    .replace(/^Fixes /, "Fixes ")
+    .replace(/ that /g, " — ")
+    .replace(/obstructs /gi, "blocks ")
+    .replace(/deludes /gi, "mohit karta hai / deludes ")
+    .replace(/\(sāta\)/g, "sata")
+    .replace(/\(asāta\)/g, "asata");
+}
+
 function pickText(text: Partial<LocalizedText>, lang: Lang): string {
   return text[lang] ?? text.en ?? text.hi ?? text.gu ?? "";
 }
@@ -211,16 +272,19 @@ export function getPrakritiDescription(
 ): string {
   if (jsonDescription) {
     const fromJson = pickText(jsonDescription, lang);
-    if (fromJson) return fromJson;
+    if (fromJson) {
+      return lang === "en" ? simplifyIndianEnglish(fromJson) : fromJson;
+    }
   }
-  if (lang !== "en") {
-    const en = PRAKRITI_DESCRIPTIONS_EN[prakritiId];
-    if (en) return en;
+
+  if (lang === "en") {
+    const english =
+      PRAKRITI_DESCRIPTIONS_EN[prakritiId] ??
+      getKarmaDescription(karmaId, "en");
+    return simplifyIndianEnglish(english);
   }
-  return (
-    PRAKRITI_DESCRIPTIONS_EN[prakritiId] ??
-    getKarmaDescription(karmaId, lang)
-  );
+
+  return getKarmaDescription(karmaId, lang);
 }
 
 export function buildScrambleDescription(
