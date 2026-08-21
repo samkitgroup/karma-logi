@@ -22,8 +22,8 @@ export type PrakritiRecord = {
 
 /** Petal order: ghāti karmas (0–3), then aghāti (4–7). */
 export const KARMA_WHEEL_IDS = [
-  "jnanavaraniya",
-  "darshanavaraniya",
+  "gyanavarniya",
+  "darshnavarniya",
   "mohaniya",
   "antaraya",
   "vedaniya",
@@ -33,15 +33,15 @@ export const KARMA_WHEEL_IDS = [
 ] as const;
 
 const GHATI_IDS = new Set<string>([
-  "jnanavaraniya",
-  "darshanavaraniya",
+  "gyanavarniya",
+  "darshnavarniya",
   "mohaniya",
   "antaraya",
 ]);
 
 const GLYPH_BY_ID: Record<string, string> = {
-  jnanavaraniya: "veil",
-  darshanavaraniya: "gate",
+  gyanavarniya: "veil",
+  darshnavarniya: "gate",
   mohaniya: "cup",
   antaraya: "chest",
   vedaniya: "sword",
@@ -89,7 +89,7 @@ export function getDisplayLines(text: string, lang: Lang): string[] {
 
   if (lang === "en") {
     const lower = trimmed.toLowerCase();
-    for (const suffix of ["avaraniya", "varaniya"]) {
+    for (const suffix of ["avarniya", "varniya"]) {
       const index = lower.indexOf(suffix);
       if (index > 2) {
         return [trimmed.slice(0, index), trimmed.slice(index)];
@@ -99,6 +99,90 @@ export function getDisplayLines(text: string, lang: Lang): string[] {
 
   const mid = Math.ceil(trimmed.length / 2);
   return [trimmed.slice(0, mid), trimmed.slice(mid)];
+}
+
+/** Curated two-line labels for the octagonal ring (readable, consistent splits). */
+const KARMA_WHEEL_LINES: Record<string, Record<Lang, string[]>> = {
+  gyanavarniya: {
+    en: ["Gyana", "varniya"],
+    hi: ["ज्ञान", "ावरणीय"],
+    gu: ["જ્ઞાન", "ાવરણીય"],
+  },
+  darshnavarniya: {
+    en: ["Darshna", "varniya"],
+    hi: ["दर्शन", "ावरणीय"],
+    gu: ["દર્શન", "ાવરણીય"],
+  },
+  mohaniya: {
+    en: ["Mohaniya"],
+    hi: ["मोहनीय"],
+    gu: ["મોહનીય"],
+  },
+  antaraya: {
+    en: ["Antaraya"],
+    hi: ["अंतराय"],
+    gu: ["અંતરાય"],
+  },
+  vedaniya: {
+    en: ["Vedaniya"],
+    hi: ["वेदनीय"],
+    gu: ["વેદનીય"],
+  },
+  nama: {
+    en: ["Nama"],
+    hi: ["नाम"],
+    gu: ["નામ"],
+  },
+  gotra: {
+    en: ["Gotra"],
+    hi: ["गोत्र"],
+    gu: ["ગોત્ર"],
+  },
+  ayushya: {
+    en: ["Ayushya"],
+    hi: ["आयुष्य"],
+    gu: ["આયુષ્ય"],
+  },
+};
+
+/** Two-line labels for the chakra ring — never breaks mid-word in CSS. */
+export function getKarmaWheelLines(karmaIndex: number, lang: Lang): string[] {
+  const id = KARMA_WHEEL_IDS[karmaIndex];
+  const curated = KARMA_WHEEL_LINES[id]?.[lang];
+  if (curated) {
+    return curated;
+  }
+
+  const name = getKarmaDisplayName(karmaIndex, lang).trim();
+  const parts = name.split(/\s+/).filter(Boolean);
+
+  if (parts.length >= 2) {
+    if (parts.length === 2) {
+      return parts;
+    }
+    return [parts.slice(0, -1).join(" "), parts[parts.length - 1]!];
+  }
+
+  if (name.length <= 9) {
+    return [name];
+  }
+
+  if (lang === "en") {
+    const lower = name.toLowerCase();
+    for (const suffix of ["avarniya", "varniya", "aniya", "iya"]) {
+      const index = lower.lastIndexOf(suffix);
+      if (index > 2) {
+        return [name.slice(0, index), name.slice(index)];
+      }
+    }
+  }
+
+  if (lang !== "en" && name.length > 10) {
+    const mid = Math.ceil(name.length / 2);
+    return [name.slice(0, mid), name.slice(mid)];
+  }
+
+  return [name];
 }
 
 export type PrakritiItem = {
@@ -149,8 +233,8 @@ export function getKarmaDisplayName(karmaIndex: number, lang: Lang): string {
 }
 
 const KARMA_SHORT_NAMES: Record<string, Record<Lang, string>> = {
-  jnanavaraniya: { en: "Jnana", hi: "ज्ञान", gu: "જ્ઞાન" },
-  darshanavaraniya: { en: "Darshan", hi: "दर्शन", gu: "દર્શન" },
+  gyanavarniya: { en: "Jnana", hi: "ज्ञान", gu: "જ્ઞાન" },
+  darshnavarniya: { en: "Darshan", hi: "दर्शन", gu: "દર્શન" },
   mohaniya: { en: "Mohan", hi: "मोह", gu: "મોહ" },
   antaraya: { en: "Antar", hi: "अंतराय", gu: "અંતરાય" },
   vedaniya: { en: "Vedan", hi: "वेदन", gu: "વેદન" },

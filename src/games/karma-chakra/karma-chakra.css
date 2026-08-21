@@ -24,7 +24,8 @@
   z-index: 50;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   background:
     radial-gradient(ellipse 120% 80% at 50% -10%, rgba(0, 229, 255, 0.14), transparent 55%),
     radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.14), transparent 40%),
@@ -32,6 +33,25 @@
   color: var(--parch);
   touch-action: manipulation;
   user-select: none;
+}
+
+.karma-chakra-root.is-playing::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 20% 80%, rgba(0, 229, 255, 0.08), transparent 42%),
+    radial-gradient(circle at 85% 70%, rgba(168, 85, 247, 0.1), transparent 38%),
+    radial-gradient(circle at 50% 40%, rgba(0, 240, 181, 0.05), transparent 45%);
+  animation: karma-chakra-bg-drift 14s ease-in-out infinite alternate;
+}
+
+.karma-chakra-root.is-playing .karma-chakra-chrome,
+.karma-chakra-root.is-playing .karma-chakra-main {
+  position: relative;
+  z-index: 1;
 }
 
 .karma-chakra-chrome {
@@ -239,188 +259,576 @@
   width: 100%;
   padding: 0 8px calc(var(--sb) + 6px);
   gap: 8px;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .karma-chakra-play {
-  flex: 0 1 auto;
+  flex: 1 1 auto;
   width: 100%;
-  max-height: calc(100% - 52px);
   min-height: 0;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(8px, 2vw, 14px);
   border-radius: 18px;
   border: 1px solid rgba(0, 229, 255, 0.22);
-  background: linear-gradient(
-    180deg,
-    rgba(18, 22, 52, 0.95) 0%,
-    rgba(9, 11, 30, 0.92) 100%
-  );
+  background:
+    radial-gradient(circle at 50% 42%, rgba(168, 85, 247, 0.12) 0%, transparent 52%),
+    radial-gradient(circle at 50% 50%, rgba(0, 229, 255, 0.08) 0%, transparent 45%),
+    linear-gradient(
+      180deg,
+      rgba(18, 22, 52, 0.95) 0%,
+      rgba(9, 11, 30, 0.92) 100%
+    );
   box-shadow:
     0 0 0 1px rgba(0, 229, 255, 0.06) inset,
     0 16px 48px rgba(0, 0, 0, 0.4);
-  overflow: hidden;
+  overflow: visible;
+  animation: karma-chakra-panel-glow 5s ease-in-out infinite;
 }
 
 .karma-chakra-play.shake {
   animation: karma-chakra-shake 0.45s ease;
 }
 
-.karma-chakra-prompt {
-  flex-shrink: 0;
-  padding: clamp(12px, 3vw, 18px) clamp(14px, 3.5vw, 18px);
-  border-bottom: 1px solid rgba(0, 229, 255, 0.12);
-  background: rgba(0, 229, 255, 0.04);
-  text-align: center;
-}
-
-.karma-chakra-badge {
-  display: inline-block;
-  margin-bottom: 10px;
-  padding: 6px 12px;
-  border-radius: 999px;
-  background: rgba(0, 229, 255, 0.12);
-  border: 1px solid rgba(0, 229, 255, 0.28);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--gold-dim);
-}
-
-.karma-chakra-prakriti {
-  margin: 0;
-  font: 700 clamp(18px, 4.8vw, 24px) / 1.35 var(--font-body), system-ui, sans-serif;
-  color: var(--gold-hi);
-  text-wrap: balance;
-}
-
-.karma-chakra-options-wrap {
+.karma-chakra-wheel-area {
   flex: 1 1 auto;
-  min-height: 0;
+  width: 100%;
+  min-height: min(88vw, 400px);
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: clamp(10px, 2.5vw, 14px);
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  overflow: visible;
 }
 
-.karma-chakra-options-hint {
-  margin: 0;
-  flex-shrink: 0;
-  font: 700 11px/1 var(--font-body), system-ui, sans-serif;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  text-align: center;
-  color: var(--text-subtle);
-}
-
-.karma-chakra-options {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
-}
-
-.karma-chakra-option {
+.karma-chakra-wheel {
   position: relative;
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  min-height: 52px;
-  padding: 10px 28px 10px 10px;
-  border-radius: 12px;
-  border: 1.5px solid rgba(255, 255, 255, 0.12);
-  background: rgba(12, 14, 36, 0.78);
-  text-align: left;
+  width: min(100%, 400px);
+  aspect-ratio: 1;
+  height: auto;
+  margin: 0 auto;
+  flex-shrink: 0;
+  overflow: visible;
+  --orbit-r: 38.75;
+  filter: drop-shadow(0 8px 32px rgba(0, 0, 0, 0.45));
+  animation: karma-chakra-wheel-breathe 5.5s ease-in-out infinite;
+}
+
+.karma-chakra-mandala {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.karma-chakra-ambient {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 92%;
+  height: 92%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(0, 229, 255, 0.14) 0%, rgba(168, 85, 247, 0.08) 38%, transparent 68%);
+  opacity: 0.85;
+  animation: karma-chakra-breathe 4s ease-in-out infinite;
+}
+
+.karma-chakra-spokes {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 99%;
+  height: 99%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: repeating-conic-gradient(
+    from -90deg,
+    rgba(0, 229, 255, 0.18) 0deg 0.7deg,
+    transparent 0.7deg 45deg
+  );
+  mask: radial-gradient(circle, transparent 27%, black 28%, black 50%, transparent 51%);
+  opacity: 0.6;
+  animation: karma-chakra-spin 96s linear infinite reverse;
+}
+
+.karma-chakra-orbit {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(var(--orbit-r) * 2%);
+  height: calc(var(--orbit-r) * 2%);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px dashed rgba(0, 229, 255, 0.3);
+  box-shadow:
+    0 0 0 1px rgba(168, 85, 247, 0.1) inset,
+    0 0 28px rgba(0, 229, 255, 0.1);
+  animation: karma-chakra-spin 72s linear infinite;
+}
+
+.karma-chakra-orbit-dots {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(var(--orbit-r) * 2%);
+  height: calc(var(--orbit-r) * 2%);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba(0, 229, 255, 0.85) 0deg 2deg,
+    transparent 2deg 45deg
+  );
+  mask: radial-gradient(circle, transparent calc(100% - 3px), black calc(100% - 2px));
+  opacity: 0.45;
+  animation: karma-chakra-spin 36s linear infinite reverse;
+}
+
+.karma-chakra-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+
+.karma-chakra-ring--mid {
+  width: 56%;
+  height: 56%;
+  border: 1px solid rgba(168, 85, 247, 0.35);
+  box-shadow:
+    0 0 14px rgba(168, 85, 247, 0.18),
+    0 0 0 1px rgba(240, 254, 255, 0.05) inset;
+  opacity: 0.65;
+  animation: karma-chakra-spin 64s linear infinite reverse;
+}
+
+.karma-chakra-ring--outer {
+  width: 98%;
+  height: 98%;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(rgba(9, 11, 30, 0.2), rgba(9, 11, 30, 0.2)) padding-box,
+    conic-gradient(
+      from 0deg,
+      rgba(0, 229, 255, 0.35),
+      rgba(168, 85, 247, 0.28),
+      rgba(255, 77, 166, 0.22),
+      rgba(0, 240, 181, 0.28),
+      rgba(0, 229, 255, 0.35)
+    )
+    border-box;
+  opacity: 0.55;
+  animation: karma-chakra-spin 48s linear infinite;
+}
+
+.karma-chakra-wheel.is-hot .karma-chakra-ambient {
+  background:
+    radial-gradient(circle, rgba(255, 77, 166, 0.16) 0%, rgba(0, 229, 255, 0.12) 42%, transparent 68%);
+  animation-duration: 2.2s;
+}
+
+.karma-chakra-ring-segments {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.karma-chakra-ring-segments::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: repeating-conic-gradient(
+    from -90deg,
+    rgba(0, 229, 255, 0.45) 0deg 1deg,
+    transparent 1deg 45deg
+  );
+  mask: radial-gradient(circle, transparent 27.5%, black 28%, black 49.8%, transparent 50%);
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+.karma-chakra-ring-segments::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: repeating-conic-gradient(
+    from -67.5deg,
+    transparent 0deg 44.2deg,
+    rgba(0, 229, 255, 0.12) 44.2deg 45deg
+  );
+  mask: radial-gradient(circle, transparent 27.5%, black 28%, black 49.8%, transparent 50%);
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+.karma-chakra-hex-aura {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(0, 229, 255, 0.16) 0%, transparent 58%),
+    radial-gradient(circle at 50% 55%, rgba(168, 85, 247, 0.12) 0%, transparent 62%);
+  animation: karma-chakra-hex-breathe 4.5s ease-in-out infinite;
+}
+
+.karma-chakra-hex-sparkles {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.75;
+  background:
+    radial-gradient(1.5px 1.5px at 18% 12%, rgba(240, 254, 255, 0.95), transparent),
+    radial-gradient(1px 1px at 82% 18%, rgba(0, 229, 255, 0.85), transparent),
+    radial-gradient(1.5px 1.5px at 88% 72%, rgba(168, 85, 247, 0.9), transparent),
+    radial-gradient(1px 1px at 14% 78%, rgba(0, 240, 181, 0.8), transparent),
+    radial-gradient(1px 1px at 50% 6%, rgba(255, 77, 166, 0.7), transparent),
+    radial-gradient(1.5px 1.5px at 50% 94%, rgba(0, 229, 255, 0.75), transparent);
+  animation: karma-chakra-sparkle-twinkle 4s ease-in-out infinite;
+}
+
+@keyframes karma-chakra-wheel-breathe {
+  0%,
+  100% {
+    filter: drop-shadow(0 8px 32px rgba(0, 0, 0, 0.45));
+  }
+  50% {
+    filter: drop-shadow(0 10px 40px rgba(0, 229, 255, 0.14))
+      drop-shadow(0 8px 32px rgba(0, 0, 0, 0.45));
+  }
+}
+
+@keyframes karma-chakra-hex-breathe {
+  0%,
+  100% {
+    opacity: 0.65;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 1;
+    filter: brightness(1.12);
+  }
+}
+
+.karma-chakra-segment {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
   cursor: pointer;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0, 229, 255, 0.14) 0%,
+      rgba(12, 14, 36, 0.94) 100%
+    );
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 229, 255, 0.28),
+    inset 0 0 12px rgba(0, 0, 0, 0.25);
   transition:
-    transform 0.12s ease,
-    border-color 0.15s ease,
-    background 0.15s ease,
-    opacity 0.15s ease;
+    filter 0.2s ease,
+    opacity 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+  animation:
+    karma-chakra-segment-in 0.42s cubic-bezier(0.34, 1.2, 0.64, 1) both,
+    karma-chakra-segment-pulse 3.8s ease-in-out infinite;
+  animation-delay: calc(var(--seg-i) * 35ms), calc(var(--seg-i) * 220ms + 500ms);
 }
 
-.karma-chakra-option:active:not(:disabled) {
-  transform: scale(0.98);
+@keyframes karma-chakra-segment-pulse {
+  0%,
+  100% {
+    box-shadow: inset 0 0 0 1px rgba(0, 229, 255, 0.2);
+  }
+  50% {
+    box-shadow:
+      inset 0 0 0 1px rgba(0, 229, 255, 0.42),
+      0 0 14px rgba(0, 229, 255, 0.1);
+  }
 }
 
-.karma-chakra-option:focus-visible {
+.karma-chakra-ring-segments .karma-chakra-segment:nth-child(even) {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(168, 85, 247, 0.12) 0%,
+      rgba(10, 12, 32, 0.94) 100%
+    );
+}
+
+.karma-chakra-ring-labels {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.karma-chakra-segment-label {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  transition: opacity 0.2s ease;
+  animation:
+    karma-chakra-label-in 0.45s cubic-bezier(0.34, 1.2, 0.64, 1) both,
+    karma-chakra-label-float 3.6s ease-in-out infinite;
+  animation-delay: calc(var(--seg-i) * 40ms + 80ms), calc(var(--seg-i) * 180ms + 600ms);
+}
+
+.karma-chakra-label-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  max-width: min(76px, 20vw);
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+@keyframes karma-chakra-label-float {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) translateY(0);
+  }
+  50% {
+    transform: translate(-50%, -50%) translateY(-3px);
+  }
+}
+
+@keyframes karma-chakra-label-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.karma-chakra-segment-label.is-dimmed .karma-chakra-label-chip {
+  opacity: 0.45;
+}
+
+.karma-chakra-segment:hover:not(:disabled):not(.is-dimmed) {
+  filter: brightness(1.18);
+}
+
+.karma-chakra-segment:active:not(:disabled) {
+  filter: brightness(0.94);
+}
+
+.karma-chakra-segment:focus-visible {
   outline: 2px solid rgba(34, 211, 238, 0.55);
   outline-offset: 2px;
 }
 
-.karma-chakra-option.is-ghati {
-  border-color: rgba(255, 77, 166, 0.32);
-  background: rgba(255, 77, 166, 0.07);
+.karma-chakra-segment.is-dimmed,
+.karma-chakra-segment-label.is-dimmed {
+  opacity: 0.35;
 }
 
-.karma-chakra-option.is-aghati {
-  border-color: rgba(0, 240, 181, 0.28);
-  background: rgba(0, 240, 181, 0.06);
+.karma-chakra-segment.is-wrong {
+  background: rgba(255, 99, 99, 0.28) !important;
+  opacity: 1;
+  animation: karma-chakra-wrong-shake 0.45s ease;
+}
+
+.karma-chakra-segment.is-correct,
+.karma-chakra-segment.is-correct-reveal {
+  background: rgba(74, 222, 128, 0.24) !important;
+  opacity: 1;
+}
+
+.karma-chakra-segment.is-correct {
+  animation: karma-chakra-correct-pop 0.55s cubic-bezier(0.34, 1.5, 0.64, 1);
+}
+
+.karma-chakra-wheel.is-hot .karma-chakra-hex-aura {
+  background:
+    radial-gradient(circle at 50% 45%, rgba(255, 77, 166, 0.18) 0%, transparent 58%),
+    radial-gradient(circle at 50% 55%, rgba(0, 229, 255, 0.14) 0%, transparent 62%);
+  animation-duration: 2.2s;
+}
+
+.karma-chakra-wheel.is-hot {
+  animation: karma-chakra-wheel-hot 2.2s ease-in-out infinite;
+}
+
+@keyframes karma-chakra-wheel-hot {
+  0%,
+  100% {
+    filter: drop-shadow(0 8px 36px rgba(255, 77, 166, 0.22))
+      drop-shadow(0 0 24px rgba(0, 229, 255, 0.15));
+  }
+  50% {
+    filter: drop-shadow(0 12px 44px rgba(255, 77, 166, 0.35))
+      drop-shadow(0 0 32px rgba(0, 229, 255, 0.28));
+  }
+}
+
+.karma-chakra-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 5;
+  width: 52%;
+  height: 52%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px;
+  border-radius: 50%;
+  text-align: center;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 35% 28%, rgba(240, 254, 255, 0.22), transparent 52%),
+    radial-gradient(circle at 70% 75%, rgba(168, 85, 247, 0.12), transparent 45%),
+    radial-gradient(circle, rgba(14, 18, 48, 0.98) 0%, rgba(9, 11, 30, 0.94) 100%);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  box-shadow:
+    0 0 32px rgba(0, 229, 255, 0.18),
+    0 0 0 1px rgba(0, 229, 255, 0.35) inset,
+    0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+.karma-chakra-center::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  padding: 2px;
+  background: conic-gradient(
+    from 180deg,
+    rgba(0, 229, 255, 0.65),
+    rgba(168, 85, 247, 0.55),
+    rgba(255, 77, 166, 0.45),
+    rgba(0, 240, 181, 0.55),
+    rgba(0, 229, 255, 0.65)
+  );
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0.85;
+  animation: karma-chakra-center-ring-spin 20s linear infinite;
+  z-index: -1;
+}
+
+@keyframes karma-chakra-center-ring-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.karma-chakra-center-aura {
+  position: absolute;
+  inset: -18%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 229, 255, 0.2) 0%, transparent 68%);
+  animation: karma-chakra-aura-breathe 3s ease-in-out infinite;
+  z-index: -1;
+}
+
+.karma-chakra-center-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  text-shadow: 0 0 12px rgba(0, 229, 255, 0.35);
+}
+
+.karma-chakra-center-word {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font: 700 clamp(11px, 3vw, 16px) / 1.2 var(--font-body), system-ui, sans-serif;
+  color: var(--gold-hi);
+  text-wrap: balance;
+  word-break: keep-all;
+  text-shadow: 0 0 20px rgba(0, 229, 255, 0.25);
+  animation: karma-chakra-word-in 0.55s cubic-bezier(0.34, 1.35, 0.64, 1) both;
+}
+
+.karma-chakra-center-line {
+  display: block;
+  white-space: nowrap;
 }
 
 .karma-chakra-option-icon {
   flex-shrink: 0;
-  margin-top: 1px;
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45));
 }
 
-.karma-chakra-option-body {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+.karma-chakra-segment-label .karma-chakra-option-icon {
+  animation: karma-chakra-icon-bob 3s ease-in-out infinite;
+  animation-delay: calc(var(--seg-i) * 150ms);
 }
 
 .karma-chakra-option-name {
-  font: 700 clamp(12px, 3.4vw, 15px) / 1.3 var(--font-body), system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  width: 100%;
+  min-height: 0;
+}
+
+.karma-chakra-option-line {
+  display: block;
+  width: 100%;
+  font: 600 clamp(7.5px, 1.9vw, 9.5px) / 1.2 var(--font-body), system-ui, sans-serif;
   color: var(--parch);
-  text-wrap: pretty;
-  word-break: break-word;
+  white-space: nowrap;
+  text-shadow:
+    0 1px 4px rgba(0, 0, 0, 0.95),
+    0 0 10px rgba(0, 229, 255, 0.15);
 }
 
-.karma-chakra-option-kind {
-  font-size: 9px;
+.karma-chakra-option-line:first-child {
   font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.karma-chakra-option.is-ghati .karma-chakra-option-kind {
-  color: rgba(255, 77, 166, 0.9);
-}
-
-.karma-chakra-option.is-aghati .karma-chakra-option-kind {
-  color: rgba(0, 240, 181, 0.9);
-}
-
-.karma-chakra-option.is-dimmed {
-  opacity: 0.4;
-}
-
-.karma-chakra-option.is-wrong {
-  border-color: rgba(255, 99, 99, 0.65);
-  background: rgba(255, 99, 99, 0.14);
-  opacity: 1;
-}
-
-.karma-chakra-option.is-correct,
-.karma-chakra-option.is-correct-reveal {
-  border-color: rgba(74, 222, 128, 0.65);
-  background: rgba(74, 222, 128, 0.14);
-  opacity: 1;
+  color: var(--gold-hi);
 }
 
 .karma-chakra-option-mark {
   position: absolute;
-  top: 6px;
-  right: 6px;
-  font-size: 12px;
+  top: -4px;
+  right: -6px;
+  font-size: 11px;
   font-weight: 800;
+  z-index: 1;
+  pointer-events: none;
 }
 
 .karma-chakra-option-mark.is-wrong {
@@ -429,6 +837,166 @@
 
 .karma-chakra-option-mark.is-correct {
   color: var(--correct);
+}
+
+.karma-chakra-options-hint {
+  margin: 0;
+  flex-shrink: 0;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 229, 255, 0.15);
+  background: rgba(9, 11, 30, 0.55);
+  font: 700 10px/1 var(--font-body), system-ui, sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--gold-dim);
+  box-shadow: 0 0 16px rgba(0, 229, 255, 0.06);
+  animation: karma-chakra-hint-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes karma-chakra-spin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes karma-chakra-breathe {
+  0%,
+  100% {
+    opacity: 0.65;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.04);
+  }
+}
+
+@keyframes karma-chakra-aura-breathe {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes karma-chakra-segment-in {
+  from {
+    opacity: 0;
+    filter: brightness(0.7);
+  }
+  to {
+    opacity: 1;
+    filter: brightness(1);
+  }
+}
+
+@keyframes karma-chakra-icon-bob {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-2px) scale(1.08);
+  }
+}
+
+@keyframes karma-chakra-word-in {
+  from {
+    opacity: 0;
+    transform: scale(0.82) translateY(6px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes karma-chakra-correct-pop {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes karma-chakra-wrong-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-4px);
+  }
+  75% {
+    transform: translateX(4px);
+  }
+}
+
+@keyframes karma-chakra-bg-drift {
+  from {
+    opacity: 0.55;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0.9;
+    transform: scale(1.06) translateY(-2%);
+  }
+}
+
+@keyframes karma-chakra-panel-glow {
+  0%,
+  100% {
+    border-color: rgba(0, 229, 255, 0.22);
+    box-shadow:
+      0 0 0 1px rgba(0, 229, 255, 0.06) inset,
+      0 16px 48px rgba(0, 0, 0, 0.4);
+  }
+  50% {
+    border-color: rgba(168, 85, 247, 0.35);
+    box-shadow:
+      0 0 0 1px rgba(168, 85, 247, 0.1) inset,
+      0 16px 48px rgba(0, 0, 0, 0.4),
+      0 0 32px rgba(0, 229, 255, 0.08);
+  }
+}
+
+@keyframes karma-chakra-sparkle-twinkle {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: rotate(8deg) scale(1.02);
+  }
+}
+
+@keyframes karma-chakra-hint-pulse {
+  0%,
+  100% {
+    border-color: rgba(0, 229, 255, 0.15);
+    box-shadow: 0 0 16px rgba(0, 229, 255, 0.06);
+  }
+  50% {
+    border-color: rgba(0, 229, 255, 0.35);
+    box-shadow: 0 0 22px rgba(0, 229, 255, 0.14);
+  }
 }
 
 .karma-chakra-skip {
@@ -580,31 +1148,46 @@
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .karma-chakra-root.is-playing::before,
+  .karma-chakra-play,
+  .karma-chakra-orbit,
+  .karma-chakra-orbit-dots,
+  .karma-chakra-options-hint,
+  .karma-chakra-center-word,
+  .karma-chakra-option-icon,
+  .karma-chakra-wheel {
+    animation: none;
+  }
+
+  .karma-chakra-center::before,
+  .karma-chakra-ring--outer,
+  .karma-chakra-ring--mid,
+  .karma-chakra-spokes {
+    animation: none;
+  }
+
+  .karma-chakra-center-aura,
+  .karma-chakra-ambient,
+  .karma-chakra-hex-aura,
+  .karma-chakra-hex-sparkles,
+  .karma-chakra-segment,
+  .karma-chakra-segment-label {
+    animation: none;
+  }
+}
+
 @media (max-height: 720px) {
-  .karma-chakra-prompt {
-    padding: 10px 12px;
+  .karma-chakra-wheel-area {
+    min-height: min(82vw, 340px);
   }
 
-  .karma-chakra-badge {
-    margin-bottom: 6px;
+  .karma-chakra-wheel {
+    width: min(100%, 340px);
   }
 
-  .karma-chakra-prakriti {
-    font-size: clamp(16px, 4.5vw, 20px);
-  }
-
-  .karma-chakra-options {
-    gap: 6px;
-  }
-
-  .karma-chakra-option {
-    min-height: 46px;
-    padding: 8px 24px 8px 8px;
-  }
-
-  .karma-chakra-option-name {
-    font-size: clamp(11px, 3vw, 13px);
-    line-height: 1.25;
+  .karma-chakra-center-word {
+    font-size: clamp(12px, 3.2vw, 16px);
   }
 
   .karma-chakra-skip {

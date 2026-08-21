@@ -28,7 +28,7 @@ export const karmaGames: KarmaGame[] = [
     title: "Karma Chakra",
     description: "Place each Prakriti under the correct Karma.",
     example:
-      "Mati Jnanavaraniya → player selects Jnanavaraniya from the 8 Karma categories.",
+      "Mati Gyanavarniya → player selects Gyanavarniya from the 8 Karma categories.",
     status: "available",
     accent: "cyan",
   },

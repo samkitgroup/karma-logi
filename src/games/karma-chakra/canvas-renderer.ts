@@ -1,4 +1,4 @@
-import { COLORS, KARMAS, LABELS, getKarmaDisplayName } from "./content";
+import { COLORS, KARMAS, getKarmaDisplayName } from "./content";
 import type {
   GameState,
   Lang,
@@ -202,10 +202,7 @@ function isBondHintActive(state: GameState, now: number): boolean {
 }
 
 function karmaHintText(bond: NonNullable<GameState["bond"]>, lang: Lang): string {
-  const labels = LABELS[lang];
-  const karma = KARMAS[bond.k];
-  const category = karma.g ? labels.ghatiShort : labels.aghatiShort;
-  return `${category} · ${getKarmaDisplayName(bond.k, lang)}`;
+  return getKarmaDisplayName(bond.k, lang);
 }
 
 function petalPath(

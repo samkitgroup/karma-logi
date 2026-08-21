@@ -1,7 +1,7 @@
 [
   {
     "id": "q01",
-    "karmaId": "jnanavaraniya",
+    "karmaId": "gyanavarniya",
     "situation": {
       "en": "A student listens carefully to a verse, but forgets it within a few minutes.",
       "hi": "एक विद्यार्थी ध्यान से श्लोक सुनता है, पर कुछ ही मिनटों में भूल जाता है।",
@@ -10,7 +10,7 @@
   },
   {
     "id": "q02",
-    "karmaId": "jnanavaraniya",
+    "karmaId": "gyanavarniya",
     "situation": {
       "en": "During a heated argument, clear thinking fades and the mind becomes confused.",
       "hi": "तेज बहस के दौरान स्पष्ट सोच गायब हो जाती है और मन भ्रमित हो जाता है।",
@@ -19,7 +19,7 @@
   },
   {
     "id": "q03",
-    "karmaId": "jnanavaraniya",
+    "karmaId": "gyanavarniya",
     "situation": {
       "en": "Even after non-violence is explained many times, the person still cannot grasp this simple truth.",
       "hi": "अहिंसा कई बार समझाने पर भी व्यक्ति इस सरल सत्य को नहीं समझ पाता।",
@@ -28,7 +28,7 @@
   },
   {
     "id": "q04",
-    "karmaId": "jnanavaraniya",
+    "karmaId": "gyanavarniya",
     "situation": {
       "en": "Ordinary sensory knowledge fails — safe and harmful foods are often confused.",
       "hi": "साधारण इंद्रिय ज्ञान विफल हो जाता है — सुरक्षित और हानिकारक भोजन में भूल होती है।",
@@ -37,7 +37,7 @@
   },
   {
     "id": "q05",
-    "karmaId": "darshanavaraniya",
+    "karmaId": "darshnavarniya",
     "situation": {
       "en": "In deep sleep, the soul has no awareness of the outside world.",
       "hi": "गहरी नींद में आत्मा को बाहरी संसार का कोई बोध नहीं रहता।",
@@ -46,7 +46,7 @@
   },
   {
     "id": "q06",
-    "karmaId": "darshanavaraniya",
+    "karmaId": "darshnavarniya",
     "situation": {
       "en": "Heavy drowsiness during meditation blocks any inner clarity.",
       "hi": "ध्यान के दौरान भारी झपकी आंतरिक स्पष्टता को रोक देती है।",
@@ -55,7 +55,7 @@
   },
   {
     "id": "q07",
-    "karmaId": "darshanavaraniya",
+    "karmaId": "darshnavarniya",
     "situation": {
       "en": "Wrong belief stops one from seeing that the soul and body are different.",
       "hi": "मिथ्या दृष्टि की आदत आत्मा को शरीर से अलग देखने से रोकती है।",
@@ -64,7 +64,7 @@
   },
   {
     "id": "q08",
-    "karmaId": "darshanavaraniya",
+    "karmaId": "darshnavarniya",
     "situation": {
       "en": "Even what the eyes see is not truly understood — as if inner vision is veiled.",
       "hi": "आँखों से दिखाई देने वाली वस्तु भी वास्तव में नहीं समझी जाती — जैसे दर्शन ढका हो।",

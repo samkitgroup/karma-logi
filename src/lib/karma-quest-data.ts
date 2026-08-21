@@ -16,8 +16,8 @@ export type QuestQuestion = {
 };
 
 const GHATI_IDS = new Set<KarmaQuestId>([
-  "jnanavaraniya",
-  "darshanavaraniya",
+  "gyanavarniya",
+  "darshnavarniya",
   "mohaniya",
   "antaraya",
 ]);

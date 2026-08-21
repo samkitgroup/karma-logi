@@ -2,12 +2,12 @@ import fs from "node:fs";
 import data from "../data.json" with { type: "json" };
 
 const KARMA_DESCRIPTIONS = {
-  jnanavaraniya: {
+  gyanavarniya: {
     en: "Ghati karma — dhakhe che aatma nu gyan (knowledge).",
     hi: "घाती कर्म जो आत्मा के ज्ञान को आवृत करता है।",
     gu: "ઘાતી કર્મ જે આત્માના જ્ઞાનને આવૃત કરે છે.",
   },
-  darshanavaraniya: {
+  darshnavarniya: {
     en: "Ghati karma — dhakhe che sachu darshan (truth-seeing).",
     hi: "घाती कर्म जो वास्तविकता के दर्शन को आवृत करता है।",
     gu: "ઘાતી કર્મ જે વાસ્તવિકતાના દર્શનને આવૃત કરે છે.",
@@ -45,15 +45,15 @@ const KARMA_DESCRIPTIONS = {
 };
 
 const PRAKRITI_EN = {
-  mati_jnanavaraniya: "Mati gyan dhakay che — roj nu simple samaj.",
-  shruta_jnanavaraniya: "Shruta gyan dhakay che — shastra mathi malta gyan.",
-  avadhi_jnanavaraniya: "Avadhi gyan dhakay che — dur nu jovu gyan.",
-  manahparyaya_jnanavaraniya: "Manahparyaya gyan dhakay che — bija na vichar samaj.",
-  kevala_jnanavaraniya: "Keval gyan dhakay che — sampurn gyan.",
-  chakshu_darshanavaraniya: "Chakshu darshan dhakay che — aankh thi jovu.",
-  achakshu_darshanavaraniya: "Aankh vagar nu darshan dhakay che.",
-  avadhi_darshanavaraniya: "Avadhi darshan dhakay che — dur nu jovu.",
-  kevala_darshanavaraniya: "Keval darshan dhakay che — sampurn darshan.",
+  mati_gyanavarniya: "Mati gyan dhakay che — roj nu simple samaj.",
+  shruta_gyanavarniya: "Shruta gyan dhakay che — shastra mathi malta gyan.",
+  avadhi_gyanavarniya: "Avadhi gyan dhakay che — dur nu jovu gyan.",
+  manahparyaya_gyanavarniya: "Manahparyaya gyan dhakay che — bija na vichar samaj.",
+  kevala_gyanavarniya: "Keval gyan dhakay che — sampurn gyan.",
+  chakshu_darshnavarniya: "Chakshu darshan dhakay che — aankh thi jovu.",
+  achakshu_darshnavarniya: "Aankh vagar nu darshan dhakay che.",
+  avadhi_darshnavarniya: "Avadhi darshan dhakay che — dur nu jovu.",
+  kevala_darshnavarniya: "Keval darshan dhakay che — sampurn darshan.",
   nidra: "Nidra — thodi neend, darshan ochhu dhake che.",
   nidra_nidra: "Ghani nidra — ghani neend, darshan ochhu dhake che.",
   prachala: "Prachala — jhapat, darshan ma antaray kare che.",

@@ -1,71 +1,71 @@
 [
     {
-      "id": "jnanavaraniya",
+      "id": "gyanavarniya",
       "order": 1,
       "name": {
-        "en": "Jnanavaraniya",
+        "en": "Gyana varniya",
         "hi": "ज्ञानावरणीय",
         "gu": "જ્ઞાનાવરણીય"
       },
       "prakritiCount": 5,
       "prakritis": [
         {
-          "id": "mati_jnanavaraniya",
+          "id": "mati_gyanavarniya",
           "order": 1,
-          "name": { "en": "Mati Jnanavaraniya", "hi": "मति ज्ञानावरणीय", "gu": "મતિ જ્ઞાનાવરણીય" }
+          "name": { "en": "Mati Gyanavarniya", "hi": "मति ज्ञानावरणीय", "gu": "મતિ જ્ઞાનાવરણીય" }
         },
         {
-          "id": "shruta_jnanavaraniya",
+          "id": "shruta_gyanavarniya",
           "order": 2,
-          "name": { "en": "Shruta Jnanavaraniya", "hi": "श्रुत ज्ञानावरणीय", "gu": "શ્રુત જ્ઞાનાવરણીય" }
+          "name": { "en": "Shruta Gyanavarniya", "hi": "श्रुत ज्ञानावरणीय", "gu": "શ્રુત જ્ઞાનાવરણીય" }
         },
         {
-          "id": "avadhi_jnanavaraniya",
+          "id": "avadhi_gyanavarniya",
           "order": 3,
-          "name": { "en": "Avadhi Jnanavaraniya", "hi": "अवधि ज्ञानावरणीय", "gu": "અવધિ જ્ઞાનાવરણીય" }
+          "name": { "en": "Avadhi Gyanavarniya", "hi": "अवधि ज्ञानावरणीय", "gu": "અવધિ જ્ઞાનાવરણીય" }
         },
         {
-          "id": "manahparyaya_jnanavaraniya",
+          "id": "manahparyaya_gyanavarniya",
           "order": 4,
-          "name": { "en": "Manahparyaya Jnanavaraniya", "hi": "मनःपर्यय ज्ञानावरणीय", "gu": "મનઃપર્યય જ્ઞાનાવરણીય" }
+          "name": { "en": "Manahparyaya Gyanavarniya", "hi": "मनःपर्यय ज्ञानावरणीय", "gu": "મનઃપર્યય જ્ઞાનાવરણીય" }
         },
         {
-          "id": "kevala_jnanavaraniya",
+          "id": "kevala_gyanavarniya",
           "order": 5,
-          "name": { "en": "Kevala Jnanavaraniya", "hi": "केवल ज्ञानावरणीय", "gu": "કેવળ જ્ઞાનાવરણીય" }
+          "name": { "en": "Kevala Gyanavarniya", "hi": "केवल ज्ञानावरणीय", "gu": "કેવળ જ્ઞાનાવરણીય" }
         }
       ]
     },
   
     {
-      "id": "darshanavaraniya",
+      "id": "darshnavarniya",
       "order": 2,
       "name": {
-        "en": "Darshanavaraniya",
+        "en": "Darshna varniya",
         "hi": "दर्शनावरणीय",
         "gu": "દર્શનાવરણીય"
       },
       "prakritiCount": 9,
       "prakritis": [
         {
-          "id": "chakshu_darshanavaraniya",
+          "id": "chakshu_darshnavarniya",
           "order": 1,
-          "name": { "en": "Chakshu Darshanavaraniya", "hi": "चक्षु दर्शनावरणीय", "gu": "ચક્ષુ દર્શનાવરણીય" }
+          "name": { "en": "Chakshu Darshna varniya", "hi": "चक्षु दर्शनावरणीय", "gu": "ચક્ષુ દર્શનાવરણીય" }
         },
         {
-          "id": "achakshu_darshanavaraniya",
+          "id": "achakshu_darshnavarniya",
           "order": 2,
-          "name": { "en": "Achakshu Darshanavaraniya", "hi": "अचक्षु दर्शनावरणीय", "gu": "અચક્ષુ દર્શનાવરણીય" }
+          "name": { "en": "Achakshu Darshna varniya", "hi": "अचक्षु दर्शनावरणीय", "gu": "અચક્ષુ દર્શનાવરણીય" }
         },
         {
-          "id": "avadhi_darshanavaraniya",
+          "id": "avadhi_darshnavarniya",
           "order": 3,
-          "name": { "en": "Avadhi Darshanavaraniya", "hi": "अवधि दर्शनावरणीय", "gu": "અવધિ દર્શનાવરણીય" }
+          "name": { "en": "Avadhi Darshna varniya", "hi": "अवधि दर्शनावरणीय", "gu": "અવધિ દર્શનાવરણીય" }
         },
         {
-          "id": "kevala_darshanavaraniya",
+          "id": "kevala_darshnavarniya",
           "order": 4,
-          "name": { "en": "Kevala Darshanavaraniya", "hi": "केवल दर्शनावरणीय", "gu": "કેવળ દર્શનાવરણીય" }
+          "name": { "en": "Kevala Darshna varniya", "hi": "केवल दर्शनावरणीय", "gu": "કેવળ દર્શનાવરણીય" }
         },
         {
           "id": "nidra",
