@@ -4,257 +4,196 @@ export type LocalizedText = Record<Lang, string>;
 
 const KARMA_DESCRIPTIONS: Record<string, LocalizedText> = {
   "jnanavaraniya": {
-    "en": "Ghati karma — covers gyan (knowledge) of the soul.",
+    "en": "Ghati karma — dhakhe che aatma nu gyan (knowledge).",
     "hi": "घाती कर्म जो आत्मा के ज्ञान को आवृत करता है।",
     "gu": "ઘાતી કર્મ જે આત્માના જ્ઞાનને આવૃત કરે છે."
   },
   "darshanavaraniya": {
-    "en": "Ghati karma — covers darshan (seeing truth) of the soul.",
+    "en": "Ghati karma — dhakhe che sachu darshan (truth-seeing).",
     "hi": "घाती कर्म जो वास्तविकता के दर्शन को आवृत करता है।",
     "gu": "ઘાતી કર્મ જે વાસ્તવિકતાના દર્શનને આવૃત કરે છે."
   },
   "mohaniya": {
-    "en": "Ghati karma — deludes the soul through kashaya and mithyatva.",
+    "en": "Ghati karma — kashay thi aatma ne mohit kare che.",
     "hi": "घाती कर्म जो कषाय और मिथ्यात्व से आत्मा को मोहित करता है।",
     "gu": "ઘાતી કર્મ જે કષાય અને મિથ્યાત્વથી આત્માને મોહિત કરે છે."
   },
   "antaraya": {
-    "en": "Ghati karma — creates antaraya in punya sadhana and good deeds.",
+    "en": "Ghati karma — punya ane sadhana ma antaraya kare che.",
     "hi": "घाती कर्म जो पुण्य की आध्यात्मिक साधना में अन्तराय करता है।",
     "gu": "ઘાતી કર્મ જે પુણ્યની આધ્યાત્મિક સાધનામાં અંતરાય કરે છે."
   },
   "vedaniya": {
-    "en": "Aghati karma — brings sata or asata feeling in the soul.",
+    "en": "Aghati karma — sata ke asata vedaniya (feeling) aape che.",
     "hi": "अघाती कर्म जो साता या असाता अनुभव निर्धारित करता है।",
     "gu": "અઘાતી કર્મ જે સાતા અથવા અસાતા અનુભવ નક્કી કરે છે."
   },
   "ayushya": {
-    "en": "Aghati karma — fixes ayushya (lifespan) in a yoni.",
+    "en": "Aghati karma — yoni ma ayushya (lifespan) fix kare che.",
     "hi": "अघाती कर्म जो किसी योनि में आयु निर्धारित करता है।",
     "gu": "અઘાતી કર્મ જે કોઈ યોનિમાં આయુષ્ય નક્કી કરે છે."
   },
   "nama": {
-    "en": "Aghati karma — shapes sharir, indriya, and worldly status.",
+    "en": "Aghati karma — sharir, indriya ane sthiti banave che.",
     "hi": "अघाती कर्म जो शरीर, इन्द्रिय और लौकिक स्थिति बनाता है।",
     "gu": "અઘાતી કર્મ જે શરીર, ઇન્દ્રિય અને સાંસારિક સ્થિતિ બનાવે છે."
   },
   "gotra": {
-    "en": "Aghati karma — fixes high or low gotra (worldly status).",
+    "en": "Aghati karma — ucha ke nicha gotra (family status) fix kare che.",
     "hi": "अघाती कर्म जो उच्च या नीच गोत्र (स्थिति) निर्धारित करता है।",
     "gu": "અઘાતી કર્મ જે ઉચ્ચ અથવા નીચ ગોત્ર (સ્થિતિ) નક્કી કરે છે."
   }
 };
 
 const PRAKRITI_DESCRIPTIONS_EN: Record<string, string> = {
-  "mati_jnanavaraniya": "Obscures mati (ordinary sensory) knowledge.",
-  "shruta_jnanavaraniya": "Obscures śruta (scriptural) knowledge.",
-  "avadhi_jnanavaraniya": "Obscures avadhi (clairvoyant) knowledge.",
-  "manahparyaya_jnanavaraniya": "Obscures manahparyaya (mind-reading) knowledge.",
-  "kevala_jnanavaraniya": "Obscures kevala (omniscient) knowledge.",
-  "chakshu_darshanavaraniya": "Obscures chakṣu (ocular) perception.",
-  "achakshu_darshanavaraniya": "Obscures perception without eyes.",
-  "avadhi_darshanavaraniya": "Obscures avadhi (clairvoyant) perception.",
-  "kevala_darshanavaraniya": "Obscures kevala (omniscient) perception.",
-  "nidra": "Light sleep that veils perception.",
-  "nidra_nidra": "Deep sleep that heavily veils perception.",
-  "prachala": "Drowsiness that disturbs perception.",
-  "prachala_prachala": "Heavy drowsiness that disturbs perception.",
-  "sata_vedaniya": "Causes pleasant (sāta) feeling.",
-  "asata_vedaniya": "Causes unpleasant (asāta) feeling.",
-  "mithyatva_mohaniya": "Wrong belief (mithyātva) that deludes the soul.",
-  "samyaktva_mohaniya": "Right belief mixed with slight delusion.",
-  "mishra_mohaniya": "Mixed right and wrong belief.",
-  "anantanubandhi_krodha": "Intense anger bound for an entire life.",
-  "anantanubandhi_mana": "Intense pride bound for an entire life.",
-  "anantanubandhi_maya": "Intense deceit bound for an entire life.",
-  "anantanubandhi_lobha": "Intense greed bound for an entire life.",
-  "apratyakhyana_krodha": "Anger that resists renouncing harmful acts.",
-  "apratyakhyana_mana": "Pride that resists renouncing harmful acts.",
-  "apratyakhyana_maya": "Deceit that resists renouncing harmful acts.",
-  "apratyakhyana_lobha": "Greed that resists renouncing harmful acts.",
-  "pratyakhyana_krodha": "Anger that can still be renounced with effort.",
-  "pratyakhyana_mana": "Pride that can still be renounced with effort.",
-  "pratyakhyana_maya": "Deceit that can still be renounced with effort.",
-  "pratyakhyana_lobha": "Greed that can still be renounced with effort.",
-  "sanjvalana_krodha": "Flaring anger that is easier to overcome.",
-  "sanjvalana_mana": "Flaring pride that is easier to overcome.",
-  "sanjvalana_maya": "Flaring deceit that is easier to overcome.",
-  "sanjvalana_lobha": "Flaring greed that is easier to overcome.",
-  "hasya": "Laughter born of mohaniya passion.",
-  "rati": "Attachment and liking toward objects.",
-  "arati": "Dislike and aversion toward objects.",
-  "shoka": "Sorrow and grief that binds the soul.",
-  "bhaya": "Fear that agitates the soul.",
-  "jugupsa": "Disgust or repulsion toward objects.",
-  "stri_veda": "Sexual desire toward women.",
-  "purusha_veda": "Sexual desire toward men.",
-  "napumsaka_veda": "Sexual desire toward neutral gender.",
-  "naraka_ayushya": "Lifespan fixed in the naraka realm.",
-  "tiryanch_ayushya": "Lifespan fixed in the animal realm.",
-  "manushya_ayushya": "Lifespan fixed in the human realm.",
-  "deva_ayushya": "Lifespan fixed in the celestial realm.",
-  "naraka_gati": "Determines rebirth in the Naraka realm.",
-  "tiryanch_gati": "Determines rebirth in the Tiryanch realm.",
-  "manushya_gati": "Determines rebirth in the Manushya realm.",
-  "deva_gati": "Determines rebirth in the Deva realm.",
-  "ekendriya_jati": "Fixes the number of senses in ekendriya beings.",
-  "dvindriya_jati": "Fixes the number of senses in dvindriya beings.",
-  "trindriya_jati": "Fixes the number of senses in trindriya beings.",
-  "chaturindriya_jati": "Fixes the number of senses in chaturindriya beings.",
-  "panchendriya_jati": "Fixes the number of senses in panchendriya beings.",
-  "audarika_sharira": "Determines the Audarika body type.",
-  "vaikriya_sharira": "Determines the Vaikriya body type.",
-  "aharaka_sharira": "Determines the Aharaka body type.",
-  "taijasa_sharira": "Determines the Taijasa body type.",
-  "karmana_sharira": "Determines the Karmana body type.",
-  "audarika_angopanga": "Fixes limbs and body parts of the Audarika body.",
-  "vaikriya_angopanga": "Fixes limbs and body parts of the Vaikriya body.",
-  "aharaka_angopanga": "Fixes limbs and body parts of the Aharaka body.",
-  "nirmana": "Fixes the overall structure and formation of the body.",
-  "audarika_bandhana": "Binds particles into the Audarika body.",
-  "vaikriya_bandhana": "Binds particles into the Vaikriya body.",
-  "aharaka_bandhana": "Binds particles into the Aharaka body.",
-  "taijasa_bandhana": "Binds particles into the Taijasa body.",
-  "karmana_bandhana": "Binds particles into the Karmana body.",
-  "audarika_sanghata": "Aggregates particles in the Audarika body.",
-  "vaikriya_sanghata": "Aggregates particles in the Vaikriya body.",
-  "aharaka_sanghata": "Aggregates particles in the Aharaka body.",
-  "taijasa_sanghata": "Aggregates particles in the Taijasa body.",
-  "karmana_sanghata": "Aggregates particles in the Karmana body.",
-  "vajra_rishabha_naracha": "Bone-joint structure prakriti: Vajra Rishabha Naracha.",
-  "rishabha_naracha": "Bone-joint structure prakriti: Rishabha Naracha.",
-  "naracha": "Bone-joint structure prakriti: Naracha.",
-  "ardha_naracha": "Bone-joint structure prakriti: Ardha Naracha.",
-  "kilika": "Interlocking joint structure of the body.",
-  "sevarta": "Joint structure related to bodily movement.",
-  "samachaturasra": "Symmetrical square-like body proportions.",
-  "nyagrodha_parimandala": "Body broad at top like a banyan tree crown.",
-  "sadi": "Body tapering downward like a winnowing basket.",
-  "kubja": "Hunchbacked bodily formation.",
-  "vamana": "Dwarf-like short bodily formation.",
-  "hunda": "Pot-shaped bodily formation.",
-  "varna": "General bodily color prakriti.",
-  "gandha": "General bodily smell prakriti.",
-  "rasa": "General taste-related bodily prakriti.",
-  "sparsha": "General touch-related bodily prakriti.",
-  "naraka_anupurvi": "Sequential rebirth tendency toward the Naraka realm.",
-  "tiryanch_anupurvi": "Sequential rebirth tendency toward the Tiryanch realm.",
-  "manushya_anupurvi": "Sequential rebirth tendency toward the Manushya realm.",
-  "deva_anupurvi": "Sequential rebirth tendency toward the Deva realm.",
-  "agurulaghu": "Determines whether the body is heavy or light.",
-  "upaghata": "Self-injuring capacity of the body.",
-  "paraghata": "Capacity to injure other living beings.",
-  "atap": "Radiance or heat emitted by the body.",
-  "udyota": "Light or glow emitted by the body.",
-  "ucchvasa": "Breathing function of the living body.",
-  "vihayogati_prashasta": "Aerial movement tendency: Prashasta.",
-  "vihayogati_aprashasta": "Aerial movement tendency: Aprashasta.",
-  "tras": "Mobile (trasa) nature of the living being.",
-  "sthavara": "Immobile (sthāvara) nature of the living being.",
-  "badara": "Gross (badara) physical constitution.",
-  "sukshma": "Subtle (sūkṣma) physical constitution.",
-  "paryapta": "Fully developed and complete bodily capacities.",
-  "aparyapta": "Incomplete or undeveloped bodily capacities.",
-  "pratyeka": "Individual (pratyeka) embodiment, not shared.",
-  "sadharana": "Shared (sādhāraṇa) embodiment among beings.",
-  "sthira": "Stable and steady bodily condition.",
-  "asthira": "Unstable and changing bodily condition.",
-  "shubha": "Auspicious bodily appearance.",
-  "ashubha": "Inauspicious bodily appearance.",
-  "subhaga": "Attractive and pleasing bodily form.",
-  "durbhaga": "Unattractive bodily form.",
-  "susvara": "Pleasant voice and speech quality.",
-  "dusvara": "Harsh or unpleasant voice quality.",
-  "adeya": "Body that inspires trust and respect.",
-  "anadeya": "Body that fails to inspire trust.",
-  "yashah_kirti": "Reputation and fame quality: Yashah.",
-  "ayashah_kirti": "Reputation and fame quality: Ayashah.",
-  "tirthankara": "Marks the soul destined to become a Tirthankara.",
-  "krishna_varna": "Determines Krishna bodily color.",
-  "nila_varna": "Determines Nila bodily color.",
-  "rakta_varna": "Determines Rakta bodily color.",
-  "pita_varna": "Determines Pita bodily color.",
-  "shukla_varna": "Determines Shukla bodily color.",
-  "surabhi_gandha": "Determines Surabhi bodily smell.",
-  "durabhi_gandha": "Determines Durabhi bodily smell.",
-  "tikta_rasa": "Determines Tikta taste quality of the body.",
-  "katu_rasa": "Determines Katu taste quality of the body.",
-  "kashaya_rasa": "Determines Kashaya taste quality of the body.",
-  "amla_rasa": "Determines Amla taste quality of the body.",
-  "madhura_rasa": "Determines Madhura taste quality of the body.",
-  "karkasha_sparsha": "Determines Karkasha touch quality of the body.",
-  "mridu_sparsha": "Determines Mridu touch quality of the body.",
-  "guru_sparsha": "Determines Guru touch quality of the body.",
-  "laghu_sparsha": "Determines Laghu touch quality of the body.",
-  "uchcha_gotra": "High worldly status and noble birth.",
-  "nicha_gotra": "Low worldly status and humble birth.",
-  "dana_antaraya": "Obstructs giving and charity.",
-  "labha_antaraya": "Obstructs gain of merit or wealth.",
-  "bhoga_antaraya": "Obstructs enjoyment of owned objects.",
-  "upabhoga_antaraya": "Obstructs use of shared or borrowed objects.",
-  "virya_antaraya": "Obstructs spiritual vigor and effort."
+  "mati_jnanavaraniya": "Mati gyan dhakay che — roj nu simple samaj.",
+  "shruta_jnanavaraniya": "Shruta gyan dhakay che — shastra mathi malta gyan.",
+  "avadhi_jnanavaraniya": "Avadhi gyan dhakay che — dur nu jovu gyan.",
+  "manahparyaya_jnanavaraniya": "Manahparyaya gyan dhakay che — bija na vichar samaj.",
+  "kevala_jnanavaraniya": "Keval gyan dhakay che — sampurn gyan.",
+  "chakshu_darshanavaraniya": "Chakshu darshan dhakay che — aankh thi jovu.",
+  "achakshu_darshanavaraniya": "Aankh vagar nu darshan dhakay che.",
+  "avadhi_darshanavaraniya": "Avadhi darshan dhakay che — dur nu jovu.",
+  "kevala_darshanavaraniya": "Keval darshan dhakay che — sampurn darshan.",
+  "nidra": "Nidra — thodi neend, darshan ochhu dhake che.",
+  "nidra_nidra": "Ghani nidra — ghani neend, darshan ochhu dhake che.",
+  "prachala": "Prachala — jhapat, darshan ma antaray kare che.",
+  "prachala_prachala": "Ghani prachala — ghani jhapat, darshan bhari dhake che.",
+  "sata_vedaniya": "Sata vedaniya — sukh ane shant anubhav.",
+  "asata_vedaniya": "Asata vedaniya — dukh ane asant anubhav.",
+  "mithyatva_mohaniya": "Mithyatva — khoto vishwas, aatma ne mohit kare che.",
+  "samyaktva_mohaniya": "Samyaktva — sacho vishwas, thodu moh sathe.",
+  "mishra_mohaniya": "Mishra vishwas — sacho ane khoto vishwas mix.",
+  "anantanubandhi_krodha": "Anantanubandhi krodh — krodh akhi jivan sudhi bandh.",
+  "anantanubandhi_mana": "Anantanubandhi man — man akhi jivan sudhi bandh.",
+  "anantanubandhi_maya": "Anantanubandhi maya — maya akhi jivan sudhi bandh.",
+  "anantanubandhi_lobha": "Anantanubandhi lobh — lobh akhi jivan sudhi bandh.",
+  "apratyakhyana_krodha": "Apratyakhyan krodh — krodh chhodva mushkel.",
+  "apratyakhyana_mana": "Apratyakhyan man — man chhodva mushkel.",
+  "apratyakhyana_maya": "Apratyakhyan maya — maya chhodva mushkel.",
+  "apratyakhyana_lobha": "Apratyakhyan lobh — lobh chhodva mushkel.",
+  "pratyakhyana_krodha": "Pratyakhyan krodh — prayatn thi krodh chhodi shakay.",
+  "pratyakhyana_mana": "Pratyakhyan man — prayatn thi man chhodi shakay.",
+  "pratyakhyana_maya": "Pratyakhyan maya — prayatn thi maya chhodi shakay.",
+  "pratyakhyana_lobha": "Pratyakhyan lobh — prayatn thi lobh chhodi shakay.",
+  "sanjvalana_krodha": "Sanjvalan krodh — krodh jaldi shant thai shake.",
+  "sanjvalana_mana": "Sanjvalan man — man jaldi shant thai shake.",
+  "sanjvalana_maya": "Sanjvalan maya — maya jaldi shant thai shake.",
+  "sanjvalana_lobha": "Sanjvalan lobh — lobh jaldi shant thai shake.",
+  "hasya": "Hasya — hansva, mohaniya kashay.",
+  "rati": "Rati — vastu prati rag ane lagav.",
+  "arati": "Arati — vastu prati anraga ane durag.",
+  "shoka": "Shok — dukh ane shok, aatma ne bandhe che.",
+  "bhaya": "Bhay — dar, aatma ne khabhar kare che.",
+  "jugupsa": "Jugupsa — ghin ke durag vastu prati.",
+  "stri_veda": "Stri ved — stri prati kam.",
+  "purusha_veda": "Purush ved — purush prati kam.",
+  "napumsaka_veda": "Napumsak ved — napumsak prati kam.",
+  "naraka_ayushya": "Naraka ayushya — naraka yoni ma jivan fix.",
+  "tiryanch_ayushya": "Tiryanch ayushya — pashu yoni ma jivan fix.",
+  "manushya_ayushya": "Manushya ayushya — manushya yoni ma jivan fix.",
+  "deva_ayushya": "Deva ayushya — dev yoni ma jivan fix.",
+  "naraka_gati": "Naraka gati — aa yoni ma punarjanma fix kare che.",
+  "tiryanch_gati": "Tiryanch gati — aa yoni ma punarjanma fix kare che.",
+  "manushya_gati": "Manushya gati — aa yoni ma punarjanma fix kare che.",
+  "deva_gati": "Deva gati — aa yoni ma punarjanma fix kare che.",
+  "ekendriya_jati": "Ekendriya jati — ketli indriya hoy te fix kare che.",
+  "dvindriya_jati": "Dvindriya jati — ketli indriya hoy te fix kare che.",
+  "trindriya_jati": "Trindriya jati — ketli indriya hoy te fix kare che.",
+  "chaturindriya_jati": "Chaturindriya jati — ketli indriya hoy te fix kare che.",
+  "panchendriya_jati": "Panchendriya jati — ketli indriya hoy te fix kare che.",
+  "audarika_sharira": "Audarika sharir — sharir no prakar fix kare che.",
+  "vaikriya_sharira": "Vaikriya sharir — sharir no prakar fix kare che.",
+  "aharaka_sharira": "Aharaka sharir — sharir no prakar fix kare che.",
+  "taijasa_sharira": "Taijasa sharir — sharir no prakar fix kare che.",
+  "karmana_sharira": "Karmana sharir — sharir no prakar fix kare che.",
+  "audarika_angopanga": "Audarika angopang — ang ane angda fix kare che.",
+  "vaikriya_angopanga": "Vaikriya angopang — ang ane angda fix kare che.",
+  "aharaka_angopanga": "Aharaka angopang — ang ane angda fix kare che.",
+  "nirmana": "Nirman — sharir ni rachna ane akar fix kare che.",
+  "audarika_bandhana": "Audarika bandhan — sharir na kan bandhe che.",
+  "vaikriya_bandhana": "Vaikriya bandhan — sharir na kan bandhe che.",
+  "aharaka_bandhana": "Aharaka bandhan — sharir na kan bandhe che.",
+  "taijasa_bandhana": "Taijasa bandhan — sharir na kan bandhe che.",
+  "karmana_bandhana": "Karmana bandhan — sharir na kan bandhe che.",
+  "audarika_sanghata": "Audarika sanghat — sharir na kan jode che.",
+  "vaikriya_sanghata": "Vaikriya sanghat — sharir na kan jode che.",
+  "aharaka_sanghata": "Aharaka sanghat — sharir na kan jode che.",
+  "taijasa_sanghata": "Taijasa sanghat — sharir na kan jode che.",
+  "karmana_sanghata": "Karmana sanghat — sharir na kan jode che.",
+  "vajra_rishabha_naracha": "Vajra Rishabha Naracha — had ane sandhi ni rachna.",
+  "rishabha_naracha": "Rishabha Naracha — had ane sandhi ni rachna.",
+  "naracha": "Naracha — had ane sandhi ni rachna.",
+  "ardha_naracha": "Ardha Naracha — had ane sandhi ni rachna.",
+  "kilika": "Kilika — sharir na sandhi jode che.",
+  "sevarta": "Sevarta — sharir ni halchal mate ni rachna.",
+  "samachaturasra": "Sam chaturasra — sharir chaturasra akar nu.",
+  "nyagrodha_parimandala": "Nyagrodh parimandal — upar thi choda sharir.",
+  "sadi": "Sadi — niche taraf sankuchit sharir.",
+  "kubja": "Kubj — kubyar sharir.",
+  "vamana": "Vaman — nanu sharir.",
+  "hunda": "Hund — matka jem sharir akar.",
+  "varna": "Varna — sharir no rang.",
+  "gandha": "Gandh — sharir ni vaas.",
+  "rasa": "Ras — sharir no svad.",
+  "sparsha": "Sparsh — sharir nu sparsh.",
+  "naraka_anupurvi": "Naraka anupurvi — aa yoni taraf punarjanma ni riti.",
+  "tiryanch_anupurvi": "Tiryanch anupurvi — aa yoni taraf punarjanma ni riti.",
+  "manushya_anupurvi": "Manushya anupurvi — aa yoni taraf punarjanma ni riti.",
+  "deva_anupurvi": "Deva anupurvi — aa yoni taraf punarjanma ni riti.",
+  "agurulaghu": "Agurulaghu — sharir bhari ke halku hoy te fix kare che.",
+  "upaghata": "Upaghata — potana sharir ne nuksan pahochadva ni shakti.",
+  "paraghata": "Paraghata — bija jivo ne nuksan pahochadva ni shakti.",
+  "atap": "Atap — sharir thi tap ane tej nikle che.",
+  "udyota": "Udyot — sharir thi prakash ke tej nikle che.",
+  "ucchvasa": "Ucchvas — sharir nu shvasan (breathing).",
+  "vihayogati_prashasta": "Prashasta vihayogati — akash ma gati ni riti.",
+  "vihayogati_aprashasta": "Aprashasta vihayogati — akash ma gati ni riti.",
+  "tras": "Trasa — chalta prani, sthavar nathi.",
+  "sthavara": "Sthavar — sthir prani, jem vanaspati.",
+  "badara": "Badar — motu ane sthul sharir.",
+  "sukshma": "Sukshma — nano ane sukshma sharir.",
+  "paryapta": "Paryapt — sharir puru ane vikasit che.",
+  "aparyapta": "Aparyapt — sharir adhuru ke ochhu vikasit che.",
+  "pratyeka": "Pratyek — ek jiv mate alag sharir.",
+  "sadharana": "Sadharan — vahli sharir, vahli jivo share kare che.",
+  "sthira": "Sthir — sharir sthir ane sthayi che.",
+  "asthira": "Asthir — sharir badlata ane asthir che.",
+  "shubha": "Shubh — shubh ane shant sharir darshan.",
+  "ashubha": "Ashubh — ashubh sharir darshan.",
+  "subhaga": "Subhag — manbhav ane sundar sharir.",
+  "durbhaga": "Durbhag — ochhu manbhav sharir.",
+  "susvara": "Susvar — madhur ane shant awaz.",
+  "dusvara": "Dusvar — kathor ane apriya awaz.",
+  "adeya": "Adey — sharir prati vishwas ane samman.",
+  "anadeya": "Anadey — sharir prati vishwas ochho.",
+  "yashah_kirti": "Yashah kirti — yash ane khyati ni prakriti.",
+  "ayashah_kirti": "Ayashah kirti — yash ane khyati ni prakriti.",
+  "tirthankara": "Tirthankar prakriti — tirthankar banva mate no yogya jiv.",
+  "krishna_varna": "Krishna varna — sharir no rang fix kare che.",
+  "nila_varna": "Nila varna — sharir no rang fix kare che.",
+  "rakta_varna": "Rakta varna — sharir no rang fix kare che.",
+  "pita_varna": "Pita varna — sharir no rang fix kare che.",
+  "shukla_varna": "Shukla varna — sharir no rang fix kare che.",
+  "surabhi_gandha": "Surabhi gandh — sharir ni vaas fix kare che.",
+  "durabhi_gandha": "Durabhi gandh — sharir ni vaas fix kare che.",
+  "tikta_rasa": "Tikta ras — sharir no svad fix kare che.",
+  "katu_rasa": "Katu ras — sharir no svad fix kare che.",
+  "kashaya_rasa": "Kashaya ras — sharir no svad fix kare che.",
+  "amla_rasa": "Amla ras — sharir no svad fix kare che.",
+  "madhura_rasa": "Madhura ras — sharir no svad fix kare che.",
+  "karkasha_sparsha": "Karkasha sparsh — sharir nu sparsh fix kare che.",
+  "mridu_sparsha": "Mridu sparsh — sharir nu sparsh fix kare che.",
+  "guru_sparsha": "Guru sparsh — sharir nu sparsh fix kare che.",
+  "laghu_sparsha": "Laghu sparsh — sharir nu sparsh fix kare che.",
+  "uchcha_gotra": "Uchcha gotra — uchi kul ane pratishtha.",
+  "nicha_gotra": "Nicha gotra — nichi kul ane ochhi pratishtha.",
+  "dana_antaraya": "Dana antaraya — daan aapva ma antaray.",
+  "labha_antaraya": "Labha antaraya — labh ke punya ma antaray.",
+  "bhoga_antaraya": "Bhoga antaraya — potanu bhogva ma antaray.",
+  "upabhoga_antaraya": "Upbhog antaraya — upbhog ma antaray.",
+  "virya_antaraya": "Virya antaraya — sadhana ni urja ma antaray."
 };
-
-function simplifyIndianEnglish(text: string): string {
-  const exact: Record<string, string> = {
-    "Obscures mati (ordinary sensory) knowledge.":
-      "Blocks mati gyan — simple everyday knowledge.",
-    "Obscures śruta (scriptural) knowledge.":
-      "Blocks shruta gyan — knowledge from scriptures.",
-    "Obscures avadhi (clairvoyant) knowledge.":
-      "Blocks avadhi gyan — far-seeing knowledge.",
-    "Obscures manahparyaya (mind-reading) knowledge.":
-      "Blocks manahparyaya gyan — knowing others' thoughts.",
-    "Obscures kevala (omniscient) knowledge.":
-      "Blocks keval gyan — full omniscient knowledge.",
-    "Obscures chakṣu (ocular) perception.":
-      "Blocks chakshu darshan — seeing through the eyes.",
-    "Obscures perception without eyes.":
-      "Blocks darshan without using the eyes.",
-    "Obscures avadhi (clairvoyant) perception.":
-      "Blocks avadhi darshan — far-seeing vision.",
-    "Obscures kevala (omniscient) perception.":
-      "Blocks keval darshan — full omniscient vision.",
-    "Light sleep that veils perception.":
-      "Light nidra — sleep that covers darshan a little.",
-    "Deep sleep that heavily veils perception.":
-      "Deep nidra — sleep that fully covers darshan.",
-    "Drowsiness that disturbs perception.":
-      "Prachala (drowsiness) — neend that disturbs darshan.",
-    "Heavy drowsiness that disturbs perception.":
-      "Heavy prachala — strong neend that disturbs darshan.",
-    "Causes pleasant (sāta) feeling.":
-      "Brings sata vedaniya — happy, pleasant feeling.",
-    "Causes unpleasant (asāta) feeling.":
-      "Brings asata vedaniya — painful, unhappy feeling.",
-    "Wrong belief (mithyātva) that deludes the soul.":
-      "Mithyatva — wrong belief that deludes the soul.",
-    "Intense anger bound for an entire life.":
-      "Anantanubandhi krodh — anger bound for full life.",
-    "Intense pride bound for an entire life.":
-      "Anantanubandhi man — pride bound for full life.",
-    "Obstructs giving and charity.":
-      "Creates antaraya in daan — blocks giving charity.",
-    "Obstructs gain of merit or wealth.":
-      "Creates antaraya in labh — blocks gaining punya or wealth.",
-  };
-
-  if (exact[text]) {
-    return exact[text];
-  }
-
-  return text
-    .replace(/^Obscures /, "Blocks ")
-    .replace(/^Determines /, "Fixes ")
-    .replace(/^Causes /, "Brings ")
-    .replace(/^Aggregates /, "Joins ")
-    .replace(/^Fixes /, "Fixes ")
-    .replace(/ that /g, " — ")
-    .replace(/obstructs /gi, "blocks ")
-    .replace(/deludes /gi, "mohit karta hai / deludes ")
-    .replace(/\(sāta\)/g, "sata")
-    .replace(/\(asāta\)/g, "asata");
-}
 
 function pickText(text: Partial<LocalizedText>, lang: Lang): string {
   return text[lang] ?? text.en ?? text.hi ?? text.gu ?? "";
@@ -272,18 +211,14 @@ export function getPrakritiDescription(
 ): string {
   if (jsonDescription) {
     const fromJson = pickText(jsonDescription, lang);
-    if (fromJson) {
-      return lang === "en" ? simplifyIndianEnglish(fromJson) : fromJson;
-    }
+    if (fromJson) return fromJson;
   }
-
   if (lang === "en") {
-    const english =
+    return (
       PRAKRITI_DESCRIPTIONS_EN[prakritiId] ??
-      getKarmaDescription(karmaId, "en");
-    return simplifyIndianEnglish(english);
+      getKarmaDescription(karmaId, "en")
+    );
   }
-
   return getKarmaDescription(karmaId, lang);
 }
 

@@ -34,11 +34,11 @@ export function shuffleLetters(letters: string[]): LetterTile[] {
 }
 
 export function pickStarterHintIndices(length: number): number[] {
-  if (length <= 5) {
+  if (length <= 4) {
     return [];
   }
 
-  const count = length <= 8 ? 2 : length <= 12 ? 3 : 4;
+  const count = length <= 6 ? 1 : length <= 9 ? 2 : length <= 13 ? 3 : 4;
   const indices: number[] = [];
 
   for (let i = 0; i < count; i++) {

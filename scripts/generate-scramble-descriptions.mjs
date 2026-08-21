@@ -3,103 +3,103 @@ import data from "../data.json" with { type: "json" };
 
 const KARMA_DESCRIPTIONS = {
   jnanavaraniya: {
-    en: "Ghāti karma that obscures knowledge (jñāna) of the soul.",
+    en: "Ghati karma — dhakhe che aatma nu gyan (knowledge).",
     hi: "घाती कर्म जो आत्मा के ज्ञान को आवृत करता है।",
     gu: "ઘાતી કર્મ જે આત્માના જ્ઞાનને આવૃત કરે છે.",
   },
   darshanavaraniya: {
-    en: "Ghāti karma that obscures perception (darśana) of reality.",
+    en: "Ghati karma — dhakhe che sachu darshan (truth-seeing).",
     hi: "घाती कर्म जो वास्तविकता के दर्शन को आवृत करता है।",
     gu: "ઘાતી કર્મ જે વાસ્તવિકતાના દર્શનને આવૃત કરે છે.",
   },
   mohaniya: {
-    en: "Ghāti karma that deludes the soul through passions and wrong belief.",
+    en: "Ghati karma — kashay thi aatma ne mohit kare che.",
     hi: "घाती कर्म जो कषाय और मिथ्यात्व से आत्मा को मोहित करता है।",
     gu: "ઘાતી કર્મ જે કષાય અને મિથ્યાત્વથી આત્માને મોહિત કરે છે.",
   },
   antaraya: {
-    en: "Ghāti karma that obstructs meritorious spiritual effort.",
+    en: "Ghati karma — punya ane sadhana ma antaraya kare che.",
     hi: "घाती कर्म जो पुण्य की आध्यात्मिक साधना में अन्तराय करता है।",
     gu: "ઘાતી કર્મ જે પુણ્યની આધ્યાત્મિક સાધનામાં અંતરાય કરે છે.",
   },
   vedaniya: {
-    en: "Aghāti karma that determines pleasant or painful experience.",
+    en: "Aghati karma — sata ke asata vedaniya (feeling) aape che.",
     hi: "अघाती कर्म जो साता या असाता अनुभव निर्धारित करता है।",
     gu: "અઘાતી કર્મ જે સાતા અથવા અસાતા અનુભવ નક્કી કરે છે.",
   },
   ayushya: {
-    en: "Aghāti karma that fixes the lifespan in a given realm.",
+    en: "Aghati karma — yoni ma ayushya (lifespan) fix kare che.",
     hi: "अघाती कर्म जो किसी योनि में आयु निर्धारित करता है।",
     gu: "અઘાતી કર્મ જે કોઈ યોનિમાં આయુષ્ય નક્કી કરે છે.",
   },
   nama: {
-    en: "Aghāti karma that shapes the body, senses, and worldly status.",
+    en: "Aghati karma — sharir, indriya ane sthiti banave che.",
     hi: "अघाती कर्म जो शरीर, इन्द्रिय और लौकिक स्थिति बनाता है।",
     gu: "અઘાતી કર્મ જે શરીર, ઇન્દ્રિય અને સાંસારિક સ્થિતિ બનાવે છે.",
   },
   gotra: {
-    en: "Aghāti karma that determines high or low worldly status.",
+    en: "Aghati karma — ucha ke nicha gotra (family status) fix kare che.",
     hi: "अघाती कर्म जो उच्च या नीच गोत्र (स्थिति) निर्धारित करता है।",
     gu: "અઘાતી કર્મ જે ઉચ્ચ અથવા નીચ ગોત્ર (સ્થિતિ) નક્કી કરે છે.",
   },
 };
 
 const PRAKRITI_EN = {
-  mati_jnanavaraniya: "Obscures mati (ordinary sensory) knowledge.",
-  shruta_jnanavaraniya: "Obscures śruta (scriptural) knowledge.",
-  avadhi_jnanavaraniya: "Obscures avadhi (clairvoyant) knowledge.",
-  manahparyaya_jnanavaraniya: "Obscures manahparyaya (mind-reading) knowledge.",
-  kevala_jnanavaraniya: "Obscures kevala (omniscient) knowledge.",
-  chakshu_darshanavaraniya: "Obscures chakṣu (ocular) perception.",
-  achakshu_darshanavaraniya: "Obscures perception without eyes.",
-  avadhi_darshanavaraniya: "Obscures avadhi (clairvoyant) perception.",
-  kevala_darshanavaraniya: "Obscures kevala (omniscient) perception.",
-  nidra: "Light sleep that veils perception.",
-  nidra_nidra: "Deep sleep that heavily veils perception.",
-  prachala: "Drowsiness that disturbs perception.",
-  prachala_prachala: "Heavy drowsiness that disturbs perception.",
-  sata_vedaniya: "Causes pleasant (sāta) feeling.",
-  asata_vedaniya: "Causes unpleasant (asāta) feeling.",
-  mithyatva_mohaniya: "Wrong belief (mithyātva) that deludes the soul.",
-  samyaktva_mohaniya: "Right belief mixed with slight delusion.",
-  mishra_mohaniya: "Mixed right and wrong belief.",
-  anantanubandhi_krodha: "Intense anger bound for an entire life.",
-  anantanubandhi_mana: "Intense pride bound for an entire life.",
-  anantanubandhi_maya: "Intense deceit bound for an entire life.",
-  anantanubandhi_lobha: "Intense greed bound for an entire life.",
-  apratyakhyana_krodha: "Anger that resists renouncing harmful acts.",
-  apratyakhyana_mana: "Pride that resists renouncing harmful acts.",
-  apratyakhyana_maya: "Deceit that resists renouncing harmful acts.",
-  apratyakhyana_lobha: "Greed that resists renouncing harmful acts.",
-  pratyakhyana_krodha: "Anger that can still be renounced with effort.",
-  pratyakhyana_mana: "Pride that can still be renounced with effort.",
-  pratyakhyana_maya: "Deceit that can still be renounced with effort.",
-  pratyakhyana_lobha: "Greed that can still be renounced with effort.",
-  sanjvalana_krodha: "Flaring anger that is easier to overcome.",
-  sanjvalana_mana: "Flaring pride that is easier to overcome.",
-  sanjvalana_maya: "Flaring deceit that is easier to overcome.",
-  sanjvalana_lobha: "Flaring greed that is easier to overcome.",
-  hasya: "Laughter born of mohaniya passion.",
-  rati: "Attachment and liking toward objects.",
-  arati: "Dislike and aversion toward objects.",
-  shoka: "Sorrow and grief that binds the soul.",
-  bhaya: "Fear that agitates the soul.",
-  jugupsa: "Disgust or repulsion toward objects.",
-  stri_veda: "Sexual desire toward women.",
-  purusha_veda: "Sexual desire toward men.",
-  napumsaka_veda: "Sexual desire toward neutral gender.",
-  naraka_ayushya: "Lifespan fixed in the naraka realm.",
-  tiryanch_ayushya: "Lifespan fixed in the animal realm.",
-  manushya_ayushya: "Lifespan fixed in the human realm.",
-  deva_ayushya: "Lifespan fixed in the celestial realm.",
-  uchcha_gotra: "High worldly status and noble birth.",
-  nicha_gotra: "Low worldly status and humble birth.",
-  dana_antaraya: "Obstructs giving and charity.",
-  labha_antaraya: "Obstructs gain of merit or wealth.",
-  bhoga_antaraya: "Obstructs enjoyment of owned objects.",
-  upabhoga_antaraya: "Obstructs use of shared or borrowed objects.",
-  virya_antaraya: "Obstructs spiritual vigor and effort.",
-  tirthankara: "Marks the soul destined to become a Tirthankara.",
+  mati_jnanavaraniya: "Mati gyan dhakay che — roj nu simple samaj.",
+  shruta_jnanavaraniya: "Shruta gyan dhakay che — shastra mathi malta gyan.",
+  avadhi_jnanavaraniya: "Avadhi gyan dhakay che — dur nu jovu gyan.",
+  manahparyaya_jnanavaraniya: "Manahparyaya gyan dhakay che — bija na vichar samaj.",
+  kevala_jnanavaraniya: "Keval gyan dhakay che — sampurn gyan.",
+  chakshu_darshanavaraniya: "Chakshu darshan dhakay che — aankh thi jovu.",
+  achakshu_darshanavaraniya: "Aankh vagar nu darshan dhakay che.",
+  avadhi_darshanavaraniya: "Avadhi darshan dhakay che — dur nu jovu.",
+  kevala_darshanavaraniya: "Keval darshan dhakay che — sampurn darshan.",
+  nidra: "Nidra — thodi neend, darshan ochhu dhake che.",
+  nidra_nidra: "Ghani nidra — ghani neend, darshan ochhu dhake che.",
+  prachala: "Prachala — jhapat, darshan ma antaray kare che.",
+  prachala_prachala: "Ghani prachala — ghani jhapat, darshan bhari dhake che.",
+  sata_vedaniya: "Sata vedaniya — sukh ane shant anubhav.",
+  asata_vedaniya: "Asata vedaniya — dukh ane asant anubhav.",
+  mithyatva_mohaniya: "Mithyatva — khoto vishwas, aatma ne mohit kare che.",
+  samyaktva_mohaniya: "Samyaktva — sacho vishwas, thodu moh sathe.",
+  mishra_mohaniya: "Mishra vishwas — sacho ane khoto vishwas mix.",
+  anantanubandhi_krodha: "Anantanubandhi krodh — krodh akhi jivan sudhi bandh.",
+  anantanubandhi_mana: "Anantanubandhi man — man akhi jivan sudhi bandh.",
+  anantanubandhi_maya: "Anantanubandhi maya — maya akhi jivan sudhi bandh.",
+  anantanubandhi_lobha: "Anantanubandhi lobh — lobh akhi jivan sudhi bandh.",
+  apratyakhyana_krodha: "Apratyakhyan krodh — krodh chhodva mushkel.",
+  apratyakhyana_mana: "Apratyakhyan man — man chhodva mushkel.",
+  apratyakhyana_maya: "Apratyakhyan maya — maya chhodva mushkel.",
+  apratyakhyana_lobha: "Apratyakhyan lobh — lobh chhodva mushkel.",
+  pratyakhyana_krodha: "Pratyakhyan krodh — prayatn thi krodh chhodi shakay.",
+  pratyakhyana_mana: "Pratyakhyan man — prayatn thi man chhodi shakay.",
+  pratyakhyana_maya: "Pratyakhyan maya — prayatn thi maya chhodi shakay.",
+  pratyakhyana_lobha: "Pratyakhyan lobh — prayatn thi lobh chhodi shakay.",
+  sanjvalana_krodha: "Sanjvalan krodh — krodh jaldi shant thai shake.",
+  sanjvalana_mana: "Sanjvalan man — man jaldi shant thai shake.",
+  sanjvalana_maya: "Sanjvalan maya — maya jaldi shant thai shake.",
+  sanjvalana_lobha: "Sanjvalan lobh — lobh jaldi shant thai shake.",
+  hasya: "Hasya — hansva, mohaniya kashay.",
+  rati: "Rati — vastu prati rag ane lagav.",
+  arati: "Arati — vastu prati anraga ane durag.",
+  shoka: "Shok — dukh ane shok, aatma ne bandhe che.",
+  bhaya: "Bhay — dar, aatma ne khabhar kare che.",
+  jugupsa: "Jugupsa — ghin ke durag vastu prati.",
+  stri_veda: "Stri ved — stri prati kam.",
+  purusha_veda: "Purush ved — purush prati kam.",
+  napumsaka_veda: "Napumsak ved — napumsak prati kam.",
+  naraka_ayushya: "Naraka ayushya — naraka yoni ma jivan fix.",
+  tiryanch_ayushya: "Tiryanch ayushya — pashu yoni ma jivan fix.",
+  manushya_ayushya: "Manushya ayushya — manushya yoni ma jivan fix.",
+  deva_ayushya: "Deva ayushya — dev yoni ma jivan fix.",
+  uchcha_gotra: "Uchcha gotra — uchi kul ane pratishtha.",
+  nicha_gotra: "Nicha gotra — nichi kul ane ochhi pratishtha.",
+  dana_antaraya: "Dana antaraya — daan aapva ma antaray.",
+  labha_antaraya: "Labha antaraya — labh ke punya ma antaray.",
+  bhoga_antaraya: "Bhoga antaraya — potanu bhogva ma antaray.",
+  upabhoga_antaraya: "Upbhog antaraya — upbhog ma antaray.",
+  virya_antaraya: "Virya antaraya — sadhana ni urja ma antaray.",
+  tirthankara: "Tirthankar prakriti — tirthankar banva mate no yogya jiv.",
 };
 
 function describePrakritiEn(id, karmaId, nameEn) {
@@ -108,161 +108,174 @@ function describePrakritiEn(id, karmaId, nameEn) {
   }
 
   if (nameEn.endsWith(" Gati")) {
-    return `Determines rebirth in the ${nameEn.replace(" Gati", "")} realm.`;
+    const realm = nameEn.replace(" Gati", "");
+    return `${realm} gati — aa yoni ma punarjanma fix kare che.`;
   }
   if (nameEn.endsWith(" Jati")) {
-    return `Fixes the number of senses in ${nameEn.replace(" Jati", "").toLowerCase()} beings.`;
+    const kind = nameEn.replace(" Jati", "");
+    return `${kind} jati — ketli indriya hoy te fix kare che.`;
   }
   if (nameEn.endsWith(" Sharira")) {
-    return `Determines the ${nameEn.replace(" Sharira", "")} body type.`;
+    const kind = nameEn.replace(" Sharira", "");
+    return `${kind} sharir — sharir no prakar fix kare che.`;
   }
   if (nameEn.endsWith(" Angopanga")) {
-    return `Fixes limbs and body parts of the ${nameEn.replace(" Angopanga", "")} body.`;
+    const kind = nameEn.replace(" Angopanga", "");
+    return `${kind} angopang — ang ane angda fix kare che.`;
   }
   if (nameEn.endsWith(" Bandhana")) {
-    return `Binds particles into the ${nameEn.replace(" Bandhana", "")} body.`;
+    const kind = nameEn.replace(" Bandhana", "");
+    return `${kind} bandhan — sharir na kan bandhe che.`;
   }
   if (nameEn.endsWith(" Sanghata")) {
-    return `Aggregates particles in the ${nameEn.replace(" Sanghata", "")} body.`;
+    const kind = nameEn.replace(" Sanghata", "");
+    return `${kind} sanghat — sharir na kan jode che.`;
   }
   if (nameEn.endsWith(" Anupurvi")) {
-    return `Sequential rebirth tendency toward the ${nameEn.replace(" Anupurvi", "")} realm.`;
+    const realm = nameEn.replace(" Anupurvi", "");
+    return `${realm} anupurvi — aa yoni taraf punarjanma ni riti.`;
   }
   if (nameEn.endsWith(" Varna")) {
-    return `Determines ${nameEn.replace(" Varna", "")} bodily color.`;
+    const kind = nameEn.replace(" Varna", "");
+    return `${kind} varna — sharir no rang fix kare che.`;
   }
   if (nameEn.endsWith(" Gandha")) {
-    return `Determines ${nameEn.replace(" Gandha", "")} bodily smell.`;
+    const kind = nameEn.replace(" Gandha", "");
+    return `${kind} gandh — sharir ni vaas fix kare che.`;
   }
   if (nameEn.endsWith(" Rasa")) {
-    return `Determines ${nameEn.replace(" Rasa", "")} taste quality of the body.`;
+    const kind = nameEn.replace(" Rasa", "");
+    return `${kind} ras — sharir no svad fix kare che.`;
   }
   if (nameEn.endsWith(" Sparsha")) {
-    return `Determines ${nameEn.replace(" Sparsha", "")} touch quality of the body.`;
+    const kind = nameEn.replace(" Sparsha", "");
+    return `${kind} sparsh — sharir nu sparsh fix kare che.`;
   }
   if (nameEn.endsWith(" Vihayogati")) {
-    return `Aerial movement tendency: ${nameEn.replace(" Vihayogati", "")}.`;
+    const kind = nameEn.replace(" Vihayogati", "");
+    return `${kind} vihayogati — akash ma gati ni riti.`;
   }
   if (nameEn.endsWith(" Kirti")) {
-    return `Reputation and fame quality: ${nameEn.replace(" Kirti", "")}.`;
+    const kind = nameEn.replace(" Kirti", "");
+    return `${kind} kirti — yash ane khyati ni prakriti.`;
   }
   if (nameEn === "Nirmana") {
-    return "Fixes the overall structure and formation of the body.";
+    return "Nirman — sharir ni rachna ane akar fix kare che.";
   }
   if (nameEn === "Agurulaghu") {
-    return "Determines whether the body is heavy or light.";
+    return "Agurulaghu — sharir bhari ke halku hoy te fix kare che.";
   }
   if (nameEn === "Upaghata") {
-    return "Self-injuring capacity of the body.";
+    return "Upaghata — potana sharir ne nuksan pahochadva ni shakti.";
   }
   if (nameEn === "Paraghata") {
-    return "Capacity to injure other living beings.";
+    return "Paraghata — bija jivo ne nuksan pahochadva ni shakti.";
   }
   if (nameEn === "Atapa") {
-    return "Radiance or heat emitted by the body.";
+    return "Atap — sharir thi tap ane tej nikle che.";
   }
   if (nameEn === "Udyota") {
-    return "Light or glow emitted by the body.";
+    return "Udyot — sharir thi prakash ke tej nikle che.";
   }
   if (nameEn === "Ucchvasa") {
-    return "Breathing function of the living body.";
+    return "Ucchvas — sharir nu shvasan (breathing).";
   }
   if (nameEn === "Trasa") {
-    return "Mobile (trasa) nature of the living being.";
+    return "Trasa — chalta prani, sthavar nathi.";
   }
   if (nameEn === "Sthavara") {
-    return "Immobile (sthāvara) nature of the living being.";
+    return "Sthavar — sthir prani, jem vanaspati.";
   }
   if (nameEn === "Badara") {
-    return "Gross (badara) physical constitution.";
+    return "Badar — motu ane sthul sharir.";
   }
   if (nameEn === "Sukshma") {
-    return "Subtle (sūkṣma) physical constitution.";
+    return "Sukshma — nano ane sukshma sharir.";
   }
   if (nameEn === "Paryapta") {
-    return "Fully developed and complete bodily capacities.";
+    return "Paryapt — sharir puru ane vikasit che.";
   }
   if (nameEn === "Aparyapta") {
-    return "Incomplete or undeveloped bodily capacities.";
+    return "Aparyapt — sharir adhuru ke ochhu vikasit che.";
   }
   if (nameEn === "Pratyeka") {
-    return "Individual (pratyeka) embodiment, not shared.";
+    return "Pratyek — ek jiv mate alag sharir.";
   }
   if (nameEn === "Sadharana") {
-    return "Shared (sādhāraṇa) embodiment among beings.";
+    return "Sadharan — vahli sharir, vahli jivo share kare che.";
   }
   if (nameEn === "Sthira") {
-    return "Stable and steady bodily condition.";
+    return "Sthir — sharir sthir ane sthayi che.";
   }
   if (nameEn === "Asthira") {
-    return "Unstable and changing bodily condition.";
+    return "Asthir — sharir badlata ane asthir che.";
   }
   if (nameEn === "Shubha") {
-    return "Auspicious bodily appearance.";
+    return "Shubh — shubh ane shant sharir darshan.";
   }
   if (nameEn === "Ashubha") {
-    return "Inauspicious bodily appearance.";
+    return "Ashubh — ashubh sharir darshan.";
   }
   if (nameEn === "Subhaga") {
-    return "Attractive and pleasing bodily form.";
+    return "Subhag — manbhav ane sundar sharir.";
   }
   if (nameEn === "Durbhaga") {
-    return "Unattractive bodily form.";
+    return "Durbhag — ochhu manbhav sharir.";
   }
   if (nameEn === "Susvara") {
-    return "Pleasant voice and speech quality.";
+    return "Susvar — madhur ane shant awaz.";
   }
   if (nameEn === "Dusvara") {
-    return "Harsh or unpleasant voice quality.";
+    return "Dusvar — kathor ane apriya awaz.";
   }
   if (nameEn === "Adeya") {
-    return "Body that inspires trust and respect.";
+    return "Adey — sharir prati vishwas ane samman.";
   }
   if (nameEn === "Anadeya") {
-    return "Body that fails to inspire trust.";
+    return "Anadey — sharir prati vishwas ochho.";
   }
   if (nameEn === "Samachaturasra") {
-    return "Symmetrical square-like body proportions.";
+    return "Sam chaturasra — sharir chaturasra akar nu.";
   }
   if (nameEn === "Nyagrodha Parimandala") {
-    return "Body broad at top like a banyan tree crown.";
+    return "Nyagrodh parimandal — upar thi choda sharir.";
   }
   if (nameEn === "Sadi") {
-    return "Body tapering downward like a winnowing basket.";
+    return "Sadi — niche taraf sankuchit sharir.";
   }
   if (nameEn === "Kubja") {
-    return "Hunchbacked bodily formation.";
+    return "Kubj — kubyar sharir.";
   }
   if (nameEn === "Vamana") {
-    return "Dwarf-like short bodily formation.";
+    return "Vaman — nanu sharir.";
   }
   if (nameEn === "Hunda") {
-    return "Pot-shaped bodily formation.";
+    return "Hund — matka jem sharir akar.";
   }
   if (nameEn.includes("Naracha")) {
-    return `Bone-joint structure prakriti: ${nameEn}.`;
+    return `${nameEn} — had ane sandhi ni rachna.`;
   }
   if (nameEn === "Kilika") {
-    return "Interlocking joint structure of the body.";
+    return "Kilika — sharir na sandhi jode che.";
   }
   if (nameEn === "Sevarta") {
-    return "Joint structure related to bodily movement.";
+    return "Sevarta — sharir ni halchal mate ni rachna.";
   }
   if (nameEn === "Varna") {
-    return "General bodily color prakriti.";
+    return "Varna — sharir no rang.";
   }
   if (nameEn === "Gandha") {
-    return "General bodily smell prakriti.";
+    return "Gandh — sharir ni vaas.";
   }
   if (nameEn === "Rasa") {
-    return "General taste-related bodily prakriti.";
+    return "Ras — sharir no svad.";
   }
   if (nameEn === "Sparsha") {
-    return "General touch-related bodily prakriti.";
+    return "Sparsh — sharir nu sparsh.";
   }
 
   const karmaName = data.find((k) => k.id === karmaId)?.name.en ?? karmaId;
-  return `Prakriti of ${karmaName}: ${nameEn}.`;
+  return `${nameEn} — ${karmaName} ni prakriti.`;
 }
 
 const prakritiEntries = {};
@@ -303,14 +316,13 @@ export function getPrakritiDescription(
     const fromJson = pickText(jsonDescription, lang);
     if (fromJson) return fromJson;
   }
-  if (lang !== "en") {
-    const en = PRAKRITI_DESCRIPTIONS_EN[prakritiId];
-    if (en) return en;
+  if (lang === "en") {
+    return (
+      PRAKRITI_DESCRIPTIONS_EN[prakritiId] ??
+      getKarmaDescription(karmaId, "en")
+    );
   }
-  return (
-    PRAKRITI_DESCRIPTIONS_EN[prakritiId] ??
-    getKarmaDescription(karmaId, lang)
-  );
+  return getKarmaDescription(karmaId, lang);
 }
 
 export function buildScrambleDescription(
