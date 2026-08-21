@@ -10,7 +10,7 @@ export const SCRAMBLE_CONTENT: Record<
 > = {
   en: {
     subtitle: "Unscramble the letters. Discover the word.",
-    rules: "60 seconds · easy names first, then harder.",
+    rules: "60 seconds · easy names first · long words get starter letters · Hint fills a slot (−25% score).",
   },
   hi: {
     subtitle: "अक्षर सही क्रम में लगाएँ। शब्द खोजें।",

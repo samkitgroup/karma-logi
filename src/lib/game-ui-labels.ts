@@ -28,6 +28,9 @@ export const GAME_UI = {
   bound: "BOUND",
   reached: "THE PRAKRITI REACHED THE JĪVA",
   howToPlay: "How to Play",
+  hint: "Hint",
+  hintUsed: "Hint used",
+  hintPenalty: "−25% score",
 } as const;
 
 export const GAME_TITLES = {

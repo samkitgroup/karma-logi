@@ -3,10 +3,16 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import {
+  applyManualHint,
+  buildFillableIndices,
+  buildLockedSlots,
+  pickStarterHintIndices,
+  remainingLetters,
   scoreForPuzzle,
   selectionMatchesAnswer,
   shuffleLetters,
   type LetterTile,
+  type PuzzleState,
 } from "./scramble-engine";
 import { haptic, playTone, resumeAudio } from "@/games/karma-chakra/audio";
 import { SCRAMBLE_CONTENT } from "./labels";
@@ -23,13 +29,6 @@ import type { Lang } from "@/lib/language";
 
 type GameMode = "start" | "play" | "over";
 
-type PuzzleState = {
-  item: ScrambleItem;
-  answer: string[];
-  tiles: LetterTile[];
-  selection: LetterTile[];
-};
-
 type ResultState = {
   score: number;
   solved: number;
@@ -39,11 +38,17 @@ type ResultState = {
 
 function buildPuzzle(item: ScrambleItem, lang: Lang): PuzzleState {
   const answer = getAnswerUnits(item, lang);
+  const starterIndices = pickStarterHintIndices(answer.length);
+  const locked = buildLockedSlots(answer, starterIndices, "starter");
+  const tiles = shuffleLetters(remainingLetters(answer, locked));
+
   return {
     item,
     answer,
-    tiles: shuffleLetters(answer),
+    tiles,
     selection: [],
+    locked,
+    manualHintsUsed: 0,
   };
 }
 
@@ -240,10 +245,14 @@ export function KarmaScrambleGame({
       setGrading(true);
       setTries((value) => value + 1);
 
-      if (selectionMatchesAnswer(selection, current.answer)) {
+      if (selectionMatchesAnswer(selection, current.answer, current.locked)) {
         setStreak((prevStreak) => {
           const nextStreak = prevStreak + 1;
-          const points = scoreForPuzzle(current.item.difficulty, nextStreak);
+          const points = scoreForPuzzle(
+            current.answer.length,
+            nextStreak,
+            current.manualHintsUsed,
+          );
           setScore((value) => value + points);
           setSolved((value) => value + 1);
           setBestStreak((value) => Math.max(value, nextStreak));
@@ -282,18 +291,38 @@ export function KarmaScrambleGame({
         return;
       }
 
+      const fillableCount = buildFillableIndices(
+        puzzle.answer.length,
+        puzzle.locked,
+      ).length;
       const nextSelection = [...puzzle.selection, tile];
       setSlotTone("idle");
       setPuzzle({ ...puzzle, selection: nextSelection });
       playTone("tick", mutedRef.current);
       haptic(4, reducedRef.current);
 
-      if (nextSelection.length === puzzle.answer.length) {
+      if (nextSelection.length === fillableCount) {
         submitSelection(nextSelection, puzzle);
       }
     },
     [grading, puzzle, submitSelection, usedTileIds],
   );
+
+  const useHint = useCallback(() => {
+    if (!puzzle || grading || mode !== "play") {
+      return;
+    }
+
+    const nextPuzzle = applyManualHint(puzzle);
+    if (!nextPuzzle) {
+      return;
+    }
+
+    setPuzzle(nextPuzzle);
+    showToast(`${GAME_UI.hintUsed} (${GAME_UI.hintPenalty})`, false);
+    playTone("tick", mutedRef.current);
+    haptic(6, reducedRef.current);
+  }, [grading, mode, puzzle, showToast]);
 
   useEffect(() => {
     return () => {
@@ -313,6 +342,13 @@ export function KarmaScrambleGame({
       : `${GAME_UI.kindPrakriti} · ${puzzle?.item.karmaName[lang] ?? ""}`;
 
   const description = puzzle?.item.description[lang] ?? "";
+
+  const canUseHint =
+    puzzle &&
+    !grading &&
+    buildFillableIndices(puzzle.answer.length, puzzle.locked).some(
+      (_, selectionIndex) => !puzzle.selection[selectionIndex],
+    );
 
   const toggleMuted = () => {
     setMuted((current) => {
@@ -370,9 +406,20 @@ export function KarmaScrambleGame({
 
             <div className="karma-scramble-slots" aria-live="polite">
               {puzzle.answer.map((_, index) => {
-                const char = puzzle.selection[index]?.char;
-                const tone =
-                  slotTone === "idle"
+                const locked = puzzle.locked[index];
+                const fillable = buildFillableIndices(
+                  puzzle.answer.length,
+                  puzzle.locked,
+                );
+                const selectionIndex = fillable.indexOf(index);
+                const char =
+                  locked?.char ??
+                  (selectionIndex >= 0
+                    ? puzzle.selection[selectionIndex]?.char
+                    : undefined);
+                const tone = locked
+                  ? "locked"
+                  : slotTone === "idle"
                     ? "idle"
                     : slotTone === "ok"
                       ? "ok"
@@ -410,9 +457,22 @@ export function KarmaScrambleGame({
           <div className="karma-scramble-actions">
             <button
               type="button"
+              className="karma-scramble-action hint"
+              onClick={useHint}
+              disabled={grading || !canUseHint}
+            >
+              💡 {GAME_UI.hint}
+            </button>
+            <button
+              type="button"
               className="karma-scramble-action"
               onClick={clearSelection}
-              disabled={grading || puzzle.selection.length === 0}
+              disabled={
+                grading ||
+                puzzle.selection.length === 0 ||
+                buildFillableIndices(puzzle.answer.length, puzzle.locked).length ===
+                  0
+              }
             >
               ↺ {GAME_UI.clear}
             </button>

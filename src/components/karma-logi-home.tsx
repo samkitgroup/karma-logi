@@ -15,15 +15,21 @@ import { KarmaScrambleGame } from "@/games/karma-scramble/karma-scramble-game";
 import { getGameById, karmaGames } from "@/lib/games";
 import type { Lang } from "@/lib/language";
 import { fetchPlayerMe, submitPlayerScore } from "@/lib/player-api";
+import { verifyVenueLocation } from "@/lib/location-access";
 import type { PlayerScoreMap, PlayerSession } from "@/lib/player-types";
 
-export function KarmaLogiHome() {
+type KarmaLogiHomeProps = {
+  locationRequired?: boolean;
+};
+
+export function KarmaLogiHome({ locationRequired = false }: KarmaLogiHomeProps) {
   const [showIntro, setShowIntro] = useState(true);
   const [lang, setLang] = useState<Lang>("en");
   const [activeGameId, setActiveGameId] = useState<string | null>(null);
   const [player, setPlayer] = useState<PlayerSession | null>(null);
   const [scores, setScores] = useState<PlayerScoreMap>({});
   const [sessionReady, setSessionReady] = useState(false);
+  const [checkingLocation, setCheckingLocation] = useState(false);
   const [notice, setNotice] = useState("");
 
   const finishIntro = useCallback(() => {
@@ -94,16 +100,31 @@ export function KarmaLogiHome() {
   );
 
   const selectGame = useCallback(
-    (gameId: string) => {
+    async (gameId: string) => {
       if (scores[gameId] !== undefined) {
         setNotice("You have already played this game with this mobile number.");
         return;
       }
 
+      if (locationRequired) {
+        setCheckingLocation(true);
+        setNotice("");
+
+        try {
+          const result = await verifyVenueLocation();
+          if (!result.ok) {
+            setNotice(result.message);
+            return;
+          }
+        } finally {
+          setCheckingLocation(false);
+        }
+      }
+
       setNotice("");
       setActiveGameId(gameId);
     },
-    [scores],
+    [locationRequired, scores],
   );
 
   const activeGame = activeGameId ? getGameById(activeGameId) : undefined;
@@ -213,6 +234,10 @@ export function KarmaLogiHome() {
           <p className="mb-4 rounded-xl border border-gold/20 bg-gold/10 px-4 py-3 text-center text-sm text-gold-bright shrink-0">
             {notice}
           </p>
+        ) : locationRequired ? (
+          <p className="mb-4 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-center text-xs text-text-muted shrink-0">
+            On-site play only — location is checked when you tap a game.
+          </p>
         ) : null}
 
         {/* Center Games List Container */}
@@ -233,7 +258,10 @@ export function KarmaLogiHome() {
                   game={game}
                   played={scores[game.id] !== undefined}
                   score={scores[game.id]}
-                  onSelect={selectGame}
+                  onSelect={(gameId) => {
+                    void selectGame(gameId);
+                  }}
+                  disabled={checkingLocation}
                 />
               </li>
             ))}
