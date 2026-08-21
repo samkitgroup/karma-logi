@@ -19,6 +19,7 @@ import {
   GAME_TITLE,
   LABELS,
   pickRandomPrakriti,
+  getKarmaDisplayName,
 } from "./content";
 import "./karma-chakra.css";
 import { GAME_DURATION_MS, formatGameTime } from "@/lib/game-config";
@@ -318,7 +319,15 @@ export function KarmaChakraGame({
       state.streak = 0;
       burst(particlesRef.current, bond.x, bond.y, COLORS.rust, 16);
       state.shake = 6;
-      showToast(LABELS[state.lang].bound, true);
+      
+      const correctKarmaName = getKarmaDisplayName(bond.k, state.lang);
+      const wrongMsg = state.lang === "hi"
+        ? `गलत! यह ${correctKarmaName} से संबंधित है।`
+        : state.lang === "gu"
+          ? `ખોટું! આ ${correctKarmaName} નું છે.`
+          : `Incorrect! It belongs to ${correctKarmaName}.`;
+      showToast(wrongMsg, true);
+
       playTone("bad", state.muted);
       haptic(90, state.reduced);
       showFeedback(index, bond.k);
@@ -339,7 +348,15 @@ export function KarmaChakraGame({
     state.met.add(bond.k);
     burst(particlesRef.current, layout.cx, layout.cy, COLORS.rust, 34);
     state.shake = 9;
-    showToast(LABELS[state.lang].reached, true);
+    
+    const correctKarmaName = getKarmaDisplayName(bond.k, state.lang);
+    const missedMsg = state.lang === "hi"
+      ? `प्रकृति आत्मा तक पहुँची! (सही: ${correctKarmaName})`
+      : state.lang === "gu"
+        ? `પ્રકૃતિ આત્મા સુધી પહોંચી! (સાચું: ${correctKarmaName})`
+        : `Prakriti reached Jiva! (Correct: ${correctKarmaName})`;
+    showToast(missedMsg, true);
+
     playTone("bad", state.muted);
     haptic([30, 60, 30], state.reduced);
     showFeedback(-1, bond.k);
@@ -659,14 +676,35 @@ export function KarmaChakraGame({
 
       <div className={`karma-chakra-screen ${mode === "start" ? "" : "hide"}`}>
         <div className="karma-chakra-screen-glow" aria-hidden />
-        <h1 className="karma-chakra-logotype">{GAME_TITLE}</h1>
-        <div className="karma-chakra-sub">{GAME_SUBTITLE}</div>
-        <p className="karma-chakra-pitch">
-          60 seconds · match each prakriti to its karma petal.
-        </p>
-        <button type="button" className="karma-chakra-cta" onClick={startGame}>
-          {labels.begin}
-        </button>
+        {/* Title Group */}
+        <div className="text-center mb-6">
+          <h1 className="karma-chakra-logotype">{GAME_TITLE}</h1>
+          <p className="karma-chakra-sub mt-2 max-w-[280px] mx-auto leading-relaxed">
+            {GAME_SUBTITLE}
+          </p>
+        </div>
+
+        {/* Grouped Instructions Card */}
+        <div className="mx-auto w-full max-w-sm rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-md shadow-[0_4px_24px_rgba(0,0,0,0.2)] mb-8">
+          <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-text-subtle border-b border-white/5 pb-2.5 mb-3.5 text-center">
+            How to Play
+          </p>
+          <ul className="space-y-3.5 pl-1 text-left">
+            {labels.rules.split("·").map((rule, idx) => (
+              <li key={idx} className="flex items-start gap-3 text-[15.5px] font-bold text-foreground">
+                <span className="mt-[8px] h-1.5 w-1.5 shrink-0 rounded-full bg-gold-bright shadow-[0_0_8px_rgba(255,184,0,0.8)]" />
+                <span className="leading-normal">{rule.trim()}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* CTA Play Button */}
+        <div className="flex justify-center">
+          <button type="button" className="karma-chakra-cta" onClick={startGame}>
+            {labels.begin}
+          </button>
+        </div>
       </div>
 
       <div className={`karma-chakra-screen ${mode === "over" ? "" : "hide"}`}>

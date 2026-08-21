@@ -5,6 +5,7 @@ export const QUEST_LABELS: Record<
   {
     title: string;
     subtitle: string;
+    rules: string;
     begin: string;
     badge: string;
     prompt: string;
@@ -28,6 +29,7 @@ export const QUEST_LABELS: Record<
   en: {
     title: "Karma Quest",
     subtitle: "Read the situation. Identify the karma.",
+    rules: "60 seconds · 30 situations · 4 options each.",
     begin: "BEGIN",
     badge: "Which karma is at work?",
     prompt: "Choose the karma",
@@ -50,6 +52,7 @@ export const QUEST_LABELS: Record<
   hi: {
     title: "Karma Quest",
     subtitle: "परिस्थिति पढ़ें। कर्म पहचानें।",
+    rules: "60 सेकंड · 30 परिस्थितियाँ · प्रत्येक में 4 विकल्प।",
     begin: "शुरू करें",
     badge: "कौन सा कर्म कार्यरत है?",
     prompt: "कर्म चुनें",
@@ -72,6 +75,7 @@ export const QUEST_LABELS: Record<
   gu: {
     title: "Karma Quest",
     subtitle: "પરિસ્થિતિ વાંચો. કર્મ ઓળખો.",
+    rules: "60 સેકન્ડ · 30 પરિસ્થિતિઓ · પ્રત્યેકમાં 4 વિકલ્પો.",
     begin: "શરૂ કરો",
     badge: "કયું કર્મ કાર્યરત છે?",
     prompt: "કર્મ પસંદ કરો",

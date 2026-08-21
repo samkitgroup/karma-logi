@@ -248,7 +248,7 @@ export function renderFrame(
   }
   drawJiva(ctx, layout, state, time, fontFamily);
   if (state.bond) {
-    drawBondWord(ctx, layout, state, deltaSec);
+    drawBondWord(ctx, layout, state, deltaSec, fontFamily);
   }
   drawFx(ctx, particles, motes, deltaSec);
 }
@@ -565,6 +565,7 @@ function drawBondWord(
   layout: Layout,
   state: GameState,
   deltaSec: number,
+  fontFamily: string,
 ) {
   const bond = state.bond;
   if (!bond) {
@@ -589,7 +590,7 @@ function drawBondWord(
     30,
     Math.max(16, ((layout.cx * 2 * 0.62) / Math.max(7, bond.text.length)) * 1.5),
   );
-  ctx.font = `${fontSize}px Georgia, serif`;
+  ctx.font = `${fontSize}px ${fontFamily}`;
   const textWidth = ctx.measureText(bond.text).width;
   const pad = 16;
   const halfWidth = textWidth / 2 + pad;

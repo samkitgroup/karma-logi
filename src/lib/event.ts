@@ -9,8 +9,8 @@ export const auspices = "Shri Jawahar Nagar Jain Sangh";
 export const sahebjis: Sahebji[] = [
   {
     id: "vijaysaiyambodhisurishwarji",
-    title: "P.P. Acharya Bhagwant",
-    name: "Shri Vijaysaiyambodhisurishwarji M.S.",
+    title: "P.P. Aacharya Bhagwant",
+    name: "Shri Saiyambodhisurishwarji M.S.",
   },
   {
     id: "krupabodhvijayji",

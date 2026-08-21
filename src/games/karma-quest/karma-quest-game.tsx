@@ -284,12 +284,20 @@ export function KarmaQuestGame({
       setFeedbackWrong(selectedId);
       setFeedbackCorrect(correctId);
       setShake(true);
-      showToast(labels.wrong, false);
+      
+      const correctKarmaName = round.options.find(o => o.id === correctId)?.name[lang] ?? "";
+      const feedbackMsg = lang === "hi" 
+        ? `गलत (सही: ${correctKarmaName})` 
+        : lang === "gu" 
+          ? `ખોટું (સાચું: ${correctKarmaName})` 
+          : `Wrong (Correct: ${correctKarmaName})`;
+      showToast(feedbackMsg, false);
+
       playTone("bad", mutedRef.current);
       haptic(90, reducedRef.current);
-      advanceAfter(FEEDBACK_MS);
+      advanceAfter(1600); // Give user enough time to see correct/wrong highlights and toast message
     },
-    [advanceAfter, grading, labels.solved, labels.wrong, mode, round, showToast],
+    [advanceAfter, grading, labels.solved, lang, mode, round, showToast],
   );
 
   useEffect(() => {
@@ -424,12 +432,35 @@ export function KarmaQuestGame({
       </div>
 
       <div className={`karma-quest-screen ${mode === "start" ? "" : "hide"}`}>
-        <h1 className="karma-quest-logotype">{labels.title}</h1>
-        <p className="karma-quest-sub">{labels.subtitle}</p>
-        <p className="karma-quest-sub">60 seconds · 30 situations · 4 options each.</p>
-        <button type="button" className="karma-quest-cta" onClick={startGame}>
-          {labels.begin}
-        </button>
+        {/* Title Group */}
+        <div className="text-center mb-6">
+          <h1 className="karma-quest-logotype">{labels.title}</h1>
+          <p className="mt-2 text-sm font-semibold tracking-wide text-gold-dim">
+            {labels.subtitle}
+          </p>
+        </div>
+
+        {/* Grouped Instructions Card */}
+        <div className="mx-auto w-full max-w-sm rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-md shadow-[0_4px_24px_rgba(0,0,0,0.2)] mb-8">
+          <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-text-subtle border-b border-white/5 pb-2.5 mb-3.5 text-center">
+            How to Play
+          </p>
+          <ul className="space-y-3.5 pl-1 text-left">
+            {labels.rules.split("·").map((rule, idx) => (
+              <li key={idx} className="flex items-start gap-3 text-[15.5px] font-bold text-foreground">
+                <span className="mt-[8px] h-1.5 w-1.5 shrink-0 rounded-full bg-gold-bright shadow-[0_0_8px_rgba(255,184,0,0.8)]" />
+                <span className="leading-normal">{rule.trim()}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* CTA Play Button */}
+        <div className="flex justify-center">
+          <button type="button" className="karma-quest-cta" onClick={startGame}>
+            {labels.begin}
+          </button>
+        </div>
       </div>
 
       <div className={`karma-quest-screen ${mode === "over" ? "" : "hide"}`}>

@@ -79,7 +79,7 @@
 }
 
 .karma-scramble-timer b {
-  font: 600 13px/1 system-ui, sans-serif;
+  font: 600 13px/1 var(--font-body), system-ui, sans-serif;
   color: var(--gold-hi);
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.06em;
@@ -350,10 +350,11 @@
 
 .karma-scramble-sub {
   margin-top: 10px;
-  max-width: 320px;
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--text-muted);
+  max-width: 380px;
+  font-size: 15.5px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--gold-dim);
 }
 
 .karma-scramble-cta {
@@ -361,23 +362,33 @@
   min-width: 180px;
   min-height: 52px;
   padding: 0 32px;
-  border: 1px solid var(--gold);
+  border: 1px solid rgba(0, 229, 255, 0.4);
   border-radius: 26px;
-  background: transparent;
-  color: var(--gold-hi);
-  font-size: 12px;
-  font-weight: 600;
+  background: linear-gradient(135deg, #00e5ff 0%, #7c3aed 100%);
+  color: #0d0f2b;
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 12.5px;
+  font-weight: 800;
   letter-spacing: 0.24em;
   text-indent: 0.24em;
   cursor: pointer;
-  box-shadow:
-    0 0 28px rgba(0, 229, 255, 0.35),
-    inset 0 0 0 1px rgba(168, 85, 247, 0.12);
+  box-shadow: 
+    0 4px 20px rgba(0, 229, 255, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.karma-scramble-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 6px 28px rgba(0, 229, 255, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 .karma-scramble-cta:active {
-  transform: scale(0.97);
-  background: rgba(8, 145, 178, 0.15);
+  transform: scale(0.97) translateY(0);
+  box-shadow: 
+    0 2px 10px rgba(0, 229, 255, 0.15);
 }
 
 .karma-scramble-stats {
@@ -448,3 +459,33 @@
     animation: none;
   }
 }
+
+/* Multilingual Legibility Overrides */
+.lang-hi .karma-scramble-hint,
+.lang-gu .karma-scramble-hint {
+  font-size: 17px;
+  line-height: 1.7;
+  font-style: normal;
+}
+
+.lang-hi .karma-scramble-tile,
+.lang-gu .karma-scramble-tile,
+.lang-hi .karma-scramble-slot,
+.lang-gu .karma-scramble-slot {
+  font-family: var(--font-body), sans-serif;
+}
+
+/* Hover effects for scramble buttons */
+@media (hover: hover) {
+  .karma-scramble-tile:hover:not(:disabled) {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 6px 20px rgba(0, 229, 255, 0.42);
+  }
+  .karma-scramble-back:hover:not(:disabled),
+  .karma-scramble-pill:hover:not(:disabled) {
+    border-color: var(--gold);
+    color: var(--gold-hi);
+    box-shadow: 0 0 12px rgba(0, 229, 255, 0.16);
+  }
+}
+

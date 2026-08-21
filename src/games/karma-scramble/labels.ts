@@ -5,6 +5,7 @@ export const SCRAMBLE_LABELS: Record<
   {
     title: string;
     subtitle: string;
+    rules: string;
     begin: string;
     badge: string;
     kindKarma: string;
@@ -26,6 +27,7 @@ export const SCRAMBLE_LABELS: Record<
   en: {
     title: "Karma Scramble",
     subtitle: "Unscramble the letters. Discover the word.",
+    rules: "60 seconds · easy names first, then harder.",
     begin: "BEGIN",
     badge: "Unscramble this Jain concept",
     kindKarma: "Eight karmas",
@@ -46,6 +48,7 @@ export const SCRAMBLE_LABELS: Record<
   hi: {
     title: "Karma Scramble",
     subtitle: "अक्षर सही क्रम में लगाएँ। शब्द खोजें।",
+    rules: "60 सेकंड · पहले आसान नाम, फिर कठिन।",
     begin: "शुरू करें",
     badge: "इस जैन अवधारणा को सही करें",
     kindKarma: "आठ कर्म",
@@ -66,6 +69,7 @@ export const SCRAMBLE_LABELS: Record<
   gu: {
     title: "Karma Scramble",
     subtitle: "અક્ષરો ગોઠવો. શબ્દ શોધો.",
+    rules: "60 સેકન્ડ · પહેલાં સરળ નામો, પછી અઘરાં.",
     begin: "શરૂ કરો",
     badge: "આ જૈન ખ્યાલ ઉકેલો",
     kindKarma: "આઠ કર્મ",

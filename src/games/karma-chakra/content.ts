@@ -65,6 +65,7 @@ export const LABELS: Record<
     correct: string;
     timeUp: string;
     totalScore: string;
+    rules: string;
   }
 > = {
   en: {
@@ -82,6 +83,7 @@ export const LABELS: Record<
     correct: "Correct",
     timeUp: "TIME'S UP",
     totalScore: "TOTAL NIRJARĀ",
+    rules: "60 seconds · match each prakriti to its karma petal.",
   },
   hi: {
     ghati: "घाती · आत्मघातक",
@@ -98,6 +100,7 @@ export const LABELS: Record<
     correct: "सही",
     timeUp: "समय समाप्त",
     totalScore: "कुल निर्जरा",
+    rules: "60 सेकंड · प्रत्येक प्रकृति को उसकी कर्म पंखुड़ी से मिलाएँ।",
   },
   gu: {
     ghati: "ઘાતી · આત્મઘાતક",
@@ -114,6 +117,7 @@ export const LABELS: Record<
     correct: "સાચા",
     timeUp: "સમય પૂરો",
     totalScore: "કુલ નિર્જરા",
+    rules: "60 સેકન્ડ · દરેક પ્રકૃતિને તેની કર્મ પાંખડી સાથે જોડો.",
   },
 };
 

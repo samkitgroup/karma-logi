@@ -32,7 +32,17 @@
   );
   --capsule-text: #2a2218;
   --capsule-label: #6b5a3e;
+  --font-body: var(--font-inter);
 }
+
+.lang-hi {
+  --font-body: var(--font-sahitya);
+}
+
+.lang-gu {
+  --font-body: var(--font-hind-vadodara);
+}
+
 
 @theme inline {
   --color-background: var(--background);
@@ -92,16 +102,16 @@ body {
   isolation: isolate;
   display: grid;
   place-items: center;
-  width: 3.75rem;
-  height: 3.75rem;
+  width: 4.5rem;
+  height: 4.5rem;
   margin-inline: auto;
-  border-radius: 1rem;
+  border-radius: 1.25rem;
   background: linear-gradient(145deg, #7c3aed 0%, #00b4d8 45%, #00e5ff 100%);
   box-shadow:
     0 0 36px rgba(0, 229, 255, 0.55),
     0 0 64px rgba(168, 85, 247, 0.3);
   font-family: var(--font-display), Georgia, serif;
-  font-size: 1.625rem;
+  font-size: 1.85rem;
   font-weight: 700;
   color: #041018;
 }
@@ -110,10 +120,10 @@ body {
   position: relative;
   display: grid;
   place-items: center;
-  width: 7.5rem;
-  height: 7.5rem;
+  width: 9.5rem;
+  height: 9.5rem;
   margin-inline: auto;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
 }
 
 .intro-chakra-backdrop {
@@ -230,23 +240,24 @@ body {
 .intro-subtitle {
   position: relative;
   z-index: 2;
-  font-size: clamp(0.5625rem, 2.2vw, 0.6875rem);
+  font-size: clamp(0.75rem, 2.8vw, 0.95rem);
   font-weight: 600;
   letter-spacing: 0.32em;
   text-indent: 0.32em;
   color: var(--gold-bright);
-  text-shadow: 0 0 22px rgba(0, 229, 255, 0.45);
+  text-shadow: 0 0 22px rgba(0, 229, 255, 0.35);
   user-select: text;
 }
 
 .intro-presents {
   position: relative;
   z-index: 2;
-  font-size: clamp(0.5rem, 2vw, 0.625rem);
-  font-weight: 600;
-  letter-spacing: 0.28em;
-  text-indent: 0.28em;
-  color: var(--gold-dim);
+  font-size: clamp(0.6875rem, 2.4vw, 0.85rem);
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-indent: 0.32em;
+  color: rgba(240, 244, 255, 0.7);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
   user-select: text;
 }
 
@@ -317,8 +328,10 @@ body {
   font-family: var(--font-body), system-ui, sans-serif;
   font-size: 1.125rem;
   font-weight: 700;
-  color: #f8fafc;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(4px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 @media (min-width: 640px) {
@@ -330,58 +343,72 @@ body {
 }
 
 .game-icon-cyan {
-  background: linear-gradient(145deg, #7c3aed, #00b4d8 55%, #00e5ff);
-  box-shadow: 0 0 28px rgba(0, 229, 255, 0.5);
+  background: radial-gradient(circle at 30% 30%, rgba(0, 229, 255, 0.35), rgba(124, 58, 237, 0.45));
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.25);
+  color: #00e5ff;
+  border-color: rgba(0, 229, 255, 0.4);
 }
 
 .game-icon-teal {
-  background: linear-gradient(145deg, #059669, #00f0b5);
-  box-shadow: 0 0 28px rgba(0, 240, 181, 0.45);
+  background: radial-gradient(circle at 30% 30%, rgba(0, 240, 181, 0.35), rgba(5, 150, 105, 0.45));
+  box-shadow: 0 0 20px rgba(0, 240, 181, 0.25);
+  color: #00f0b5;
+  border-color: rgba(0, 240, 181, 0.4);
 }
 
 .game-icon-gold {
-  background: linear-gradient(145deg, #ea580c, #ffb800 55%, #fde047);
-  box-shadow: 0 0 28px rgba(255, 184, 0, 0.45);
+  background: radial-gradient(circle at 30% 30%, rgba(253, 224, 71, 0.35), rgba(234, 88, 12, 0.45));
+  box-shadow: 0 0 20px rgba(255, 184, 0, 0.25);
+  color: #ffb800;
+  border-color: rgba(255, 184, 0, 0.4);
 }
 
 .game-icon-crimson {
-  background: linear-gradient(145deg, #be185d, #ff4da6 55%, #e879f9);
-  box-shadow: 0 0 28px rgba(255, 77, 166, 0.45);
+  background: radial-gradient(circle at 30% 30%, rgba(232, 121, 249, 0.35), rgba(190, 24, 93, 0.45));
+  box-shadow: 0 0 20px rgba(255, 77, 166, 0.25);
+  color: #ff4da6;
+  border-color: rgba(255, 77, 166, 0.4);
 }
 
 .sahebji-credit {
   margin-inline: auto;
-  padding: 14px 0;
-  border-top: 1px solid rgba(0, 229, 255, 0.22);
-  border-bottom: 1px solid rgba(236, 72, 153, 0.18);
-  max-width: 340px;
-  font-size: 10px;
-  line-height: 1.85;
-  letter-spacing: 0.1em;
+  padding: 20px 24px;
+  width: 90%;
+  max-width: 400px;
+  background: rgba(12, 14, 36, 0.55);
+  border: 1px solid rgba(0, 229, 255, 0.16);
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+  font-size: 11px;
+  line-height: 1.55;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--gold-dim);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
 }
 
 .sahebji-credit b {
   display: block;
-  margin-top: 0.15rem;
-  font-family: var(--font-display), Georgia, serif;
-  font-size: 11px;
-  font-weight: 600;
-  line-height: 1.5;
-  letter-spacing: 0.06em;
+  margin-top: 0.5rem;
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 14.5px;
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
   text-transform: none;
   color: var(--foreground);
 }
 
 .sahebji-credit-compact {
   margin-top: 0;
-  padding: 10px 0;
-  font-size: 9px;
+  padding: 16px 20px;
+  font-size: 10px;
+  width: 92%;
+  max-width: 380px;
 }
 
 .sahebji-credit-compact b {
-  font-size: 9px;
+  font-size: 13.5px;
 }
 
 .glow-gold {
@@ -588,34 +615,105 @@ body {
 .language-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 8px;
 }
 
 .language-row button {
-  border: 1px solid rgba(0, 229, 255, 0.28);
-  background: rgba(12, 14, 36, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
   color: var(--text-subtle);
-  min-height: 44px;
+  min-height: 40px;
   height: auto;
-  padding: 0 16px;
-  border-radius: 22px;
-  font: 600 11px/1 system-ui, sans-serif;
+  padding: 0 18px;
+  border-radius: 20px;
+  font: 600 11px/1 var(--font-body), system-ui, sans-serif;
   letter-spacing: 0.1em;
   cursor: pointer;
-  transition:
-    background 0.15s ease,
-    border-color 0.15s ease,
-    color 0.15s ease,
-    box-shadow 0.15s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.language-row button:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #fff;
 }
 
 .language-row button.on {
-  background: rgba(168, 85, 247, 0.2);
-  border-color: rgba(0, 229, 255, 0.5);
+  background: rgba(255, 184, 0, 0.12);
+  border-color: rgba(255, 184, 0, 0.55);
   color: var(--gold-bright);
-  box-shadow: 0 0 16px rgba(0, 229, 255, 0.25);
+  box-shadow: 0 0 16px rgba(255, 184, 0, 0.25);
 }
 
 .language-row button:active {
   transform: scale(0.97);
+}
+
+/* Indic Script Font Scaling for Hindi (Sahitya) & Gujarati (Hind Vadodara) */
+.lang-hi, 
+.lang-gu {
+  font-size: 1.05rem;
+}
+
+/* Specific elements scaling to balance visual weights of complex glyphs */
+.lang-hi .karma-quest-sub,
+.lang-gu .karma-quest-sub,
+.lang-hi .karma-scramble-sub,
+.lang-gu .karma-scramble-sub {
+  font-size: 17px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
+  line-height: 1.6 !important;
+  max-width: 440px !important;
+}
+
+.lang-hi .karma-quest-situation,
+.lang-gu .karma-quest-situation {
+  font-size: 19px !important;
+  font-weight: 700 !important;
+  line-height: 1.65 !important;
+}
+
+.lang-hi .karma-quest-option-name,
+.lang-gu .karma-quest-option-name {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+}
+
+.lang-hi .karma-chakra-pitch,
+.lang-gu .karma-chakra-pitch {
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.08em !important;
+  line-height: 1.6 !important;
+  max-width: 420px !important;
+}
+
+.lang-hi .karma-quest-cta,
+.lang-gu .karma-quest-cta,
+.lang-hi .karma-scramble-cta,
+.lang-gu .karma-scramble-cta,
+.lang-hi .karma-chakra-cta,
+.lang-gu .karma-chakra-cta {
+  font-size: 15.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+}
+
+.lang-hi .karma-quest-toast,
+.lang-gu .karma-quest-toast {
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+}
+
+/* Grouped instructions list items scaling for Hindi & Gujarati */
+.lang-hi .karma-quest-screen li,
+.lang-gu .karma-quest-screen li,
+.lang-hi .karma-scramble-screen li,
+.lang-gu .karma-scramble-screen li,
+.lang-hi .karma-chakra-screen li,
+.lang-gu .karma-chakra-screen li {
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  line-height: 1.5 !important;
 }

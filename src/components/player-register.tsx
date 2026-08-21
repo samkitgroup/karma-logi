@@ -54,7 +54,7 @@ export function PlayerRegister({ onRegistered }: PlayerRegisterProps) {
               required
               minLength={2}
               maxLength={100}
-              className="w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-base text-foreground outline-none transition focus:border-gold/40"
+              className="w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-base text-foreground outline-none transition focus:border-gold focus:shadow-[0_0_12px_rgba(0,229,255,0.25)]"
               placeholder="Your name"
             />
           </label>
@@ -72,7 +72,7 @@ export function PlayerRegister({ onRegistered }: PlayerRegisterProps) {
               required
               minLength={10}
               maxLength={15}
-              className="w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-base text-foreground outline-none transition focus:border-gold/40"
+              className="w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-base text-foreground outline-none transition focus:border-gold focus:shadow-[0_0_12px_rgba(0,229,255,0.25)]"
               placeholder="10-digit mobile"
             />
           </label>
