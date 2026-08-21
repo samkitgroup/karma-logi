@@ -1,0 +1,421 @@
+.karma-quest-root {
+  --ink: var(--background);
+  --panel: var(--panel);
+  --hair: var(--hair);
+  --gold: var(--gold);
+  --gold-hi: var(--gold-bright);
+  --gold-dim: var(--gold-dim);
+  --parch: var(--parch);
+  --ghati: var(--ghati);
+  --aghati: var(--aghati);
+  --rust: var(--rust);
+  --mute: var(--mute);
+  --text-muted: var(--text-muted);
+  --glass: var(--glass);
+  --violet: var(--violet);
+  --st: env(safe-area-inset-top, 0px);
+  --sb: env(safe-area-inset-bottom, 0px);
+}
+
+.karma-quest-root {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 120% 80% at 50% -10%, rgba(0, 229, 255, 0.14), transparent 55%),
+    radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.14), transparent 40%),
+    var(--ink);
+  color: var(--parch);
+}
+
+.karma-quest-top {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: calc(var(--st) + 10px) 14px 10px;
+}
+
+.karma-quest-back,
+.karma-quest-pill {
+  height: 40px;
+  min-width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 11px;
+  border: 1px solid var(--hair);
+  border-radius: 17px;
+  background: var(--glass);
+  backdrop-filter: blur(8px);
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.karma-quest-back {
+  padding: 0 14px;
+}
+
+.karma-quest-back:active,
+.karma-quest-pill:active {
+  transform: scale(0.96);
+}
+
+.karma-quest-title {
+  flex: 1;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-shadow: 0 0 18px rgba(0, 229, 255, 0.35);
+}
+
+.karma-quest-timer b {
+  font: 600 13px/1 system-ui, sans-serif;
+  color: var(--gold-hi);
+  font-variant-numeric: tabular-nums;
+}
+
+.karma-quest-track {
+  height: 2px;
+  margin: 0 14px 8px;
+  border-radius: 2px;
+  background: rgba(15, 23, 42, 0.95);
+  overflow: hidden;
+}
+
+.karma-quest-track i {
+  display: block;
+  height: 100%;
+  width: 0;
+  margin-left: auto;
+  transform-origin: right;
+  background: linear-gradient(270deg, var(--rust), var(--gold));
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.55);
+  transition: width 0.1s linear;
+}
+
+.karma-quest-main {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: calc(100dvh - var(--st) - 72px - var(--sb));
+  padding: 8px 14px calc(var(--sb) + 14px);
+  overflow-y: auto;
+}
+
+.karma-quest-score-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+.karma-quest-score-row b {
+  color: var(--gold-hi);
+  font-size: 14px;
+}
+
+.karma-quest-card {
+  border-radius: 18px;
+  border: 1px solid var(--hair);
+  background: var(--panel);
+  box-shadow:
+    0 0 0 1px rgba(0, 229, 255, 0.08) inset,
+    0 16px 48px rgba(0, 0, 0, 0.45),
+    0 0 40px rgba(0, 229, 255, 0.1);
+  padding: 18px 16px;
+}
+
+.karma-quest-card.shake {
+  animation: karma-quest-shake 0.45s ease;
+}
+
+.karma-quest-badge {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(0, 229, 255, 0.12);
+  border: 1px solid rgba(0, 229, 255, 0.22);
+  color: var(--gold-dim);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.karma-quest-situation {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--parch);
+}
+
+.karma-quest-prompt {
+  margin-top: 14px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--gold-dim);
+}
+
+.karma-quest-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.karma-quest-option {
+  min-height: 56px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--hair);
+  background: var(--glass);
+  color: var(--parch);
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.12s, border-color 0.12s, box-shadow 0.12s;
+}
+
+.karma-quest-option:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.karma-quest-option:disabled {
+  cursor: default;
+  opacity: 0.9;
+}
+
+.karma-quest-option.ghati {
+  border-left: 3px solid var(--ghati);
+}
+
+.karma-quest-option.aghati {
+  border-left: 3px solid var(--aghati);
+}
+
+.karma-quest-option.selected-wrong {
+  border-color: var(--rust);
+  box-shadow: 0 0 16px rgba(255, 99, 99, 0.25);
+  background: rgba(255, 99, 99, 0.1);
+}
+
+.karma-quest-option.selected-correct {
+  border-color: var(--aghati);
+  box-shadow: 0 0 16px rgba(0, 240, 181, 0.3);
+  background: rgba(0, 240, 181, 0.1);
+}
+
+.karma-quest-option.reveal-correct {
+  border-color: var(--aghati);
+  box-shadow: 0 0 16px rgba(0, 240, 181, 0.35);
+  background: rgba(0, 240, 181, 0.08);
+}
+
+.karma-quest-option-name {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.karma-quest-option-tag {
+  display: block;
+  margin-top: 4px;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+.karma-quest-skip {
+  min-height: 46px;
+  border-radius: 14px;
+  border: 1px solid rgba(168, 85, 247, 0.35);
+  background: var(--glass);
+  color: var(--gold-hi);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.karma-quest-skip:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.karma-quest-toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--sb) + 24px);
+  z-index: 30;
+  transform: translate(-50%, 12px);
+  opacity: 0;
+  pointer-events: none;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: var(--glass);
+  border: 1px solid var(--hair);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.karma-quest-toast.on {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.karma-quest-toast.bad {
+  border-color: rgba(255, 99, 99, 0.45);
+  color: var(--rust);
+}
+
+.karma-quest-toast.good {
+  border-color: rgba(0, 240, 181, 0.45);
+  color: var(--aghati);
+}
+
+.karma-quest-screen {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--st) + 24px) 24px calc(var(--sb) + 24px);
+  background: rgba(9, 11, 30, 0.94);
+  backdrop-filter: blur(8px);
+  text-align: center;
+}
+
+.karma-quest-screen.hide {
+  display: none;
+}
+
+.karma-quest-logotype {
+  margin: 0;
+  font-size: clamp(28px, 8vw, 38px);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  background: linear-gradient(135deg, #f0feff 0%, #00e5ff 38%, #a855f7 72%, #ec4899 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.karma-quest-sub {
+  margin-top: 10px;
+  max-width: 320px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.karma-quest-cta {
+  margin-top: 28px;
+  min-width: 180px;
+  min-height: 52px;
+  padding: 0 32px;
+  border: 1px solid var(--gold);
+  border-radius: 26px;
+  background: transparent;
+  color: var(--gold-hi);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-indent: 0.24em;
+  cursor: pointer;
+  box-shadow:
+    0 0 28px rgba(0, 229, 255, 0.35),
+    inset 0 0 0 1px rgba(168, 85, 247, 0.12);
+}
+
+.karma-quest-cta:active {
+  transform: scale(0.97);
+  background: rgba(8, 145, 178, 0.15);
+}
+
+.karma-quest-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+  max-width: 360px;
+  margin-top: 20px;
+}
+
+.karma-quest-stat {
+  padding: 10px 8px;
+  border-radius: 12px;
+  background: var(--glass);
+  border: 1px solid var(--hair);
+}
+
+.karma-quest-stat u {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--gold-hi);
+  text-decoration: none;
+}
+
+.karma-quest-stat s {
+  display: block;
+  margin-top: 4px;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  color: var(--mute);
+}
+
+@keyframes karma-quest-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20%,
+  60% {
+    transform: translateX(-6px);
+  }
+  40%,
+  80% {
+    transform: translateX(6px);
+  }
+}
+
+@media (min-width: 480px) {
+  .karma-quest-main {
+    max-width: 480px;
+    margin-inline: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .karma-quest-root * {
+    transition-duration: 0.01ms !important;
+  }
+
+  .karma-quest-card.shake {
+    animation: none;
+  }
+}

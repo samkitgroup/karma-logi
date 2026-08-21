@@ -1,75 +1,82 @@
-import Link from "next/link";
-
-import type { KarmaGame } from "@/lib/games";
+import type { GameAccent, KarmaGame } from "@/lib/games";
+import { GAME_DURATION_SEC } from "@/lib/game-config";
 
 type GameCardProps = {
   game: KarmaGame;
+  played?: boolean;
+  score?: number;
+  onSelect: (gameId: string) => void;
 };
 
-export function GameCard({ game }: GameCardProps) {
-  const isGrowth = game.category === "growth";
-  const isAvailable = game.status === "available";
+const accentIconClass: Record<GameAccent, string> = {
+  cyan: "game-icon-cyan",
+  teal: "game-icon-teal",
+  gold: "game-icon-gold",
+  crimson: "game-icon-crimson",
+};
 
-  const cardContent = (
-    <div className="flex gap-4">
-      <div
-        className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-full sm:h-16 sm:w-16 ${
-          isGrowth ? "orb-light glow-gold" : "orb-shadow glow-shadow"
-        }`}
-      >
-        <span
-          className={`font-serif text-lg font-semibold sm:text-xl ${
-            isGrowth ? "text-gold-gradient" : "text-gold-bright"
-          }`}
-        >
-          {game.title.charAt(0)}
-        </span>
-      </div>
+const accentStripeClass: Record<GameAccent, string> = {
+  cyan: "game-card-stripe-cyan",
+  teal: "game-card-stripe-teal",
+  gold: "game-card-stripe-gold",
+  crimson: "game-card-stripe-crimson",
+};
 
-      <div className="min-w-0 flex-1">
-        <div className="flex items-start justify-between gap-2">
-          <span
-            className={`rounded-full px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wider ${
-              isGrowth
-                ? "border border-gold/30 bg-gold/10 text-gold-bright"
-                : "border border-gold-dim/40 bg-black/20 text-text-muted"
-            }`}
-          >
-            {game.concept}
-          </span>
-          <span
-            className={`shrink-0 text-[9px] font-semibold uppercase tracking-wider ${
-              isAvailable ? "text-ghati" : "text-gold-dim"
-            }`}
-          >
-            {isAvailable ? "Play" : "Soon"}
-          </span>
-        </div>
+export function GameCard({ game, played = false, score, onSelect }: GameCardProps) {
+  const isAvailable = game.status === "available" && !played;
+  const isLocked = game.status === "available" && played;
 
-        <h3 className="mt-2 font-serif text-lg tracking-wide text-gold-gradient sm:text-xl">
-          {game.title}
-        </h3>
-
-        <p className="mt-1.5 text-sm leading-relaxed text-text-muted">
-          {game.description}
-        </p>
-      </div>
-    </div>
-  );
-
-  const className = `glass-panel block rounded-2xl p-4 transition duration-300 active:scale-[0.99] sm:p-5 ${
+  const className = `game-card-link game-card ${accentStripeClass[game.accent]} glass-panel relative block w-full overflow-hidden rounded-2xl p-4 text-left transition duration-300 sm:p-5 ${
     isAvailable
-      ? "cursor-pointer sm:hover:border-gold/35 sm:hover:glow-gold"
-      : "cursor-default opacity-75"
+      ? "game-card-live active:scale-[0.98] sm:hover:glow-gold"
+      : isLocked
+        ? "opacity-70"
+        : "opacity-80"
   }`;
 
-  if (isAvailable) {
-    return (
-      <Link href={game.href} className={className}>
-        {cardContent}
-      </Link>
-    );
-  }
+  const badgeLabel =
+    game.status === "coming-soon"
+      ? "Soon"
+      : played
+        ? `Played · ${score ?? 0}`
+        : "Play";
 
-  return <article className={className}>{cardContent}</article>;
+  return (
+    <button
+      type="button"
+      className={className}
+      onClick={() => onSelect(game.id)}
+      disabled={game.status !== "available"}
+    >
+      <div className="flex items-center gap-3.5 sm:gap-4">
+        <div className={`game-icon ${accentIconClass[game.accent]}`}>
+          {game.number}
+        </div>
+
+        <div className="min-w-0 flex-1">
+          <div className="flex items-start justify-between gap-2">
+            <h3 className="text-base font-semibold tracking-wide text-foreground sm:text-xl">
+              {game.title}
+            </h3>
+            <span
+              className={`shrink-0 rounded-full px-2.5 py-1 text-[9px] font-semibold uppercase tracking-wider ${
+                isAvailable
+                  ? "bg-gold/20 text-gold shadow-[0_0_14px_rgba(0,229,255,0.45)]"
+                  : played
+                    ? "bg-white/10 text-text-muted"
+                    : "bg-white/5 text-text-subtle"
+              }`}
+            >
+              {badgeLabel}
+            </span>
+          </div>
+
+          <p className="mt-1.5 text-sm leading-snug text-gold-dim">{game.description}</p>
+          <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-text-subtle">
+            {played ? "Completed" : `${GAME_DURATION_SEC}s round`}
+          </p>
+        </div>
+      </div>
+    </button>
+  );
 }

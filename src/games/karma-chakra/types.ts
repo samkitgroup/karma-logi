@@ -1,6 +1,6 @@
 export type Lang = "en" | "hi" | "gu";
 
-export type GameMode = "start" | "play" | "learn" | "over";
+export type GameMode = "start" | "play" | "over";
 
 export type BondFx = "veil" | "pulse" | "shift" | "echo" | "bars" | "glow";
 
@@ -16,6 +16,7 @@ export type WordEntry = [string, number, BondFx];
 
 export type Bond = {
   text: string;
+  prakritiId: string;
   k: number;
   fx: BondFx;
   x: number;
@@ -75,14 +76,17 @@ export type GameState = {
   score: number;
   streak: number;
   best: number;
-  lives: number;
   hits: number;
   tries: number;
   met: Set<number>;
-  deck: number[];
   bond: Bond | null;
   drag: boolean;
   target: number;
+  feedbackWrong: number;
+  feedbackCorrect: number;
+  feedbackUntil: number;
+  grading: boolean;
+  endsAt: number;
   muted: boolean;
   shake: number;
   pulse: number;

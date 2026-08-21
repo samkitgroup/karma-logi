@@ -267,16 +267,16 @@ function drawBackground(
     layout.cy - height * 0.06,
     Math.max(width, height) * 0.8,
   );
-  gradient.addColorStop(0, "#171105");
-  gradient.addColorStop(0.42, "#0b0a07");
-  gradient.addColorStop(1, "#050406");
+  gradient.addColorStop(0, COLORS.inkMid);
+  gradient.addColorStop(0.42, COLORS.ink);
+  gradient.addColorStop(1, COLORS.inkDeep);
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, width, height);
 
   for (const star of stars) {
     ctx.globalAlpha =
       0.1 + Math.abs(Math.sin(time / 2400 + star.tw)) * 0.3 * star.a;
-    ctx.fillStyle = "#d9bd78";
+    ctx.fillStyle = COLORS.star;
     ctx.beginPath();
     ctx.arc(star.x * width, star.y * height, star.s, 0, 7);
     ctx.fill();
@@ -292,8 +292,8 @@ function drawBackground(
       layout.cy,
       Math.max(width, height) * 0.75,
     );
-    vignette.addColorStop(0, "rgba(180,87,58,0)");
-    vignette.addColorStop(1, `rgba(180,87,58,${(state.pulse * 0.3).toFixed(3)})`);
+    vignette.addColorStop(0, "rgba(255, 99, 99, 0)");
+    vignette.addColorStop(1, `rgba(255, 77, 166, ${(state.pulse * 0.32).toFixed(3)})`);
     ctx.fillStyle = vignette;
     ctx.fillRect(0, 0, width, height);
   }
@@ -309,7 +309,7 @@ function drawMandala(
   const { cx, cy, r } = layout;
   ctx.save();
   ctx.translate(cx, cy);
-  ctx.strokeStyle = "#4d3f20";
+  ctx.strokeStyle = COLORS.mandala;
   ctx.lineWidth = 1;
   ctx.globalAlpha = 0.5;
   for (const scale of [0.4, 0.7, 1.34]) {
@@ -363,7 +363,9 @@ function drawPetals(
   for (let i = 0; i < 8; i++) {
     const petal = petalPos(layout, i);
     const karma = KARMAS[i];
-    const isTarget = state.target === i;
+    const isTarget = state.target === i && state.feedbackWrong < 0;
+    const isWrong = state.feedbackWrong === i;
+    const isCorrect = state.feedbackCorrect === i;
     const accent = karma.g ? COLORS.ghati : COLORS.aghati;
 
     ctx.save();
@@ -371,34 +373,66 @@ function drawPetals(
     if (isTarget && !state.reduced) {
       ctx.scale(1.08, 1.08);
     }
+    if (isWrong || isCorrect) {
+      ctx.scale(1.1, 1.1);
+    }
     ctx.rotate(petal.a - Math.PI / 2);
     petalPath(ctx, pw, out, into);
-    ctx.fillStyle = isTarget ? "#241a0c" : "#100d07";
+
+    if (isWrong) {
+      ctx.fillStyle = "rgba(255, 99, 99, 0.22)";
+      ctx.strokeStyle = COLORS.rust;
+      ctx.lineWidth = 2.2;
+    } else if (isCorrect) {
+      ctx.fillStyle = "rgba(74, 222, 128, 0.22)";
+      ctx.strokeStyle = COLORS.correct;
+      ctx.lineWidth = 2.2;
+    } else {
+      ctx.fillStyle = isTarget
+        ? COLORS.petalActive
+        : karma.g
+          ? COLORS.petalGhati
+          : COLORS.petalAghati;
+      ctx.lineWidth = isTarget ? 1.6 : 1;
+      ctx.strokeStyle = isTarget ? COLORS.goldHi : accent;
+    }
+
     ctx.fill();
-    ctx.lineWidth = isTarget ? 1.6 : 1;
-    ctx.strokeStyle = isTarget ? COLORS.goldHi : accent;
-    ctx.globalAlpha = isTarget ? 1 : 0.62;
+    ctx.globalAlpha = isWrong || isCorrect || isTarget ? 1 : 0.62;
     ctx.stroke();
     ctx.globalAlpha = 1;
     ctx.restore();
 
     const lines = karma.n[lang];
     const glyphY = petal.y - (lines.length > 1 ? pw * 0.52 : pw * 0.42);
+    const glyphColor = isWrong
+      ? COLORS.rust
+      : isCorrect
+        ? COLORS.correct
+        : isTarget
+          ? COLORS.goldHi
+          : accent;
     drawGlyph(
       ctx,
       karma.glyph,
       petal.x,
       glyphY,
       pw * 0.27,
-      isTarget ? COLORS.goldHi : accent,
-      isTarget ? 1 : 0.72,
-      isTarget ? 1.5 : 1.15,
+      glyphColor,
+      isWrong || isCorrect || isTarget ? 1 : 0.72,
+      isWrong || isCorrect ? 1.6 : isTarget ? 1.5 : 1.15,
     );
 
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillStyle = isTarget ? COLORS.goldHi : COLORS.parch;
-    ctx.globalAlpha = isTarget ? 1 : 0.88;
+    ctx.fillStyle = isWrong
+      ? COLORS.rust
+      : isCorrect
+        ? COLORS.correct
+        : isTarget
+          ? COLORS.goldHi
+          : COLORS.parch;
+    ctx.globalAlpha = isWrong || isCorrect || isTarget ? 1 : 0.88;
     const fontSize = fitFont(ctx, lines, pw * 1.78, fontFamily);
     const base = petal.y + (lines.length > 1 ? pw * 0.1 : pw * 0.2);
     lines.forEach((line, index) => {
@@ -469,21 +503,21 @@ function drawJiva(
     cy,
     radius + breathe,
   );
-  soulGradient.addColorStop(0, "#fff6dd");
-  soulGradient.addColorStop(0.5, "#f0cf83");
-  soulGradient.addColorStop(1, "#8d6a2a");
+  soulGradient.addColorStop(0, COLORS.goldHi);
+  soulGradient.addColorStop(0.5, COLORS.gold);
+  soulGradient.addColorStop(1, COLORS.accentCyan);
   ctx.fillStyle = soulGradient;
   ctx.beginPath();
   ctx.arc(cx, cy, radius * 0.52 + breathe, 0, 7);
   ctx.fill();
-  ctx.strokeStyle = "#a3823c";
+  ctx.strokeStyle = COLORS.goldDim;
   ctx.lineWidth = 1;
   ctx.globalAlpha = 0.7;
   ctx.beginPath();
   ctx.arc(cx, cy, radius, 0, 7);
   ctx.stroke();
   ctx.globalAlpha = 1;
-  ctx.fillStyle = "#a1885a";
+  ctx.fillStyle = COLORS.mute;
   ctx.textAlign = "center";
   ctx.font = `600 8px ${fontFamily}`;
   ctx.fillText("JĪVA", cx, cy + radius + 16);
@@ -507,8 +541,8 @@ function drawThread(
   ctx.save();
   ctx.setLineDash(danger ? [3, 7] : []);
   ctx.strokeStyle = danger
-    ? `rgba(180,87,58,${(0.25 + state.pulse * 0.5).toFixed(2)})`
-    : "rgba(244,227,180,.75)";
+    ? `rgba(255, 99, 99, ${(0.25 + state.pulse * 0.5).toFixed(2)})`
+    : "rgba(0, 229, 255, 0.78)";
   ctx.lineWidth = danger ? 1 : 1.8;
   ctx.beginPath();
   ctx.moveTo(bond.x, bond.y);
@@ -563,16 +597,16 @@ function drawBondWord(
   } else {
     ctx.rect(-halfWidth, -halfHeight, halfWidth * 2, halfHeight * 2);
   }
-  ctx.fillStyle = "#0e0b06e6";
+  ctx.fillStyle = COLORS.panel;
   ctx.fill();
-  ctx.strokeStyle = state.drag ? COLORS.goldHi : "#6d5729";
+  ctx.strokeStyle = state.drag ? COLORS.goldHi : COLORS.panelBorder;
   ctx.lineWidth = state.drag ? 1.5 : 1;
   ctx.stroke();
 
   if (bond.fx === "bars") {
     ctx.save();
     ctx.clip();
-    ctx.strokeStyle = "#6d5729";
+    ctx.strokeStyle = COLORS.panelBorder;
     ctx.globalAlpha = 0.55;
     for (let x = -halfWidth; x < halfWidth; x += 13) {
       ctx.beginPath();

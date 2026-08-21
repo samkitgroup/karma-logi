@@ -1,15 +1,18 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import { ChakraMotif } from "@/components/chakra-motif";
 import { SahebjiBanner } from "@/components/sahebji-banner";
 import { auspices } from "@/lib/event";
 
 const INTRO_MS = 5500;
 
-export function IntroSplash() {
-  const router = useRouter();
+type IntroSplashProps = {
+  onComplete: () => void;
+};
+
+export function IntroSplash({ onComplete }: IntroSplashProps) {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
@@ -20,15 +23,15 @@ export function IntroSplash() {
 
       if (elapsed >= INTRO_MS) {
         window.clearInterval(interval);
-        router.replace("/games");
+        onComplete();
       }
     }, 50);
 
     return () => window.clearInterval(interval);
-  }, [router]);
+  }, [onComplete]);
 
   function skipIntro() {
-    router.replace("/games");
+    onComplete();
   }
 
   return (
@@ -45,9 +48,17 @@ export function IntroSplash() {
       className="intro-splash cosmic-vignette relative flex min-h-[100dvh] w-full cursor-pointer flex-col overflow-hidden cosmic-bg outline-none"
       aria-label="Skip intro and go to games"
     >
-      <div className="relative z-10 flex min-h-[100dvh] flex-col px-4 pb-8">
-        <div className="flex flex-1 flex-col items-center justify-center text-center">
-          <p className="intro-presents mb-3 uppercase">{auspices} Presents</p>
+      <div className="pointer-events-none absolute left-1/2 top-[38%] z-0 -translate-x-1/2 -translate-y-1/2 opacity-70">
+        <ChakraMotif size={320} />
+      </div>
+
+      <div className="safe-x safe-bottom relative z-10 flex min-h-[100dvh] flex-col px-4 pb-8">
+        <div className="flex flex-1 flex-col items-center justify-center px-1 text-center">
+          <div className="intro-brand-mark animate-float touch-target" aria-hidden>
+            K
+          </div>
+
+          <p className="intro-presents mb-3 mt-4 uppercase">{auspices} Presents</p>
 
           <div className="intro-hero mx-auto max-w-md sm:max-w-lg">
             <div className="intro-logotype-rule mb-3" aria-hidden />
@@ -58,7 +69,7 @@ export function IntroSplash() {
           <p className="intro-subtitle mt-4 uppercase">The Jain Scientific Expo</p>
         </div>
 
-        <footer className="shrink-0">
+        <footer className="safe-bottom shrink-0">
           <SahebjiBanner variant="compact" />
 
           <div className="mx-auto mt-5 w-full max-w-[15rem] sm:max-w-xs">

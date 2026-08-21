@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { haptic, playTone, resumeAudio } from "./audio";
@@ -16,42 +15,49 @@ import {
 } from "./canvas-renderer";
 import {
   COLORS,
-  formatKarmaName,
+  findPrakritiById,
   GAME_SUBTITLE,
   GAME_TITLE,
+  getKarmaDisplayName,
   KARMAS,
   LABELS,
-  WORDS,
+  pickRandomPrakriti,
 } from "./content";
 import "./karma-chakra.css";
+import { GAME_DURATION_MS, formatGameTime } from "@/lib/game-config";
+import type { Lang } from "@/lib/language";
 import type {
   GameMode,
   GameState,
-  Lang,
-  LearnState,
   Mote,
   Particle,
   ResultState,
   Star,
 } from "./types";
 
-function createInitialState(reduced: boolean): GameState {
+const FEEDBACK_MS = 750;
+const SPAWN_DELAY_MS = 280;
+
+function createInitialState(reduced: boolean, lang: Lang): GameState {
   return {
     mode: "start",
-    lang: "en",
+    lang,
     round: 0,
-    total: 16,
+    total: 0,
     score: 0,
     streak: 0,
     best: 0,
-    lives: 3,
     hits: 0,
     tries: 0,
     met: new Set<number>(),
-    deck: [],
     bond: null,
     drag: false,
     target: -1,
+    feedbackWrong: -1,
+    feedbackCorrect: -1,
+    feedbackUntil: 0,
+    grading: false,
+    endsAt: 0,
     muted: false,
     shake: 0,
     pulse: 0,
@@ -59,44 +65,43 @@ function createInitialState(reduced: boolean): GameState {
   };
 }
 
-export function KarmaChakraGame() {
+export function KarmaChakraGame({
+  onExit,
+  lang: langProp,
+  onComplete,
+}: {
+  onExit: () => void;
+  lang: Lang;
+  onComplete?: (score: number) => void;
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const stateRef = useRef<GameState>(
     createInitialState(
       typeof window !== "undefined" &&
         window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+      langProp,
     ),
   );
   const layoutRef = useRef(computeLayout(390, 844));
   const starsRef = useRef<Star[]>(createStars());
   const particlesRef = useRef<Particle[]>([]);
   const motesRef = useRef<Mote[]>([]);
-  const learnTimerRef = useRef<number | null>(null);
   const toastTimerRef = useRef<number | null>(null);
   const coachTimerRef = useRef<number | null>(null);
+  const spawnTimerRef = useRef<number | null>(null);
   const frameRef = useRef<number | null>(null);
   const lastFrameRef = useRef(0);
+  const lastUiSyncRef = useRef(0);
 
   const [mode, setMode] = useState<GameMode>("start");
   const [lang, setLang] = useState<Lang>("en");
   const [score, setScore] = useState(0);
-  const [lives, setLives] = useState(3);
   const [streak, setStreak] = useState(0);
-  const [progress, setProgress] = useState(0);
+  const [timeLeftMs, setTimeLeftMs] = useState(GAME_DURATION_MS);
+  const [timeProgress, setTimeProgress] = useState(100);
   const [toast, setToast] = useState({ text: "", bad: false, visible: false });
   const [coachVisible, setCoachVisible] = useState(true);
   const [muted, setMuted] = useState(false);
-  const [learn, setLearn] = useState<LearnState>({
-    open: false,
-    tag: "",
-    tagClass: "g",
-    name: "",
-    native: "",
-    simile: "",
-    fn: "",
-    nextLabel: "NEXT",
-    timerProgress: 1,
-  });
   const [result, setResult] = useState<ResultState>({
     verdict: "JOURNEY COMPLETE",
     score: 0,
@@ -108,14 +113,27 @@ export function KarmaChakraGame() {
 
   const syncUi = useCallback(() => {
     const state = stateRef.current;
+    const remaining = Math.max(0, state.endsAt - Date.now());
     setMode(state.mode);
     setLang(state.lang);
     setScore(state.score);
-    setLives(state.lives);
     setStreak(state.streak);
-    setProgress((state.round / state.total) * 100);
+    setTimeLeftMs(remaining);
+    setTimeProgress(state.endsAt ? (remaining / GAME_DURATION_MS) * 100 : 100);
     setMuted(state.muted);
   }, []);
+
+  useEffect(() => {
+    stateRef.current.lang = langProp;
+    const bond = stateRef.current.bond;
+    if (bond?.prakritiId) {
+      const prakriti = findPrakritiById(bond.prakritiId);
+      if (prakriti) {
+        bond.text = prakriti.names[langProp];
+      }
+    }
+    syncUi();
+  }, [langProp, syncUi]);
 
   const showToast = useCallback((text: string, bad = false) => {
     setToast({ text, bad, visible: true });
@@ -127,39 +145,32 @@ export function KarmaChakraGame() {
     }, 900);
   }, []);
 
-  const buildDeck = useCallback(() => {
-    const deck: number[] = [];
-    for (let i = 0; i < 8; i++) {
-      deck.push(i, i);
-    }
-    for (let i = deck.length - 1; i > 0; i--) {
-      const j = (Math.random() * (i + 1)) | 0;
-      [deck[i], deck[j]] = [deck[j], deck[i]];
-    }
-    for (let i = 1; i < deck.length; i++) {
-      if (deck[i] === deck[i - 1] && i + 1 < deck.length) {
-        [deck[i], deck[i + 1]] = [deck[i + 1], deck[i]];
-      }
-    }
-    stateRef.current.deck = deck;
-  }, []);
-
   const finish = useCallback(
-    (dead = false) => {
+    (timeUp = false) => {
       const state = stateRef.current;
+      if (state.mode === "over") {
+        return;
+      }
       state.mode = "over";
       state.bond = null;
+      state.grading = false;
+      state.feedbackWrong = -1;
+      state.feedbackCorrect = -1;
+      state.feedbackUntil = 0;
+      if (spawnTimerRef.current) {
+        window.clearTimeout(spawnTimerRef.current);
+      }
       syncUi();
 
       const mastery = KARMAS.map((karma, index) => ({
-        name: formatKarmaName(karma.n.en),
+        name: getKarmaDisplayName(index, state.lang),
         met: state.met.has(index),
         glyph: karma.glyph,
         ghati: karma.g === 1,
       }));
 
       setResult({
-        verdict: dead ? "THE JĪVA IS OVERLOADED" : "JOURNEY COMPLETE",
+        verdict: timeUp ? "TIME'S UP" : "ROUND COMPLETE",
         score: state.score,
         accuracy: `${state.tries ? Math.round((state.hits / state.tries) * 100) : 0}%`,
         bestStreak: state.best,
@@ -167,30 +178,35 @@ export function KarmaChakraGame() {
         mastery,
       });
 
+      onComplete?.(state.score);
       playTone("done", state.muted);
       haptic([12, 60, 12, 60, 20], state.reduced);
     },
-    [syncUi],
+    [onComplete, syncUi],
   );
 
   const spawn = useCallback(() => {
     const state = stateRef.current;
     const layout = layoutRef.current;
 
-    if (state.round >= state.total) {
-      finish();
+    if (state.mode !== "play" || state.grading) {
       return;
     }
 
-    const karmaIndex = state.deck[state.round];
-    const pool = WORDS.filter((word) => word[1] === karmaIndex);
-    const word = pool[(Math.random() * pool.length) | 0];
-    const speed = 42 + state.round * 3.4;
+    if (Date.now() >= state.endsAt) {
+      finish(true);
+      return;
+    }
+
+    const karmaIndex = (Math.random() * 8) | 0;
+    const prakriti = pickRandomPrakriti(karmaIndex);
+    const speed = 46 + Math.min(state.round, 24) * 2.2;
 
     state.bond = {
-      text: word[0],
+      text: prakriti.names[state.lang],
+      prakritiId: prakriti.id,
       k: karmaIndex,
-      fx: word[2],
+      fx: prakriti.fx,
       x: layout.cx,
       y: layout.spawnY,
       t: 0,
@@ -200,62 +216,72 @@ export function KarmaChakraGame() {
         Math.hypot(layout.cx - layout.cx, layout.spawnY - layout.cy) - layout.jiva,
       ),
     };
+    state.round += 1;
     state.target = -1;
     state.pulse = 0;
     syncUi();
   }, [finish, syncUi]);
 
-  const closeLearn = useCallback(() => {
-    if (learnTimerRef.current) {
-      window.clearTimeout(learnTimerRef.current);
-    }
+  const scheduleSpawn = useCallback(
+    (delay = SPAWN_DELAY_MS) => {
+      if (spawnTimerRef.current) {
+        window.clearTimeout(spawnTimerRef.current);
+      }
+      spawnTimerRef.current = window.setTimeout(() => {
+        const state = stateRef.current;
+        if (state.mode !== "play" || state.grading || Date.now() >= state.endsAt) {
+          if (state.mode === "play" && Date.now() >= state.endsAt) {
+            finish(true);
+          }
+          return;
+        }
+        spawn();
+      }, delay);
+    },
+    [finish, spawn],
+  );
 
-    setLearn((current) => ({ ...current, open: false }));
-    const state = stateRef.current;
-    state.round += 1;
-    state.mode = "play";
-    syncUi();
-    window.setTimeout(spawn, 260);
-  }, [spawn, syncUi]);
-
-  const openLearn = useCallback(
-    (index: number) => {
+  const showFeedback = useCallback(
+    (wrongIndex: number, correctIndex: number) => {
       const state = stateRef.current;
-      const karma = KARMAS[index];
-      const labels = LABELS[state.lang];
-
-      setLearn({
-        open: true,
-        tag: karma.g ? labels.ghati : labels.aghati,
-        tagClass: karma.g ? "g" : "a",
-        name: formatKarmaName(karma.n.en),
-        native: `${karma.n.hi.join("")}  ·  ${karma.n.gu.join("")}`,
-        simile: `“${karma.s[state.lang]}”`,
-        fn: karma.f[state.lang],
-        nextLabel: labels.next,
-        timerProgress: 1,
-      });
-
-      state.mode = "learn";
+      state.grading = true;
+      state.feedbackWrong = wrongIndex;
+      state.feedbackCorrect = correctIndex;
+      state.feedbackUntil = performance.now() + FEEDBACK_MS;
+      state.bond = null;
+      state.target = -1;
+      state.drag = false;
+      state.pulse = 0;
       syncUi();
 
-      window.requestAnimationFrame(() => {
-        setLearn((current) => ({ ...current, timerProgress: 0 }));
-      });
-
-      if (learnTimerRef.current) {
-        window.clearTimeout(learnTimerRef.current);
+      if (spawnTimerRef.current) {
+        window.clearTimeout(spawnTimerRef.current);
       }
-      learnTimerRef.current = window.setTimeout(closeLearn, 3500);
+      spawnTimerRef.current = window.setTimeout(() => {
+        const current = stateRef.current;
+        if (current.mode !== "play") {
+          return;
+        }
+        current.grading = false;
+        current.feedbackWrong = -1;
+        current.feedbackCorrect = -1;
+        current.feedbackUntil = 0;
+        syncUi();
+        if (Date.now() >= current.endsAt) {
+          finish(true);
+          return;
+        }
+        scheduleSpawn();
+      }, FEEDBACK_MS);
     },
-    [closeLearn, syncUi],
+    [finish, scheduleSpawn, syncUi],
   );
 
   const grade = useCallback(
     (index: number) => {
       const state = stateRef.current;
       const bond = state.bond;
-      if (!bond || state.mode !== "play") {
+      if (!bond || state.mode !== "play" || state.grading) {
         return;
       }
 
@@ -263,6 +289,7 @@ export function KarmaChakraGame() {
       const ok = index === bond.k;
       const petal = petalPos(layout, bond.k);
       state.tries += 1;
+      state.met.add(bond.k);
 
       if (ok) {
         state.hits += 1;
@@ -276,55 +303,44 @@ export function KarmaChakraGame() {
         showToast(`${LABELS[state.lang].released} +${points}`);
         playTone("good", state.muted);
         haptic([8, 40, 14], state.reduced);
-      } else {
-        state.streak = 0;
-        burst(particlesRef.current, bond.x, bond.y, COLORS.rust, 16);
-        state.shake = 6;
-        showToast(LABELS[state.lang].bound, true);
-        playTone("bad", state.muted);
-        haptic(90, state.reduced);
+        state.bond = null;
+        state.target = -1;
+        state.drag = false;
+        state.pulse = 0;
+        syncUi();
+        scheduleSpawn();
+        return;
       }
 
-      state.met.add(bond.k);
-      state.bond = null;
-      state.target = -1;
-      state.drag = false;
-      state.pulse = 0;
-      syncUi();
-      window.setTimeout(() => openLearn(bond.k), 420);
+      state.streak = 0;
+      burst(particlesRef.current, bond.x, bond.y, COLORS.rust, 16);
+      state.shake = 6;
+      showToast(LABELS[state.lang].bound, true);
+      playTone("bad", state.muted);
+      haptic(90, state.reduced);
+      showFeedback(index, bond.k);
     },
-    [openLearn, showToast, syncUi],
+    [scheduleSpawn, showFeedback, showToast, syncUi],
   );
 
   const missed = useCallback(() => {
     const state = stateRef.current;
     const bond = state.bond;
-    if (!bond) {
+    if (!bond || state.grading) {
       return;
     }
 
     const layout = layoutRef.current;
     state.streak = 0;
-    state.lives -= 1;
     state.tries += 1;
+    state.met.add(bond.k);
     burst(particlesRef.current, layout.cx, layout.cy, COLORS.rust, 34);
     state.shake = 9;
     showToast(LABELS[state.lang].reached, true);
     playTone("bad", state.muted);
     haptic([30, 60, 30], state.reduced);
-    state.met.add(bond.k);
-    state.bond = null;
-    state.target = -1;
-    state.pulse = 0;
-    syncUi();
-
-    if (state.lives <= 0) {
-      window.setTimeout(() => finish(true), 700);
-      return;
-    }
-
-    window.setTimeout(() => openLearn(bond.k), 420);
-  }, [finish, openLearn, showToast, syncUi]);
+    showFeedback(-1, bond.k);
+  }, [showFeedback, showToast]);
 
   const startGame = useCallback(() => {
     resumeAudio();
@@ -334,11 +350,15 @@ export function KarmaChakraGame() {
     state.score = 0;
     state.streak = 0;
     state.best = 0;
-    state.lives = 3;
     state.hits = 0;
     state.tries = 0;
     state.met = new Set();
-    buildDeck();
+    state.bond = null;
+    state.grading = false;
+    state.feedbackWrong = -1;
+    state.feedbackCorrect = -1;
+    state.feedbackUntil = 0;
+    state.endsAt = Date.now() + GAME_DURATION_MS;
     syncUi();
     setCoachVisible(true);
     if (coachTimerRef.current) {
@@ -349,7 +369,7 @@ export function KarmaChakraGame() {
     }, 6000);
     spawn();
     playTone("tick", state.muted);
-  }, [buildDeck, spawn, syncUi]);
+  }, [spawn, syncUi]);
 
   const resize = useCallback(() => {
     const canvas = canvasRef.current;
@@ -385,7 +405,7 @@ export function KarmaChakraGame() {
 
     const onPointerDown = (event: PointerEvent) => {
       const state = stateRef.current;
-      if (state.mode !== "play" || !state.bond) {
+      if (state.mode !== "play" || !state.bond || state.grading) {
         return;
       }
 
@@ -428,7 +448,7 @@ export function KarmaChakraGame() {
 
     const release = () => {
       const state = stateRef.current;
-      if (!state.drag || !state.bond) {
+      if (!state.drag || !state.bond || state.grading) {
         state.drag = false;
         return;
       }
@@ -453,7 +473,7 @@ export function KarmaChakraGame() {
       const layout = layoutRef.current;
       const context = canvas.getContext("2d");
 
-      if (state.mode === "play" && state.bond) {
+      if (state.mode === "play" && state.bond && !state.grading) {
         const bond = state.bond;
         const { cx, cy } = layout;
 
@@ -485,6 +505,17 @@ export function KarmaChakraGame() {
         if (distance < layout.jiva + 14) {
           missed();
         }
+      }
+
+      if (state.mode === "play" && state.endsAt > 0 && now >= state.endsAt) {
+        finish(true);
+      }
+
+      if (now - lastUiSyncRef.current > 100 && state.mode === "play") {
+        lastUiSyncRef.current = now;
+        const remaining = Math.max(0, state.endsAt - now);
+        setTimeLeftMs(remaining);
+        setTimeProgress((remaining / GAME_DURATION_MS) * 100);
       }
 
       if (context) {
@@ -519,8 +550,8 @@ export function KarmaChakraGame() {
       if (frameRef.current) {
         window.cancelAnimationFrame(frameRef.current);
       }
-      if (learnTimerRef.current) {
-        window.clearTimeout(learnTimerRef.current);
+      if (spawnTimerRef.current) {
+        window.clearTimeout(spawnTimerRef.current);
       }
       if (toastTimerRef.current) {
         window.clearTimeout(toastTimerRef.current);
@@ -529,12 +560,7 @@ export function KarmaChakraGame() {
         window.clearTimeout(coachTimerRef.current);
       }
     };
-  }, [grade, missed, resize]);
-
-  const setLanguage = (nextLang: Lang) => {
-    stateRef.current.lang = nextLang;
-    syncUi();
-  };
+  }, [finish, grade, missed, resize]);
 
   const toggleMuted = () => {
     stateRef.current.muted = !stateRef.current.muted;
@@ -547,10 +573,14 @@ export function KarmaChakraGame() {
   const labels = LABELS[lang];
 
   return (
-    <div className="karma-chakra-root">
-      <Link href="/games" className="karma-chakra-pill karma-chakra-back">
-        ← Games
-      </Link>
+    <div className={`karma-chakra-root ${mode === "play" ? "is-playing" : ""}`}>
+      <button
+        type="button"
+        className="karma-chakra-pill karma-chakra-back"
+        onClick={onExit}
+      >
+        ← Back
+      </button>
 
       <canvas ref={canvasRef} className="karma-chakra-canvas" />
 
@@ -560,10 +590,8 @@ export function KarmaChakraGame() {
             <b>{score}</b>
           </div>
           <div className="karma-chakra-spacer" />
-          <div className="karma-chakra-pill karma-chakra-dots">
-            {[0, 1, 2].map((index) => (
-              <i key={index} className={index >= lives ? "off" : undefined} />
-            ))}
+          <div className="karma-chakra-pill karma-chakra-timer">
+            <b>{formatGameTime(timeLeftMs)}</b>
           </div>
           <button
             type="button"
@@ -576,7 +604,7 @@ export function KarmaChakraGame() {
         </div>
 
         <div className="karma-chakra-track">
-          <i style={{ width: `${progress}%` }} />
+          <i style={{ width: `${timeProgress}%` }} />
         </div>
         <div className="karma-chakra-wordmark">{GAME_TITLE}</div>
         <div className={`karma-chakra-streak ${streak >= 2 ? "on" : ""}`}>
@@ -597,71 +625,13 @@ export function KarmaChakraGame() {
         </div>
       </div>
 
-      <div
-        className={`karma-chakra-sheet ${learn.open ? "up" : ""}`}
-        onClick={closeLearn}
-        onKeyDown={(event) => {
-          if (event.key === "Enter" || event.key === " ") {
-            closeLearn();
-          }
-        }}
-        role="dialog"
-        aria-modal="true"
-        tabIndex={0}
-      >
-        <span className={`karma-chakra-tag ${learn.tagClass}`}>{learn.tag}</span>
-        <h2>{learn.name}</h2>
-        <div className="karma-chakra-native">{learn.native}</div>
-        <div
-          className="karma-chakra-simile"
-          style={{
-            borderLeftColor: learn.tagClass === "g" ? COLORS.ghati : COLORS.aghati,
-          }}
-        >
-          {learn.simile}
-        </div>
-        <div className="karma-chakra-fn">{learn.fn}</div>
-        <div className="karma-chakra-sheet-foot">
-          <div className="karma-chakra-timerbar">
-            <i
-              style={{
-                transform: `scaleX(${learn.timerProgress})`,
-                transition: learn.open ? "transform 3.4s linear" : "none",
-              }}
-            />
-          </div>
-          <button
-            type="button"
-            className="karma-chakra-next"
-            onClick={(event) => {
-              event.stopPropagation();
-              closeLearn();
-            }}
-          >
-            {learn.nextLabel}
-          </button>
-        </div>
-      </div>
-
       <div className={`karma-chakra-screen ${mode === "start" ? "" : "hide"}`}>
+        <div className="karma-chakra-screen-glow" aria-hidden />
         <h1 className="karma-chakra-logotype">{GAME_TITLE}</h1>
         <div className="karma-chakra-sub">{GAME_SUBTITLE}</div>
         <p className="karma-chakra-pitch">
-          Eight karmas bind the soul. Catch each bond as it falls — and release
-          it before it reaches the jīva.
+          60 seconds · match each prakriti to its karma petal.
         </p>
-        <div className="karma-chakra-langrow">
-          {(["en", "hi", "gu"] as Lang[]).map((option) => (
-            <button
-              key={option}
-              type="button"
-              className={lang === option ? "on" : ""}
-              onClick={() => setLanguage(option)}
-            >
-              {option === "en" ? "English" : option === "hi" ? "हिंदी" : "ગુજરાતી"}
-            </button>
-          ))}
-        </div>
         <button type="button" className="karma-chakra-cta" onClick={startGame}>
           {labels.begin}
         </button>

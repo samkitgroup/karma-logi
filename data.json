@@ -1,0 +1,497 @@
+[
+    {
+      "id": "jnanavaraniya",
+      "order": 1,
+      "name": {
+        "en": "Jnanavaraniya",
+        "hi": "ज्ञानावरणीय",
+        "gu": "જ્ઞાનાવરણીય"
+      },
+      "prakritiCount": 5,
+      "prakritis": [
+        {
+          "id": "mati_jnanavaraniya",
+          "order": 1,
+          "name": { "en": "Mati Jnanavaraniya", "hi": "मति ज्ञानावरणीय", "gu": "મતિ જ્ઞાનાવરણીય" }
+        },
+        {
+          "id": "shruta_jnanavaraniya",
+          "order": 2,
+          "name": { "en": "Shruta Jnanavaraniya", "hi": "श्रुत ज्ञानावरणीय", "gu": "શ્રુત જ્ઞાનાવરણીય" }
+        },
+        {
+          "id": "avadhi_jnanavaraniya",
+          "order": 3,
+          "name": { "en": "Avadhi Jnanavaraniya", "hi": "अवधि ज्ञानावरणीय", "gu": "અવધિ જ્ઞાનાવરણીય" }
+        },
+        {
+          "id": "manahparyaya_jnanavaraniya",
+          "order": 4,
+          "name": { "en": "Manahparyaya Jnanavaraniya", "hi": "मनःपर्यय ज्ञानावरणीय", "gu": "મનઃપર્યય જ્ઞાનાવરણીય" }
+        },
+        {
+          "id": "kevala_jnanavaraniya",
+          "order": 5,
+          "name": { "en": "Kevala Jnanavaraniya", "hi": "केवल ज्ञानावरणीय", "gu": "કેવળ જ્ઞાનાવરણીય" }
+        }
+      ]
+    },
+  
+    {
+      "id": "darshanavaraniya",
+      "order": 2,
+      "name": {
+        "en": "Darshanavaraniya",
+        "hi": "दर्शनावरणीय",
+        "gu": "દર્શનાવરણીય"
+      },
+      "prakritiCount": 9,
+      "prakritis": [
+        {
+          "id": "chakshu_darshanavaraniya",
+          "order": 1,
+          "name": { "en": "Chakshu Darshanavaraniya", "hi": "चक्षु दर्शनावरणीय", "gu": "ચક્ષુ દર્શનાવરણીય" }
+        },
+        {
+          "id": "achakshu_darshanavaraniya",
+          "order": 2,
+          "name": { "en": "Achakshu Darshanavaraniya", "hi": "अचक्षु दर्शनावरणीय", "gu": "અચક્ષુ દર્શનાવરણીય" }
+        },
+        {
+          "id": "avadhi_darshanavaraniya",
+          "order": 3,
+          "name": { "en": "Avadhi Darshanavaraniya", "hi": "अवधि दर्शनावरणीय", "gu": "અવધિ દર્શનાવરણીય" }
+        },
+        {
+          "id": "kevala_darshanavaraniya",
+          "order": 4,
+          "name": { "en": "Kevala Darshanavaraniya", "hi": "केवल दर्शनावरणीय", "gu": "કેવળ દર્શનાવરણીય" }
+        },
+        {
+          "id": "nidra",
+          "order": 5,
+          "name": { "en": "Nidra", "hi": "निद्रा", "gu": "નિદ્રા" }
+        },
+        {
+          "id": "nidra_nidra",
+          "order": 6,
+          "name": { "en": "Nidra Nidra", "hi": "निद्रा-निद्रा", "gu": "નિદ્રા-નિદ્રા" }
+        },
+        {
+          "id": "prachala",
+          "order": 7,
+          "name": { "en": "Prachala", "hi": "प्रचला", "gu": "પ્રચલા" }
+        },
+        {
+          "id": "prachala_prachala",
+          "order": 8,
+          "name": { "en": "Prachala Prachala", "hi": "प्रचला-प्रचला", "gu": "પ્રચલા-પ્રચલા" }
+        },
+        {
+          "id": "styanagriddhi",
+          "order": 9,
+          "name": { "en": "Styanagriddhi", "hi": "स्त्यानगृद्धि", "gu": "સ્ત્યાનગૃદ્ધિ" },
+          "active": 0
+        }
+      ]
+    },
+  
+    {
+      "id": "vedaniya",
+      "order": 3,
+      "name": {
+        "en": "Vedaniya",
+        "hi": "वेदनीय",
+        "gu": "વેદનીય"
+      },
+      "prakritiCount": 2,
+      "prakritis": [
+        {
+          "id": "sata_vedaniya",
+          "order": 1,
+          "name": { "en": "Sata Vedaniya", "hi": "साता वेदनीय", "gu": "સાતા વેદનીય" }
+        },
+        {
+          "id": "asata_vedaniya",
+          "order": 2,
+          "name": { "en": "Asata Vedaniya", "hi": "असाता वेदनीय", "gu": "અસાતા વેદનીય" }
+        }
+      ]
+    },
+  
+    {
+      "id": "mohaniya",
+      "order": 4,
+      "name": {
+        "en": "Mohaniya",
+        "hi": "मोहनीय",
+        "gu": "મોહનીય"
+      },
+      "prakritiCount": 28,
+      "prakritis": [
+        {
+          "id": "mithyatva_mohaniya",
+          "order": 1,
+          "name": { "en": "Mithyatva Mohaniya", "hi": "मिथ्यात्व मोहनीय", "gu": "મિથ્યાત્વ મોહનીય" }
+        },
+        {
+          "id": "samyaktva_mohaniya",
+          "order": 2,
+          "name": { "en": "Samyaktva Mohaniya", "hi": "सम्यक्त्व मोहनीय", "gu": "સમ્યક્ત્વ મોહનીય" }
+        },
+        {
+          "id": "mishra_mohaniya",
+          "order": 3,
+          "name": { "en": "Mishra Mohaniya", "hi": "मिश्र मोहनीय", "gu": "મિશ્ર મોહનીય" }
+        },
+  
+        {
+          "id": "anantanubandhi_krodha",
+          "order": 4,
+          "name": { "en": "Anantanubandhi Krodha", "hi": "अनन्तानुबन्धी क्रोध", "gu": "અનંતાનુબંધી ક્રોધ" }
+        },
+        {
+          "id": "anantanubandhi_mana",
+          "order": 5,
+          "name": { "en": "Anantanubandhi Mana", "hi": "अनन्तानुबन्धी मान", "gu": "અનંતાનુબંધી માન" }
+        },
+        {
+          "id": "anantanubandhi_maya",
+          "order": 6,
+          "name": { "en": "Anantanubandhi Maya", "hi": "अनन्तानुबन्धी माया", "gu": "અનંતાનુબંધી માયા" }
+        },
+        {
+          "id": "anantanubandhi_lobha",
+          "order": 7,
+          "name": { "en": "Anantanubandhi Lobha", "hi": "अनन्तानुबन्धी लोभ", "gu": "અનંતાનુબંધી લોભ" }
+        },
+  
+        {
+          "id": "apratyakhyana_krodha",
+          "order": 8,
+          "name": { "en": "Apratyakhyana Krodha", "hi": "अप्रत्याख्यान क्रोध", "gu": "અપ્રત્યાખ્યાન ક્રોધ" }
+        },
+        {
+          "id": "apratyakhyana_mana",
+          "order": 9,
+          "name": { "en": "Apratyakhyana Mana", "hi": "अप्रत्याख्यान मान", "gu": "અપ્રત્યાખ્યાન માન" }
+        },
+        {
+          "id": "apratyakhyana_maya",
+          "order": 10,
+          "name": { "en": "Apratyakhyana Maya", "hi": "अप्रत्याख्यान माया", "gu": "અપ્રત્યાખ્યાન માયા" }
+        },
+        {
+          "id": "apratyakhyana_lobha",
+          "order": 11,
+          "name": { "en": "Apratyakhyana Lobha", "hi": "अप्रत्याख्यान लोभ", "gu": "અપ્રત્યાખ્યાન લોભ" }
+        },
+  
+        {
+          "id": "pratyakhyana_krodha",
+          "order": 12,
+          "name": { "en": "Pratyakhyana Krodha", "hi": "प्रत्याख्यान क्रोध", "gu": "પ્રત્યાખ્યાન ક્રોધ" }
+        },
+        {
+          "id": "pratyakhyana_mana",
+          "order": 13,
+          "name": { "en": "Pratyakhyana Mana", "hi": "प्रत्याख्यान मान", "gu": "પ્રત્યાખ્યાન માન" }
+        },
+        {
+          "id": "pratyakhyana_maya",
+          "order": 14,
+          "name": { "en": "Pratyakhyana Maya", "hi": "प्रत्याख्यान माया", "gu": "પ્રત્યાખ્યાન માયા" }
+        },
+        {
+          "id": "pratyakhyana_lobha",
+          "order": 15,
+          "name": { "en": "Pratyakhyana Lobha", "hi": "प्रत्याख्यान लोभ", "gu": "પ્રત્યાખ્યાન લોભ" }
+        },
+  
+        {
+          "id": "sanjvalana_krodha",
+          "order": 16,
+          "name": { "en": "Sanjvalana Krodha", "hi": "संज्वलन क्रोध", "gu": "સંજ્વલન ક્રોધ" }
+        },
+        {
+          "id": "sanjvalana_mana",
+          "order": 17,
+          "name": { "en": "Sanjvalana Mana", "hi": "संज्वलन मान", "gu": "સંજ્વલન માન" }
+        },
+        {
+          "id": "sanjvalana_maya",
+          "order": 18,
+          "name": { "en": "Sanjvalana Maya", "hi": "संज्वलन माया", "gu": "સંજ્વલન માયા" }
+        },
+        {
+          "id": "sanjvalana_lobha",
+          "order": 19,
+          "name": { "en": "Sanjvalana Lobha", "hi": "संज्वलन लोभ", "gu": "સંજ્વલન લોભ" }
+        },
+  
+        {
+          "id": "hasya",
+          "order": 20,
+          "name": { "en": "Hasya", "hi": "हास्य", "gu": "હાસ્ય" }
+        },
+        {
+          "id": "rati",
+          "order": 21,
+          "name": { "en": "Rati", "hi": "रति", "gu": "રતિ" }
+        },
+        {
+          "id": "arati",
+          "order": 22,
+          "name": { "en": "Arati", "hi": "अरति", "gu": "અરતિ" }
+        },
+        {
+          "id": "shoka",
+          "order": 23,
+          "name": { "en": "Shoka", "hi": "शोक", "gu": "શોક" }
+        },
+        {
+          "id": "bhaya",
+          "order": 24,
+          "name": { "en": "Bhaya", "hi": "भय", "gu": "ભય" }
+        },
+        {
+          "id": "jugupsa",
+          "order": 25,
+          "name": { "en": "Jugupsa", "hi": "जुगुप्सा", "gu": "જુગુપ્સા" }
+        },
+        {
+          "id": "stri_veda",
+          "order": 26,
+          "name": { "en": "Stri Veda", "hi": "स्त्री वेद", "gu": "સ્ત્રી વેદ" }
+        },
+        {
+          "id": "purusha_veda",
+          "order": 27,
+          "name": { "en": "Purusha Veda", "hi": "पुरुष वेद", "gu": "પુરુષ વેદ" }
+        },
+        {
+          "id": "napumsaka_veda",
+          "order": 28,
+          "name": { "en": "Napumsaka Veda", "hi": "नपुंसक वेद", "gu": "નપુંસક વેદ" }
+        }
+      ]
+    },
+  
+    {
+      "id": "ayushya",
+      "order": 5,
+      "name": {
+        "en": "Ayushya",
+        "hi": "आयुष्य",
+        "gu": "આયુષ્ય"
+      },
+      "prakritiCount": 4,
+      "prakritis": [
+        {
+          "id": "naraka_ayushya",
+          "order": 1,
+          "name": { "en": "Naraka Ayushya", "hi": "नरक आयुष्य", "gu": "નરક આયુષ્ય" }
+        },
+        {
+          "id": "tiryanch_ayushya",
+          "order": 2,
+          "name": { "en": "Tiryanch Ayushya", "hi": "तिर्यंच आयुष्य", "gu": "તિર્યંચ આયુષ્ય" }
+        },
+        {
+          "id": "manushya_ayushya",
+          "order": 3,
+          "name": { "en": "Manushya Ayushya", "hi": "मनुष्य आयुष्य", "gu": "મનુષ્ય આયુષ્ય" }
+        },
+        {
+          "id": "deva_ayushya",
+          "order": 4,
+          "name": { "en": "Deva Ayushya", "hi": "देव आयुष्य", "gu": "દેવ આયુષ્ય" }
+        }
+      ]
+    },
+  
+    {
+      "id": "nama",
+      "order": 6,
+      "name": {
+        "en": "Nama",
+        "hi": "नाम",
+        "gu": "નામ"
+      },
+      "prakritiCount": 93,
+      "prakritis": [
+        { "id": "naraka_gati", "order": 1, "name": { "en": "Naraka Gati", "hi": "नरक गति", "gu": "નરક ગતિ" } },
+        { "id": "tiryanch_gati", "order": 2, "name": { "en": "Tiryanch Gati", "hi": "तिर्यंच गति", "gu": "તિર્યંચ ગતિ" } },
+        { "id": "manushya_gati", "order": 3, "name": { "en": "Manushya Gati", "hi": "मनुष्य गति", "gu": "મનુષ્ય ગતિ" } },
+        { "id": "deva_gati", "order": 4, "name": { "en": "Deva Gati", "hi": "देव गति", "gu": "દેવ ગતિ" } },
+  
+        { "id": "ekendriya_jati", "order": 5, "name": { "en": "Ekendriya Jati", "hi": "एकेन्द्रिय जाति", "gu": "એકેન્દ્રિય જાતિ" } },
+        { "id": "dvindriya_jati", "order": 6, "name": { "en": "Dvindriya Jati", "hi": "द्वीन्द्रिय जाति", "gu": "દ્વીન્દ્રિય જાતિ" } },
+        { "id": "trindriya_jati", "order": 7, "name": { "en": "Trindriya Jati", "hi": "त्रीन्द्रिय जाति", "gu": "ત્રીન્દ્રિય જાતિ" } },
+        { "id": "chaturindriya_jati", "order": 8, "name": { "en": "Chaturindriya Jati", "hi": "चतुरिन्द्रिय जाति", "gu": "ચતુરિન્દ્રિય જાતિ" } },
+        { "id": "panchendriya_jati", "order": 9, "name": { "en": "Panchendriya Jati", "hi": "पंचेन्द्रिय जाति", "gu": "પંચેન્દ્રિય જાતિ" } },
+  
+        { "id": "audarika_sharira", "order": 10, "name": { "en": "Audarika Sharira", "hi": "औदारिक शरीर", "gu": "ઔદારિક શરીર" } },
+        { "id": "vaikriya_sharira", "order": 11, "name": { "en": "Vaikriya Sharira", "hi": "वैक्रिय शरीर", "gu": "વૈક્રિય શરીર" } },
+        { "id": "aharaka_sharira", "order": 12, "name": { "en": "Aharaka Sharira", "hi": "आहारक शरीर", "gu": "આહારક શરીર" } },
+        { "id": "taijasa_sharira", "order": 13, "name": { "en": "Taijasa Sharira", "hi": "तैजस शरीर", "gu": "તૈજસ શરીર" } },
+        { "id": "karmana_sharira", "order": 14, "name": { "en": "Karmana Sharira", "hi": "कार्मण शरीर", "gu": "કાર્મણ શરીર" } },
+  
+        { "id": "audarika_angopanga", "order": 15, "name": { "en": "Audarika Angopanga", "hi": "औदारिक अंगोपांग", "gu": "ઔદારિક અંગોપાંગ" } },
+        { "id": "vaikriya_angopanga", "order": 16, "name": { "en": "Vaikriya Angopanga", "hi": "वैक्रिय अंगोपांग", "gu": "વૈક્રિય અંગોપાંગ" } },
+        { "id": "aharaka_angopanga", "order": 17, "name": { "en": "Aharaka Angopanga", "hi": "आहारक अंगोपांग", "gu": "આહારક અંગોપાંગ" } },
+  
+        { "id": "nirmana", "order": 18, "name": { "en": "Nirmana", "hi": "निर्माण", "gu": "નિર્માણ" } },
+  
+        { "id": "audarika_bandhana", "order": 19, "name": { "en": "Audarika Bandhana", "hi": "औदारिक बन्धन", "gu": "ઔદારિક બંધન" } },
+        { "id": "vaikriya_bandhana", "order": 20, "name": { "en": "Vaikriya Bandhana", "hi": "वैक्रिय बन्धन", "gu": "વૈક્રિય બંધન" } },
+        { "id": "aharaka_bandhana", "order": 21, "name": { "en": "Aharaka Bandhana", "hi": "आहारक बन्धन", "gu": "આહારક બંધન" } },
+        { "id": "taijasa_bandhana", "order": 22, "name": { "en": "Taijasa Bandhana", "hi": "तैजस बन्धन", "gu": "તૈજસ બંધન" } },
+        { "id": "karmana_bandhana", "order": 23, "name": { "en": "Karmana Bandhana", "hi": "कार्मण बन्धन", "gu": "કાર્મણ બંધન" } },
+  
+        { "id": "audarika_sanghata", "order": 24, "name": { "en": "Audarika Sanghata", "hi": "औदारिक संघात", "gu": "ઔદારિક સંઘાત" } },
+        { "id": "vaikriya_sanghata", "order": 25, "name": { "en": "Vaikriya Sanghata", "hi": "वैक्रिय संघात", "gu": "વૈક્રિય સંઘાત" } },
+        { "id": "aharaka_sanghata", "order": 26, "name": { "en": "Aharaka Sanghata", "hi": "आहारक संघात", "gu": "આહારક સંઘાત" } },
+        { "id": "taijasa_sanghata", "order": 27, "name": { "en": "Taijasa Sanghata", "hi": "तैजस संघात", "gu": "તૈજસ સંઘાત" } },
+        { "id": "karmana_sanghata", "order": 28, "name": { "en": "Karmana Sanghata", "hi": "कार्मण संघात", "gu": "કાર્મણ સંઘાત" } },
+  
+        { "id": "vajra_rishabha_naracha", "order": 29, "name": { "en": "Vajra Rishabha Naracha", "hi": "वज्र ऋषभ नाराच", "gu": "વજ્ર ઋષભ નારાચ" } },
+        { "id": "rishabha_naracha", "order": 30, "name": { "en": "Rishabha Naracha", "hi": "ऋषभ नाराच", "gu": "ઋષભ નારાચ" } },
+        { "id": "naracha", "order": 31, "name": { "en": "Naracha", "hi": "नाराच", "gu": "નારાચ" } },
+        { "id": "ardha_naracha", "order": 32, "name": { "en": "Ardha Naracha", "hi": "अर्ध नाराच", "gu": "અર્ધ નારાચ" } },
+        { "id": "kilika", "order": 33, "name": { "en": "Kilika", "hi": "कीलिका", "gu": "કીલિકા" } },
+        { "id": "sevarta", "order": 34, "name": { "en": "Sevarta", "hi": "सेवार्त", "gu": "સેવાર્ત" } },
+  
+        { "id": "samachaturasra", "order": 35, "name": { "en": "Samachaturasra", "hi": "समचतुरस्र", "gu": "સમચતુરસ્ર" } },
+        { "id": "nyagrodha_parimandala", "order": 36, "name": { "en": "Nyagrodha Parimandala", "hi": "न्यग्रोध परिमण्डल", "gu": "ન્યગ્રોધ પરિમંડળ" } },
+        { "id": "sadi", "order": 37, "name": { "en": "Sadi", "hi": "सादि", "gu": "સાદિ" } },
+        { "id": "kubja", "order": 38, "name": { "en": "Kubja", "hi": "कुब्ज", "gu": "કુબ્જ" } },
+        { "id": "vamana", "order": 39, "name": { "en": "Vamana", "hi": "वामन", "gu": "વામન" } },
+        { "id": "hunda", "order": 40, "name": { "en": "Hunda", "hi": "हुण्ड", "gu": "હુંડ" } },
+  
+        { "id": "varna", "order": 41, "name": { "en": "Varna", "hi": "वर्ण", "gu": "વર્ણ" } },
+        { "id": "gandha", "order": 42, "name": { "en": "Gandha", "hi": "गन्ध", "gu": "ગંધ" } },
+        { "id": "rasa", "order": 43, "name": { "en": "Rasa", "hi": "रस", "gu": "રસ" } },
+        { "id": "sparsha", "order": 44, "name": { "en": "Sparsha", "hi": "स्पर्श", "gu": "સ્પર્શ" } },
+  
+        { "id": "naraka_anupurvi", "order": 45, "name": { "en": "Naraka Anupurvi", "hi": "नरक आनुपूर्वी", "gu": "નરક આનુપૂર્વી" } },
+        { "id": "tiryanch_anupurvi", "order": 46, "name": { "en": "Tiryanch Anupurvi", "hi": "तिर्यंच आनुपूर्वी", "gu": "તિર્યંચ આનુપૂર્વી" } },
+        { "id": "manushya_anupurvi", "order": 47, "name": { "en": "Manushya Anupurvi", "hi": "मनुष्य आनुपूर्वी", "gu": "મનુષ્ય આનુપૂર્વી" } },
+        { "id": "deva_anupurvi", "order": 48, "name": { "en": "Deva Anupurvi", "hi": "देव आनुपूर्वी", "gu": "દેવ આનુપૂર્વી" } },
+  
+        { "id": "agurulaghu", "order": 49, "name": { "en": "Agurulaghu", "hi": "अगुरुलघु", "gu": "અગુરુલઘુ" } },
+        { "id": "upaghata", "order": 50, "name": { "en": "Upaghata", "hi": "उपघात", "gu": "ઉપઘાત" } },
+        { "id": "paraghata", "order": 51, "name": { "en": "Paraghata", "hi": "परघात", "gu": "પરઘાત" } },
+        { "id": "atap", "order": 52, "name": { "en": "Atapa", "hi": "आतप", "gu": "આતપ" } },
+        { "id": "udyota", "order": 53, "name": { "en": "Udyota", "hi": "उद्योत", "gu": "ઉદ્યોત" } },
+        { "id": "ucchvasa", "order": 54, "name": { "en": "Ucchvasa", "hi": "उच्छ्वास", "gu": "ઉચ્છ્વાસ" } },
+  
+        { "id": "vihayogati_prashasta", "order": 55, "name": { "en": "Prashasta Vihayogati", "hi": "प्रशस्त विहायोगति", "gu": "પ્રશસ્ત વિહાયોગતિ" } },
+        { "id": "vihayogati_aprashasta", "order": 56, "name": { "en": "Aprashasta Vihayogati", "hi": "अप्रशस्त विहायोगति", "gu": "અપ્રશસ્ત વિહાયોગતિ" } },
+  
+        { "id": "tras", "order": 57, "name": { "en": "Trasa", "hi": "त्रस", "gu": "ત્રસ" } },
+        { "id": "sthavara", "order": 58, "name": { "en": "Sthavara", "hi": "स्थावर", "gu": "સ્થાવર" } },
+        { "id": "badara", "order": 59, "name": { "en": "Badara", "hi": "बादर", "gu": "બાદર" } },
+        { "id": "sukshma", "order": 60, "name": { "en": "Sukshma", "hi": "सूक्ष्म", "gu": "સૂક્ષ્મ" } },
+        { "id": "paryapta", "order": 61, "name": { "en": "Paryapta", "hi": "पर्याप्त", "gu": "પર્યાપ્ત" } },
+        { "id": "aparyapta", "order": 62, "name": { "en": "Aparyapta", "hi": "अपर्याप्त", "gu": "અપર્યાપ્ત" } },
+        { "id": "pratyeka", "order": 63, "name": { "en": "Pratyeka", "hi": "प्रत्येक", "gu": "પ્રત્યેક" } },
+        { "id": "sadharana", "order": 64, "name": { "en": "Sadharana", "hi": "साधारण", "gu": "સાધારણ" } },
+        { "id": "sthira", "order": 65, "name": { "en": "Sthira", "hi": "स्थिर", "gu": "સ્થિર" } },
+        { "id": "asthira", "order": 66, "name": { "en": "Asthira", "hi": "अस्थिर", "gu": "અસ્થિર" } },
+        { "id": "shubha", "order": 67, "name": { "en": "Shubha", "hi": "शुभ", "gu": "શુભ" } },
+        { "id": "ashubha", "order": 68, "name": { "en": "Ashubha", "hi": "अशुभ", "gu": "અશુભ" } },
+        { "id": "subhaga", "order": 69, "name": { "en": "Subhaga", "hi": "सुभग", "gu": "સુભગ" } },
+        { "id": "durbhaga", "order": 70, "name": { "en": "Durbhaga", "hi": "दुर्भग", "gu": "દુર્ભગ" } },
+        { "id": "susvara", "order": 71, "name": { "en": "Susvara", "hi": "सुस्वर", "gu": "સુસ્વર" } },
+        { "id": "dusvara", "order": 72, "name": { "en": "Dusvara", "hi": "दुःस्वर", "gu": "દુઃસ્વર" } },
+        { "id": "adeya", "order": 73, "name": { "en": "Adeya", "hi": "आदेय", "gu": "આદેય" } },
+        { "id": "anadeya", "order": 74, "name": { "en": "Anadeya", "hi": "अनादेय", "gu": "અનાદેય" } },
+        { "id": "yashah_kirti", "order": 75, "name": { "en": "Yashah Kirti", "hi": "यशःकीर्ति", "gu": "યશઃકીર્તિ" } },
+        { "id": "ayashah_kirti", "order": 76, "name": { "en": "Ayashah Kirti", "hi": "अयशःकीर्ति", "gu": "અયશઃકીર્તિ" } },
+  
+        { "id": "tirthankara", "order": 77, "name": { "en": "Tirthankara", "hi": "तीर्थंकर", "gu": "તીર્થંકર" } },
+  
+        { "id": "krishna_varna", "order": 78, "name": { "en": "Krishna Varna", "hi": "कृष्ण वर्ण", "gu": "કૃષ્ણ વર્ણ" } },
+        { "id": "nila_varna", "order": 79, "name": { "en": "Nila Varna", "hi": "नील वर्ण", "gu": "નીલ વર્ણ" } },
+        { "id": "rakta_varna", "order": 80, "name": { "en": "Rakta Varna", "hi": "रक्त वर्ण", "gu": "રક્ત વર્ણ" } },
+        { "id": "pita_varna", "order": 81, "name": { "en": "Pita Varna", "hi": "पीत वर्ण", "gu": "પીત વર્ણ" } },
+        { "id": "shukla_varna", "order": 82, "name": { "en": "Shukla Varna", "hi": "शुक्ल वर्ण", "gu": "શુક્લ વર્ણ" } },
+  
+        { "id": "surabhi_gandha", "order": 83, "name": { "en": "Surabhi Gandha", "hi": "सुरभि गन्ध", "gu": "સુરભિ ગંધ" } },
+        { "id": "durabhi_gandha", "order": 84, "name": { "en": "Durabhi Gandha", "hi": "दुरभि गन्ध", "gu": "દુરભિ ગંધ" } },
+  
+        { "id": "tikta_rasa", "order": 85, "name": { "en": "Tikta Rasa", "hi": "तिक्त रस", "gu": "તિક્ત રસ" } },
+        { "id": "katu_rasa", "order": 86, "name": { "en": "Katu Rasa", "hi": "कटु रस", "gu": "કટુ રસ" } },
+        { "id": "kashaya_rasa", "order": 87, "name": { "en": "Kashaya Rasa", "hi": "कषाय रस", "gu": "કષાય રસ" } },
+        { "id": "amla_rasa", "order": 88, "name": { "en": "Amla Rasa", "hi": "अम्ल रस", "gu": "અમ્લ રસ" } },
+        { "id": "madhura_rasa", "order": 89, "name": { "en": "Madhura Rasa", "hi": "मधुर रस", "gu": "મધુર રસ" } },
+  
+        { "id": "karkasha_sparsha", "order": 90, "name": { "en": "Karkasha Sparsha", "hi": "कर्कश स्पर्श", "gu": "કર્કશ સ્પર્શ" } },
+        { "id": "mridu_sparsha", "order": 91, "name": { "en": "Mridu Sparsha", "hi": "मृदु स्पर्श", "gu": "મૃદુ સ્પર્શ" } },
+        { "id": "guru_sparsha", "order": 92, "name": { "en": "Guru Sparsha", "hi": "गुरु स्पर्श", "gu": "ગુરુ સ્પર્શ" } },
+        { "id": "laghu_sparsha", "order": 93, "name": { "en": "Laghu Sparsha", "hi": "लघु स्पर्श", "gu": "લઘુ સ્પર્શ" } }
+      ]
+    },
+  
+    {
+      "id": "gotra",
+      "order": 7,
+      "name": {
+        "en": "Gotra",
+        "hi": "गोत्र",
+        "gu": "ગોત્ર"
+      },
+      "prakritiCount": 2,
+      "prakritis": [
+        {
+          "id": "uchcha_gotra",
+          "order": 1,
+          "name": { "en": "Uchcha Gotra", "hi": "उच्च गोत्र", "gu": "ઉચ્ચ ગોત્ર" }
+        },
+        {
+          "id": "nicha_gotra",
+          "order": 2,
+          "name": { "en": "Nicha Gotra", "hi": "नीच गोत्र", "gu": "નીચ ગોત્ર" }
+        }
+      ]
+    },
+  
+    {
+      "id": "antaraya",
+      "order": 8,
+      "name": {
+        "en": "Antaraya",
+        "hi": "अन्तराय",
+        "gu": "અંતરાય"
+      },
+      "prakritiCount": 5,
+      "prakritis": [
+        {
+          "id": "dana_antaraya",
+          "order": 1,
+          "name": { "en": "Dana Antaraya", "hi": "दान अन्तराय", "gu": "દાન અંતરાય" }
+        },
+        {
+          "id": "labha_antaraya",
+          "order": 2,
+          "name": { "en": "Labha Antaraya", "hi": "लाभ अन्तराय", "gu": "લાભ અંતરાય" }
+        },
+        {
+          "id": "bhoga_antaraya",
+          "order": 3,
+          "name": { "en": "Bhoga Antaraya", "hi": "भोग अन्तराय", "gu": "ભોગ અંતરાય" }
+        },
+        {
+          "id": "upabhoga_antaraya",
+          "order": 4,
+          "name": { "en": "Upabhoga Antaraya", "hi": "उपभोग अन्तराय", "gu": "ઉપભોગ અંતરાય" }
+        },
+        {
+          "id": "virya_antaraya",
+          "order": 5,
+          "name": { "en": "Virya Antaraya", "hi": "वीर्य अन्तराय", "gu": "વીર્ય અંતરાય" }
+        }
+      ]
+    }
+]

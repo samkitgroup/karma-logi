@@ -1,5 +1,5 @@
-import { IntroSplash } from "@/components/intro-splash";
+import { KarmaLogiHome } from "@/components/karma-logi-home";
 
 export default function Home() {
-  return <IntroSplash />;
+  return <KarmaLogiHome />;
 }
