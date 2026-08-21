@@ -1,6 +1,8 @@
 import {
   buildKarmasFromDataset,
+  getDisplayLines,
   getKarmaDisplayName,
+  getKarmaShortName,
   pickRandomPrakriti,
   findPrakritiById,
   getPrakritisForKarma,
@@ -11,7 +13,9 @@ import type { KarmaEntry } from "./types";
 
 export {
   findPrakritiById,
+  getDisplayLines,
   getKarmaDisplayName,
+  getKarmaShortName,
   getPrakritisForKarma,
   pickRandomPrakriti,
   PRAKRITI_ITEMS,
@@ -76,6 +80,14 @@ export const LABELS: Record<
     timerNote: string;
     ghatiShort: string;
     aghatiShort: string;
+    matchThis: string;
+    tapKarma: string;
+    skip: string;
+    wrong: string;
+    skipped: string;
+    scoreLabel: string;
+    streakLabel: string;
+    correctLabel: string;
   }
 > = {
   en: {
@@ -102,14 +114,22 @@ export const LABELS: Record<
     roundComplete: "ROUND COMPLETE",
     timeLeft: "Time left",
     steps: [
-      "A Jain word (prakriti) falls from the top of the screen.",
-      "Read the karma label on the word — it tells you which petal to match.",
-      "Drag the word to that petal — or tap the petal directly.",
-      "Match before it reaches the center (Jīva), or you lose that round.",
+      "A prakriti name appears at the top of the card.",
+      "Tap the karma it belongs to from the eight options below.",
+      "Pink labels are ghāti karmas; teal labels are aghāti karmas.",
+      "Use Skip if you're unsure — wrong answers break your streak.",
     ],
     timerNote: "Timer starts when you tap Begin.",
     ghatiShort: "Ghāti",
     aghatiShort: "Aghāti",
+    matchThis: "Match this prakriti",
+    tapKarma: "Tap the karma it belongs to",
+    skip: "Skip",
+    wrong: "Wrong karma",
+    skipped: "Skipped",
+    scoreLabel: "Score",
+    streakLabel: "Streak",
+    correctLabel: "Correct",
   },
   hi: {
     ghati: "घाती · आत्मघातक",
@@ -135,14 +155,22 @@ export const LABELS: Record<
     roundComplete: "राउंड पूर्ण",
     timeLeft: "समय",
     steps: [
-      "एक जैन शब्द (प्रकृति) स्क्रीन के ऊपर से गिरता है।",
-      "शब्द पर कर्म लेबल पढ़ें — वह बताता है किस पंखुड़ी से मिलान करना है।",
-      "शब्द को उस पंखुड़ी तक खींचें — या सीधे पंखुड़ी पर टैप करें।",
-      "केंद्र (जीव) तक पहुँचने से पहले मिलाएँ, नहीं तो वह राउंड चूक जाएगा।",
+      "कार्ड के ऊपर प्रकृति का नाम दिखता है।",
+      "नीचे आठ विकल्पों में से सही कर्म पर टैप करें।",
+      "गुलाबी घाती कर्म हैं; हरे-नीले अघाती कर्म हैं।",
+      "अनिश्चित हों तो Skip — गलत उत्तर से स्ट्रीक टूटती है।",
     ],
     timerNote: "टाइमर Begin दबाने पर ही शुरू होगा।",
     ghatiShort: "घाती",
     aghatiShort: "अघाती",
+    matchThis: "इस प्रकृति से मिलाएँ",
+    tapKarma: "सही कर्म पर टैप करें",
+    skip: "छोड़ें",
+    wrong: "गलत कर्म",
+    skipped: "छोड़ा गया",
+    scoreLabel: "अंक",
+    streakLabel: "स्ट्रीक",
+    correctLabel: "सही",
   },
   gu: {
     ghati: "ઘાતી · આત્મઘાતક",
@@ -168,14 +196,22 @@ export const LABELS: Record<
     roundComplete: "રાઉન્ડ પૂર્ણ",
     timeLeft: "સમય",
     steps: [
-      "એક જૈન શબ્દ (પ્રકૃતિ) સ્ક્રીનની ઉપરથી પડે છે.",
-      "શબ્દ પરનું કર્મ લેબલ વાંચો — તે કઈ પાંખડી સાથે જોડવું તે બતાવે છે.",
-      "શબ્દને તે પાંખડી સુધી ખેંચો — અથવા સીધી પાંખડી પર ટેપ કરો.",
-      "કેન્દ્ર (જીવ) સુધી પહોંચે તે પહેલાં જોડો, નહીં તો તે રાઉન્ડ ચૂકી જશે.",
+      "કાર્ડની ટોચ પર પ્રકૃતિનું નામ દેખાય છે.",
+      "નીચેના આઠ વિકલ્પોમાંથી યોગ્ય કર્મ ટેપ કરો.",
+      "ગુલાબી ઘાતી કર્મ; લીલ-નીલા અઘાતી કર્મ.",
+      "ખાતરી ન હોય તો Skip — ખોટા જવાબથી સ્ટ્રીક તૂટે છે.",
     ],
     timerNote: "ટાઇમર Begin દબાવ્યા પછી જ શરૂ થશે.",
     ghatiShort: "ઘાતી",
     aghatiShort: "અઘાતી",
+    matchThis: "આ પ્રકૃતિ જોડો",
+    tapKarma: "યોગ્ય કર્મ પર ટેપ કરો",
+    skip: "છોડો",
+    wrong: "ખોટું કર્મ",
+    skipped: "છોડ્યું",
+    scoreLabel: "સ્કોર",
+    streakLabel: "સ્ટ્રીક",
+    correctLabel: "સાચા",
   },
 };
 

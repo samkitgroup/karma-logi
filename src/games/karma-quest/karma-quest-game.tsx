@@ -4,9 +4,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { haptic, playTone, resumeAudio } from "@/games/karma-chakra/audio";
 import { GameInstructionsCard } from "@/components/game-instructions-card";
+import { GamePlayHud } from "@/components/game-play-hud";
 import { QUEST_LABELS } from "./labels";
 import "./karma-quest.css";
-import { GAME_DURATION_MS, formatGameTime } from "@/lib/game-config";
+import { GAME_DURATION_MS } from "@/lib/game-config";
 import {
   buildQuestDeck,
   buildQuestionOptions,
@@ -327,73 +328,39 @@ export function KarmaQuestGame({
   return (
     <div className="karma-quest-root">
       <div className="karma-quest-chrome">
-        <header
-          className={`karma-quest-nav ${mode === "play" ? "karma-quest-nav--play" : ""}`}
-        >
-          <button type="button" className="karma-quest-back" onClick={onExit}>
-            {labels.back}
-          </button>
-          {mode !== "play" && (
+        {mode === "play" ? (
+          <GamePlayHud
+            title={labels.title}
+            timeLeftMs={timeLeftMs}
+            timeProgress={timeProgress}
+            score={score}
+            streak={streak}
+            correct={solved}
+            scoreLabel={labels.scoreLabel}
+            streakLabel={labels.streakLabel}
+            correctLabel={labels.correctLabel}
+            timeLabel={labels.timeLeft}
+            backLabel={labels.back}
+            muted={muted}
+            onExit={onExit}
+            onToggleMute={toggleMuted}
+            toast={toast}
+          />
+        ) : (
+          <header className="karma-quest-nav">
+            <button type="button" className="karma-quest-back" onClick={onExit}>
+              {labels.back}
+            </button>
             <div className="karma-quest-title">{labels.title}</div>
-          )}
-          <button
-            type="button"
-            className="karma-quest-icon-btn"
-            onClick={toggleMuted}
-            aria-label={muted ? "Unmute sound" : "Mute sound"}
-          >
-            {muted ? "✕" : "♪"}
-          </button>
-        </header>
-
-        {mode === "play" && (
-          <div className="karma-quest-hud">
-            <div className="karma-quest-timer-block">
-              <div className="karma-quest-timer-head">
-                <span className="karma-quest-timer-label">
-                  {labels.timeLeft}
-                </span>
-                <span className="karma-quest-timer-value">
-                  {formatGameTime(timeLeftMs)}
-                </span>
-              </div>
-              <div className="karma-quest-track" aria-hidden>
-                <i style={{ width: `${timeProgress}%` }} />
-              </div>
-            </div>
-
-            <div className="karma-quest-stats-bar" aria-label="Game stats">
-              <div className="karma-quest-stat karma-quest-stat--score">
-                <s>{labels.scoreLabel}</s>
-                <u>{score}</u>
-              </div>
-              <div className="karma-quest-stat-sep" aria-hidden />
-              <div
-                className={`karma-quest-stat karma-quest-stat--streak ${streak >= 2 ? "hot" : ""}`}
-              >
-                <s>{labels.streakLabel}</s>
-                <u>×{streak}</u>
-              </div>
-              <div className="karma-quest-stat-sep" aria-hidden />
-              <div className="karma-quest-stat karma-quest-stat--correct">
-                <s>{labels.correctLabel}</s>
-                <u>{solved}</u>
-              </div>
-            </div>
-
-            {toast.visible && (
-              <div
-                className={`karma-quest-toast on ${
-                  toast.good ? "good" : toast.text ? "bad" : ""
-                }`}
-                role="status"
-                aria-live="polite"
-                aria-atomic="true"
-              >
-                {toast.text}
-              </div>
-            )}
-          </div>
+            <button
+              type="button"
+              className="karma-quest-icon-btn"
+              onClick={toggleMuted}
+              aria-label={muted ? "Unmute sound" : "Mute sound"}
+            >
+              {muted ? "✕" : "♪"}
+            </button>
+          </header>
         )}
       </div>
 

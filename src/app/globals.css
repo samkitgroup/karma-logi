@@ -532,6 +532,204 @@ body {
   color: rgba(251, 191, 36, 0.92);
 }
 
+/* ── Shared in-game HUD (all karma games) ── */
+.game-play-hud {
+  margin-bottom: 8px;
+  padding-top: calc(env(safe-area-inset-top, 0px) + 10px);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.game-play-bar {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(9, 11, 30, 0.72);
+  backdrop-filter: blur(8px);
+}
+
+.game-play-back,
+.game-play-mute {
+  flex-shrink: 0;
+  align-self: center;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--gold);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.game-play-back:active,
+.game-play-mute:active {
+  transform: scale(0.96);
+}
+
+.game-play-bar-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+}
+
+.game-play-title {
+  margin: 0;
+  font-size: clamp(11px, 3vw, 13px);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+  text-shadow: 0 0 16px rgba(0, 229, 255, 0.3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.game-play-pods {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.game-play-pod {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-width: 0;
+  padding: 4px 4px 5px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.game-play-pod-label {
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  white-space: nowrap;
+}
+
+.game-play-pod-value {
+  font-size: clamp(13px, 3.6vw, 16px);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  color: var(--text-muted);
+}
+
+.game-play-pod--score .game-play-pod-value {
+  color: var(--gold-bright);
+}
+
+.game-play-pod--streak .game-play-pod-value {
+  color: #fbbf24;
+}
+
+.game-play-pod--streak.is-hot .game-play-pod-value {
+  color: #ff4da6;
+}
+
+.game-play-pod--correct .game-play-pod-value {
+  color: #4ade80;
+}
+
+.game-play-pod--time .game-play-pod-value {
+  color: #fbbf24;
+}
+
+.game-play-track {
+  height: 4px;
+  margin-top: 6px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.game-play-track i {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #22c55e, #4ade80);
+  box-shadow: 0 0 10px rgba(74, 222, 128, 0.45);
+  transition: width 0.1s linear;
+}
+
+.game-play-toast {
+  margin-top: 8px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(9, 11, 30, 0.9);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+  text-align: center;
+  color: var(--gold-dim);
+}
+
+.game-play-toast.is-bad {
+  border-color: rgba(255, 99, 99, 0.45);
+  color: var(--rust);
+}
+
+.game-play-toast.is-good {
+  border-color: rgba(74, 222, 128, 0.45);
+  color: #4ade80;
+}
+
+@media (max-width: 360px) {
+  .game-play-bar {
+    gap: 6px;
+    padding: 6px;
+  }
+
+  .game-play-pods {
+    gap: 4px;
+  }
+
+  .game-play-pod-label {
+    font-size: 7px;
+  }
+}
+
+@media (min-width: 480px) {
+  .game-play-bar-main {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .game-play-title {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .game-play-pods {
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: 280px;
+  }
+}
+
 .game-icon-gold {
   background: radial-gradient(
     circle at 30% 30%,

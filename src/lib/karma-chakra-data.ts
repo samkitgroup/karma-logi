@@ -75,6 +75,32 @@ function splitNameLines(name: string, lang: Lang): string[] {
   return lang === "en" ? [first.toUpperCase(), second.toUpperCase()] : [first, second];
 }
 
+/** Split labels for narrow grid cells (multi-word or long single tokens). */
+export function getDisplayLines(text: string, lang: Lang): string[] {
+  const trimmed = text.trim();
+  const parts = trimmed.split(/\s+/);
+  if (parts.length > 1) {
+    const mid = Math.ceil(parts.length / 2);
+    return [parts.slice(0, mid).join(" "), parts.slice(mid).join(" ")];
+  }
+  if (trimmed.length <= 10) {
+    return [trimmed];
+  }
+
+  if (lang === "en") {
+    const lower = trimmed.toLowerCase();
+    for (const suffix of ["avaraniya", "varaniya"]) {
+      const index = lower.indexOf(suffix);
+      if (index > 2) {
+        return [trimmed.slice(0, index), trimmed.slice(index)];
+      }
+    }
+  }
+
+  const mid = Math.ceil(trimmed.length / 2);
+  return [trimmed.slice(0, mid), trimmed.slice(mid)];
+}
+
 export type PrakritiItem = {
   id: string;
   karmaIndex: number;
@@ -120,6 +146,23 @@ export function getPrakritisForKarma(karmaIndex: number): PrakritiItem[] {
 export function getKarmaDisplayName(karmaIndex: number, lang: Lang): string {
   const karma = getKarmaRecord(KARMA_WHEEL_IDS[karmaIndex]);
   return karma.name[lang];
+}
+
+const KARMA_SHORT_NAMES: Record<string, Record<Lang, string>> = {
+  jnanavaraniya: { en: "Jnana", hi: "ज्ञान", gu: "જ્ઞાન" },
+  darshanavaraniya: { en: "Darshan", hi: "दर्शन", gu: "દર્શન" },
+  mohaniya: { en: "Mohan", hi: "मोह", gu: "મોહ" },
+  antaraya: { en: "Antar", hi: "अंतराय", gu: "અંતરાય" },
+  vedaniya: { en: "Vedan", hi: "वेदन", gu: "વેદન" },
+  nama: { en: "Nama", hi: "नाम", gu: "નામ" },
+  gotra: { en: "Gotra", hi: "गोत्र", gu: "ગોત્ર" },
+  ayushya: { en: "Ayush", hi: "आयुष", gu: "આયુષ" },
+};
+
+/** Compact label for karma option buttons. */
+export function getKarmaShortName(karmaIndex: number, lang: Lang): string {
+  const id = KARMA_WHEEL_IDS[karmaIndex];
+  return KARMA_SHORT_NAMES[id]?.[lang] ?? getKarmaDisplayName(karmaIndex, lang);
 }
 
 export function buildKarmasFromDataset(): KarmaEntry[] {

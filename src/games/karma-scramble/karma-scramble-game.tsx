@@ -16,10 +16,11 @@ import {
 } from "./scramble-engine";
 import { haptic, playTone, resumeAudio } from "@/games/karma-chakra/audio";
 import { GameInstructionsCard } from "@/components/game-instructions-card";
+import { GamePlayHud } from "@/components/game-play-hud";
 import { GAME_UI } from "@/lib/game-ui-labels";
 import { SCRAMBLE_LABELS } from "./labels";
 import "./karma-scramble.css";
-import { GAME_DURATION_MS, formatGameTime } from "@/lib/game-config";
+import { GAME_DURATION_MS } from "@/lib/game-config";
 import {
   buildSessionDeck,
   getAnswerUnits,
@@ -365,73 +366,39 @@ export function KarmaScrambleGame({
   return (
     <div className="karma-scramble-root">
       <div className="karma-scramble-chrome">
-        <header
-          className={`karma-scramble-nav ${mode === "play" ? "karma-scramble-nav--play" : ""}`}
-        >
-          <button type="button" className="karma-scramble-back" onClick={onExit}>
-            {labels.back}
-          </button>
-          {mode !== "play" && (
+        {mode === "play" ? (
+          <GamePlayHud
+            title={labels.title}
+            timeLeftMs={timeLeftMs}
+            timeProgress={timeProgress}
+            score={score}
+            streak={streak}
+            correct={solved}
+            scoreLabel={labels.scoreLabel}
+            streakLabel={labels.streakLabel}
+            correctLabel={labels.solvedLabel}
+            timeLabel={labels.timeLeft}
+            backLabel={labels.back}
+            muted={muted}
+            onExit={onExit}
+            onToggleMute={toggleMuted}
+            toast={toast}
+          />
+        ) : (
+          <header className="karma-scramble-nav">
+            <button type="button" className="karma-scramble-back" onClick={onExit}>
+              {labels.back}
+            </button>
             <div className="karma-scramble-title">{labels.title}</div>
-          )}
-          <button
-            type="button"
-            className="karma-scramble-icon-btn"
-            onClick={toggleMuted}
-            aria-label={muted ? "Unmute sound" : "Mute sound"}
-          >
-            {muted ? "✕" : "♪"}
-          </button>
-        </header>
-
-        {mode === "play" && (
-          <div className="karma-scramble-hud">
-            <div className="karma-scramble-timer-block">
-              <div className="karma-scramble-timer-head">
-                <span className="karma-scramble-timer-label">
-                  {labels.timeLeft}
-                </span>
-                <span className="karma-scramble-timer-value">
-                  {formatGameTime(timeLeftMs)}
-                </span>
-              </div>
-              <div className="karma-scramble-track" aria-hidden>
-                <i style={{ width: `${timeProgress}%` }} />
-              </div>
-            </div>
-
-            <div className="karma-scramble-stats-bar" aria-label="Game stats">
-              <div className="karma-scramble-stat karma-scramble-stat--score">
-                <s>{labels.scoreLabel}</s>
-                <u>{score}</u>
-              </div>
-              <div className="karma-scramble-stat-sep" aria-hidden />
-              <div
-                className={`karma-scramble-stat karma-scramble-stat--streak ${streak >= 2 ? "hot" : ""}`}
-              >
-                <s>{labels.streakLabel}</s>
-                <u>×{streak}</u>
-              </div>
-              <div className="karma-scramble-stat-sep" aria-hidden />
-              <div className="karma-scramble-stat karma-scramble-stat--solved">
-                <s>{labels.solvedLabel}</s>
-                <u>{solved}</u>
-              </div>
-            </div>
-
-            {toast.visible && (
-              <div
-                className={`karma-scramble-toast on ${
-                  toast.good ? "good" : toast.text ? "bad" : ""
-                }`}
-                role="status"
-                aria-live="polite"
-                aria-atomic="true"
-              >
-                {toast.text}
-              </div>
-            )}
-          </div>
+            <button
+              type="button"
+              className="karma-scramble-icon-btn"
+              onClick={toggleMuted}
+              aria-label={muted ? "Unmute sound" : "Mute sound"}
+            >
+              {muted ? "✕" : "♪"}
+            </button>
+          </header>
         )}
       </div>
 
@@ -567,6 +534,13 @@ export function KarmaScrambleGame({
             <s>{labels.bestStreak}</s>
           </div>
         </div>
+        <button
+          type="button"
+          className="karma-scramble-cta karma-scramble-cta--ghost"
+          onClick={onExit}
+        >
+          {labels.back}
+        </button>
       </div>
     </div>
   );
