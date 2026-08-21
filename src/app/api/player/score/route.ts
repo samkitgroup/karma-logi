@@ -34,7 +34,7 @@ export async function POST(request: Request) {
     if (!result.ok) {
       return NextResponse.json(
         {
-          error: "You have already played this game with this mobile number.",
+          error: "You have already played this game.",
           reason: result.reason,
         },
         { status: 409 },

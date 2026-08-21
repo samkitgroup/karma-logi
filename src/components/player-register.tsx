@@ -37,8 +37,8 @@ export function PlayerRegister({ onRegistered }: PlayerRegisterProps) {
           Join Karma Logi
         </h1>
         <p className="mt-3 text-center text-sm leading-relaxed text-text-muted">
-          Enter your name and mobile to play. Each game can be played once per
-          mobile number. Your total score appears on the scorecard.
+          Enter your name and mobile to join and play. Your total score appears
+          on the scorecard.
         </p>
 
         <form className="mt-8 space-y-4" onSubmit={submit}>

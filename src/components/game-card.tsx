@@ -1,5 +1,4 @@
 import type { GameAccent, KarmaGame } from "@/lib/games";
-import { GAME_DURATION_SEC } from "@/lib/game-config";
 
 type GameCardProps = {
   game: KarmaGame;
@@ -125,16 +124,9 @@ export function GameCard({
             </h3>
             {badgeElement}
           </div>
-
-          <p className="mt-1.5 text-sm leading-snug text-gold-dim">
+          <p className="mt-2 text-sm leading-relaxed text-gold-dim">
             {game.description}
           </p>
-
-          {!played && game.status === "available" ? (
-            <p className="game-card-timer mt-2.5">
-              {GAME_DURATION_SEC}s challenge
-            </p>
-          ) : null}
         </div>
       </div>
     </button>

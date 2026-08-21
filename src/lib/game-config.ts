@@ -1,5 +1,5 @@
-export const GAME_DURATION_MS = 60_000;
-export const GAME_DURATION_SEC = 60;
+export const GAME_DURATION_MS = 90_000;
+export const GAME_DURATION_SEC = 90;
 
 export function formatGameTime(ms: number): string {
   const totalSec = Math.max(0, Math.ceil(ms / 1000));

@@ -92,7 +92,7 @@ function shuffle<T>(list: T[]): T[] {
   return copy;
 }
 
-/** Easy → hard deck for a 60s round (English length tiers). */
+/** Easy → hard deck for a 90s round (English length tiers). */
 export function buildSessionDeck(): ScrambleItem[] {
   const easy = shuffle(ALL_ITEMS.filter((item) => item.difficulty <= 7));
   const medium = shuffle(

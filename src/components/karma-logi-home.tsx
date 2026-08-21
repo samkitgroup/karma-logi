@@ -102,7 +102,7 @@ export function KarmaLogiHome({ locationRequired = false }: KarmaLogiHomeProps) 
   const selectGame = useCallback(
     async (gameId: string) => {
       if (scores[gameId] !== undefined) {
-        setNotice("You have already played this game with this mobile number.");
+        setNotice("You have already played this game.");
         return;
       }
 
