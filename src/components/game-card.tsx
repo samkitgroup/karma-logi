@@ -5,6 +5,7 @@ type GameCardProps = {
   game: KarmaGame;
   played?: boolean;
   score?: number;
+  disabled?: boolean;
   onSelect: (gameId: string) => void;
 };
 
@@ -40,7 +41,13 @@ const gameIcons: Record<string, React.ReactNode> = {
   ),
 };
 
-export function GameCard({ game, played = false, score, onSelect }: GameCardProps) {
+export function GameCard({
+  game,
+  played = false,
+  score,
+  disabled = false,
+  onSelect,
+}: GameCardProps) {
   const isAvailable = game.status === "available" && !played;
   const isLocked = game.status === "available" && played;
 
@@ -78,7 +85,7 @@ export function GameCard({ game, played = false, score, onSelect }: GameCardProp
       type="button"
       className={className}
       onClick={() => onSelect(game.id)}
-      disabled={game.status !== "available"}
+      disabled={game.status !== "available" || played || disabled}
     >
       <div className="flex items-center gap-4 sm:gap-5">
         <div className={`game-icon ${accentIconClass[game.accent]}`}>
