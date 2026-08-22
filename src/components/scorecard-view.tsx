@@ -108,17 +108,23 @@ export function ScorecardView({
               </p>
             ) : (
               <ul className="divide-y divide-white/5">
-                {leaderboard.map((entry) => (
+                {leaderboard.map((entry) => {
+                  const isSelf = entry.mobile === playerMobile;
+
+                  return (
                   <li
                     key={`${entry.rank}-${entry.mobile}`}
                     className={`scorecard-leader-row ${
                       entry.rank === 1 ? "scorecard-leader-row--top" : ""
-                    }`}
+                    } ${isSelf ? "scorecard-leader-row--self" : ""}`}
                   >
                     <span className="scorecard-leader-rank">{entry.rank}</span>
                     <div className="min-w-0 flex-1">
                       <p className="truncate font-medium text-foreground">
                         {entry.name}
+                        {isSelf ? (
+                          <span className="scorecard-you-badge">You</span>
+                        ) : null}
                       </p>
                       <p className="truncate text-xs text-text-subtle">
                         {maskMobile(entry.mobile)}
@@ -128,7 +134,8 @@ export function ScorecardView({
                       {entry.totalScore}
                     </span>
                   </li>
-                ))}
+                  );
+                })}
               </ul>
             )}
           </div>

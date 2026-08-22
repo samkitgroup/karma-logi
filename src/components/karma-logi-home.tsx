@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
 import { GameCard } from "@/components/game-card";
@@ -12,7 +13,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { KarmaChakraGame } from "@/games/karma-chakra/karma-chakra-game";
 import { KarmaQuestGame } from "@/games/karma-quest/karma-quest-game";
 import { KarmaScrambleGame } from "@/games/karma-scramble/karma-scramble-game";
-import { getGameById, karmaGames } from "@/lib/games";
+import { getGameById, hasCompletedAllGames, karmaGames } from "@/lib/games";
 import { DEFAULT_LANG, type Lang } from "@/lib/language";
 import { fetchPlayerMe, submitPlayerScore } from "@/lib/player-api";
 import { verifyVenueLocation } from "@/lib/location-access";
@@ -23,6 +24,7 @@ type KarmaLogiHomeProps = {
 };
 
 export function KarmaLogiHome({ locationRequired = false }: KarmaLogiHomeProps) {
+  const router = useRouter();
   const [showIntro, setShowIntro] = useState(true);
   const [lang, setLang] = useState<Lang>(DEFAULT_LANG);
   const [activeGameId, setActiveGameId] = useState<string | null>(null);
@@ -89,6 +91,13 @@ export function KarmaLogiHome({ locationRequired = false }: KarmaLogiHomeProps) 
       try {
         const result = await submitPlayerScore({ gameId, score });
         setScores(result.scores);
+
+        if (hasCompletedAllGames(result.scores)) {
+          setActiveGameId(null);
+          router.push("/scorecard");
+          return;
+        }
+
         setNotice(`Score saved: ${result.score} pts`);
       } catch (error) {
         const message =
@@ -96,7 +105,7 @@ export function KarmaLogiHome({ locationRequired = false }: KarmaLogiHomeProps) 
         setNotice(message);
       }
     },
-    [],
+    [router],
   );
 
   const selectGame = useCallback(

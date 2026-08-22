@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Karma-Logi — Play Banner</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        background: #1a1a2e;
+      }
+
+      .toolbar {
+        max-width: 210mm;
+        margin: 16px auto 12px;
+        padding: 0 14px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+      }
+
+      .toolbar button {
+        font-size: 13px;
+        padding: 10px 18px;
+        background: linear-gradient(135deg, #00e5ff, #a855f7);
+        color: #041018;
+        font-weight: 700;
+        border: none;
+        border-radius: 999px;
+        cursor: pointer;
+        box-shadow: 0 4px 24px rgba(0, 229, 255, 0.35);
+      }
+
+      .sheet {
+        position: relative;
+        width: 210mm;
+        height: 297mm;
+        margin: 0 auto;
+        overflow: hidden;
+        padding: 8mm 10mm 7mm;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        color: #f0f4ff;
+        background-color: #090b1e;
+        background-image:
+          radial-gradient(100% 70% at 15% -5%, rgba(168, 85, 247, 0.45) 0%, transparent 50%),
+          radial-gradient(90% 60% at 90% 5%, rgba(0, 229, 255, 0.35) 0%, transparent 48%),
+          radial-gradient(80% 50% at 50% 100%, rgba(236, 72, 153, 0.28) 0%, transparent 55%),
+          linear-gradient(180deg, #141842 0%, #090b1e 45%, #060818 100%);
+      }
+
+      .sheet::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse at center, transparent 35%, rgba(0, 0, 0, 0.35) 100%);
+        pointer-events: none;
+      }
+
+      .stars {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.5;
+        background-image:
+          radial-gradient(1px 1px at 10% 20%, #fff, transparent),
+          radial-gradient(1px 1px at 30% 65%, rgba(255, 255, 255, 0.8), transparent),
+          radial-gradient(1.5px 1.5px at 70% 15%, #fff, transparent),
+          radial-gradient(1px 1px at 85% 45%, rgba(255, 255, 255, 0.7), transparent),
+          radial-gradient(1px 1px at 50% 80%, #fff, transparent),
+          radial-gradient(1px 1px at 20% 90%, rgba(255, 255, 255, 0.6), transparent);
+      }
+
+      .content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+      }
+
+      .eyebrow {
+        font-size: 7.5pt;
+        font-weight: 600;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: #67e8ff;
+      }
+
+      h1 {
+        margin: 1mm 0 0;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 28pt;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        line-height: 1;
+        color: #00e5ff;
+      }
+
+      @supports (background-clip: text) {
+        h1 {
+          background: linear-gradient(135deg, #f0feff 0%, #00e5ff 35%, #a855f7 68%, #ec4899 100%);
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+      }
+
+      .tagline {
+        margin: 1.5mm 0 0;
+        padding: 1mm 4mm;
+        border-radius: 999px;
+        border: 1px solid rgba(0, 229, 255, 0.35);
+        background: rgba(0, 229, 255, 0.12);
+        font-size: 8.5pt;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #f0feff;
+      }
+
+      .scan {
+        margin-top: 2mm;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-height: 0;
+      }
+
+      .scan-label {
+        font-size: 11pt;
+        margin-bottom: 1mm;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #00e5ff;
+      }
+
+      .qr-wrap {
+        margin-top: 0;
+        padding: 3mm;
+        border-radius: 5mm;
+        background: #fff;
+        border: 3px solid #00e5ff;
+        box-shadow: 0 0 32px rgba(168, 85, 247, 0.45);
+      }
+
+      .qr-wrap img {
+        display: block;
+        width: 105mm;
+        height: 105mm;
+      }
+
+      .url {
+        margin-top: 2mm;
+        font-size: 12pt;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        color: #f0feff;
+      }
+
+      .games {
+        margin-top: 2mm;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        gap: 3mm;
+        flex-wrap: wrap;
+      }
+
+      .game {
+        padding: 1.5mm 3mm;
+        border-radius: 999px;
+        background: #10122a;
+      }
+
+      .game:nth-child(1) {
+        border: 1.5px solid #00f0b5;
+      }
+
+      .game:nth-child(2) {
+        border: 1.5px solid #00e5ff;
+      }
+
+      .game:nth-child(3) {
+        border: 1.5px solid #ffb800;
+      }
+
+      .game-name {
+        display: block;
+        font-size: 8pt;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .game-desc {
+        display: none;
+      }
+
+      .prize {
+        margin-top: 2mm;
+        width: 100%;
+        padding: 2.5mm 4mm;
+        border-radius: 4mm;
+        border: 2px solid #a855f7;
+        background: #10122a;
+        box-shadow: inset 0 0 0 1px rgba(0, 229, 255, 0.25);
+      }
+
+      .game:nth-child(1) .game-name {
+        color: #00f0b5;
+      }
+
+      .game:nth-child(2) .game-name {
+        color: #00e5ff;
+      }
+
+      .game:nth-child(3) .game-name {
+        color: #ffb800;
+      }
+
+      .prize-title {
+        font-size: 10pt;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #ffb800;
+      }
+
+      .prize-text {
+        margin-top: 1mm;
+        font-size: 9pt;
+        font-weight: 600;
+        line-height: 1.4;
+        color: #f0f4ff;
+      }
+
+      .meta {
+        margin-top: 2mm;
+        padding-top: 0;
+        font-size: 7.5pt;
+        line-height: 1.45;
+        color: #96a4c8;
+      }
+
+      .meta strong {
+        color: #67e8ff;
+      }
+
+      .footer {
+        margin-top: 1mm;
+        font-size: 6.5pt;
+        color: #727da0;
+        line-height: 1.35;
+      }
+
+      @media print {
+        .toolbar {
+          display: none !important;
+        }
+
+        html,
+        body {
+          width: 210mm;
+          height: 297mm;
+          overflow: hidden;
+          background: #090b1e !important;
+        }
+
+        .sheet {
+          width: 210mm !important;
+          height: 297mm !important;
+          margin: 0 !important;
+          box-shadow: none !important;
+          page-break-after: avoid;
+          page-break-inside: avoid;
+        }
+
+        h1 {
+          color: #00e5ff !important;
+          background: none !important;
+          -webkit-text-fill-color: #00e5ff !important;
+        }
+
+        @page {
+          size: A4 portrait;
+          margin: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="toolbar no-print">
+      <button type="button" onclick="window.print()">Print A4</button>
+    </div>
+
+    <div class="sheet">
+      <div class="stars" aria-hidden="true"></div>
+      <div class="content">
+        <p class="eyebrow">Shri Jawahar Nagar Jain Sangh Presents</p>
+        <h1>KARMA-LOGI</h1>
+        <p class="tagline">The Jain Scientific Expo</p>
+
+        <div class="scan">
+          <p class="scan-label">Scan · Play · Win</p>
+          <div class="qr-wrap">
+            <img
+              src="https://api.qrserver.com/v1/create-qr-code/?size=600x600&data=https%3A%2F%2Fkarma-logi.vercel.app%2F&margin=0"
+              width="600"
+              height="600"
+              alt="QR code — karma-logi.vercel.app"
+            />
+          </div>
+          <p class="url">karma-logi.vercel.app</p>
+        </div>
+
+        <div class="games">
+          <div class="game">
+            <span class="game-name">Quest</span>
+            <span class="game-desc">Pick the karma from a situation</span>
+          </div>
+          <div class="game">
+            <span class="game-name">Chakra</span>
+            <span class="game-desc">Match prakriti on the wheel</span>
+          </div>
+          <div class="game">
+            <span class="game-name">Scramble</span>
+            <span class="game-desc">Unscramble the karma word</span>
+          </div>
+        </div>
+
+        <div class="prize">
+          <p class="prize-title">Top 5 Win a Prize</p>
+          <p class="prize-text">
+            Highest total score across all 3 games wins a prize
+          </p>
+        </div>
+
+        <p class="meta">
+          <strong>22–23 Aug 2026</strong> · Shri Gundecha Aaradhna Bhavan, Jawahar Nagar, Goregaon West<br />
+          Register with name &amp; mobile · View scorecard for live rankings
+        </p>
+
+        <p class="footer">
+          P.P. Acharya Bhagwant Shri Vijaysaiyambodhisurishwarji M.S. ·
+          P.P. Panyas Shri Krupabodhvijayji M.S.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

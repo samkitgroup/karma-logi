@@ -46,3 +46,11 @@ export const karmaGames: KarmaGame[] = [
 export function getGameById(id: string): KarmaGame | undefined {
   return karmaGames.find((game) => game.id === id);
 }
+
+export function getAvailableGames(): KarmaGame[] {
+  return karmaGames.filter((game) => game.status === "available");
+}
+
+export function hasCompletedAllGames(scores: Record<string, number | undefined>): boolean {
+  return getAvailableGames().every((game) => scores[game.id] !== undefined);
+}
