@@ -1,7 +1,7 @@
 /** Venue: Shri Gundecha Aaradhna Bhavan area (Goregaon West). */
 export const VENUE_LAT = 19.1612169;
 export const VENUE_LNG = 72.8454479;
-export const VENUE_RADIUS_M = 50;
+export const VENUE_RADIUS_M = 500;
 
 const EARTH_RADIUS_M = 6_371_000;
 
