@@ -5,6 +5,7 @@ import {
   type KarmaRecord,
   KARMA_DATASET,
 } from "@/lib/karma-chakra-data";
+import { dedupeByKey, shuffleItems } from "@/lib/session-deck";
 import type { Lang } from "@/lib/language";
 
 export type KarmaQuestId = (typeof KARMA_WHEEL_IDS)[number];
@@ -26,17 +27,8 @@ const ALL_QUESTIONS = questQuestions as QuestQuestion[];
 
 const karmaById = new Map(KARMA_DATASET.map((karma) => [karma.id, karma]));
 
-function shuffle<T>(list: T[]): T[] {
-  const copy = [...list];
-  for (let i = copy.length - 1; i > 0; i--) {
-    const j = (Math.random() * (i + 1)) | 0;
-    [copy[i], copy[j]] = [copy[j], copy[i]];
-  }
-  return copy;
-}
-
 export function buildQuestDeck(): QuestQuestion[] {
-  return shuffle(ALL_QUESTIONS);
+  return shuffleItems(dedupeByKey(ALL_QUESTIONS, (question) => question.id));
 }
 
 export function getQuestQuestionCount(): number {
@@ -79,16 +71,15 @@ export function buildQuestionOptions(correctId: KarmaQuestId): KarmaOption[] {
     throw new Error(`Missing karma option: ${correctId}`);
   }
 
-  const distractors = shuffle(all.filter((option) => option.id !== correctId)).slice(
-    0,
-    QUEST_OPTION_COUNT - 1,
-  );
+  const distractors = shuffleItems(
+    all.filter((option) => option.id !== correctId),
+  ).slice(0, QUEST_OPTION_COUNT - 1);
 
-  return shuffle([correct, ...distractors]);
+  return shuffleItems([correct, ...distractors]);
 }
 
 export function shuffleKarmaOptions(options: KarmaOption[]): KarmaOption[] {
-  return shuffle(options);
+  return shuffleItems(options);
 }
 
 export function scoreQuestAnswer(streak: number): number {

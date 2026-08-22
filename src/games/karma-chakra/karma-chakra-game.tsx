@@ -10,11 +10,11 @@ import {
   CHAKRA_CONTENT,
   GAME_SUBTITLE,
   GAME_TITLE,
-  PRAKRITI_ITEMS,
   getDisplayLines,
   getKarmaDisplayName,
   getKarmaWheelLines,
 } from "./content";
+import { buildChakraDeck } from "@/lib/karma-chakra-data";
 import { KARMA_CELL_ICONS, KARMA_OPTION_ORDER } from "./grid-layout";
 import {
   RING_INNER_RADIUS,
@@ -29,6 +29,7 @@ import "./karma-chakra.css";
 import { GAME_DURATION_MS } from "@/lib/game-config";
 import type { PrakritiItem } from "@/lib/karma-chakra-data";
 import type { Lang } from "@/lib/language";
+import { SessionDeck } from "@/lib/session-deck";
 
 type GameMode = "start" | "play" | "over";
 
@@ -45,10 +46,6 @@ type ResultState = {
 };
 
 const FEEDBACK_MS = 750;
-
-function pickRandomRound(): PrakritiItem {
-  return PRAKRITI_ITEMS[(Math.random() * PRAKRITI_ITEMS.length) | 0];
-}
 
 function scorePoints(streak: number): number {
   return 100 + Math.max(0, streak - 1) * 25;
@@ -114,6 +111,7 @@ export function KarmaChakraGame({
   onComplete?: (score: number) => void;
 }) {
   const content = CHAKRA_CONTENT[lang];
+  const deckRef = useRef<SessionDeck<PrakritiItem> | null>(null);
   const endsAtRef = useRef(0);
   const timerRef = useRef<number | null>(null);
   const toastRef = useRef<number | null>(null);
@@ -216,7 +214,19 @@ export function KarmaChakraGame({
       return;
     }
 
-    setRound({ prakriti: pickRandomRound() });
+    const deck = deckRef.current;
+    if (!deck) {
+      finishGame(false);
+      return;
+    }
+
+    const prakriti = deck.drawNext();
+    if (!prakriti) {
+      finishGame(false);
+      return;
+    }
+
+    setRound({ prakriti });
   }, [finishGame]);
 
   const advanceAfter = useCallback(
@@ -246,6 +256,7 @@ export function KarmaChakraGame({
   const startGame = useCallback(() => {
     resumeAudio();
     endedRef.current = false;
+    deckRef.current = new SessionDeck(buildChakraDeck(), (item) => item.id);
     endsAtRef.current = Date.now() + GAME_DURATION_MS;
     setGrading(false);
     setScore(0);

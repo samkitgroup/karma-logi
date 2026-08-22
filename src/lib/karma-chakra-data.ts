@@ -2,6 +2,7 @@ import karmaDataset from "../../data.json";
 
 import type { BondFx, KarmaEntry } from "@/games/karma-chakra/types";
 import type { Lang } from "@/lib/language";
+import { shuffleItems } from "@/lib/session-deck";
 
 export type KarmaRecord = {
   id: string;
@@ -216,6 +217,11 @@ function buildPrakritiItems(): PrakritiItem[] {
 }
 
 export const PRAKRITI_ITEMS = buildPrakritiItems();
+
+/** Shuffled prakriti deck — each item appears at most once per session. */
+export function buildChakraDeck(): PrakritiItem[] {
+  return shuffleItems(PRAKRITI_ITEMS);
+}
 
 const prakritiById = new Map(PRAKRITI_ITEMS.map((item) => [item.id, item]));
 

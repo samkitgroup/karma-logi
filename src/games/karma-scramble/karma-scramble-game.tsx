@@ -28,6 +28,7 @@ import {
   type ScrambleItem,
 } from "@/lib/karma-scramble-data";
 import type { Lang } from "@/lib/language";
+import { SessionDeck } from "@/lib/session-deck";
 
 type GameMode = "start" | "play" | "over";
 
@@ -64,8 +65,7 @@ export function KarmaScrambleGame({
   onComplete?: (score: number) => void;
 }) {
   const content = SCRAMBLE_CONTENT[lang];
-  const deckRef = useRef<ScrambleItem[]>([]);
-  const deckIndexRef = useRef(0);
+  const deckRef = useRef<SessionDeck<ScrambleItem> | null>(null);
   const endsAtRef = useRef(0);
   const timerRef = useRef<number | null>(null);
   const toastRef = useRef<number | null>(null);
@@ -161,17 +161,17 @@ export function KarmaScrambleGame({
     }
 
     const deck = deckRef.current;
-    if (deck.length === 0) {
+    if (!deck) {
       finishGame();
       return;
     }
 
-    if (deckIndexRef.current >= deck.length) {
-      deckIndexRef.current = 0;
+    const item = deck.drawNext();
+    if (!item) {
+      finishGame();
+      return;
     }
 
-    const item = deck[deckIndexRef.current];
-    deckIndexRef.current += 1;
     setPuzzle(buildPuzzle(item, lang));
   }, [finishGame, lang]);
 
@@ -203,8 +203,9 @@ export function KarmaScrambleGame({
   const startGame = useCallback(() => {
     resumeAudio();
     endedRef.current = false;
-    deckRef.current = buildSessionDeck();
-    deckIndexRef.current = 0;
+    deckRef.current = new SessionDeck(buildSessionDeck(), (item) => item.id, {
+      shuffle: false,
+    });
     endsAtRef.current = Date.now() + GAME_DURATION_MS;
     setGrading(false);
     setScore(0);

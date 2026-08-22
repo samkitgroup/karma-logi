@@ -18,6 +18,7 @@ import {
   type QuestQuestion,
 } from "@/lib/karma-quest-data";
 import type { Lang } from "@/lib/language";
+import { SessionDeck } from "@/lib/session-deck";
 
 type GameMode = "start" | "play" | "over";
 
@@ -89,8 +90,7 @@ export function KarmaQuestGame({
   onComplete?: (score: number) => void;
 }) {
   const content = QUEST_CONTENT[lang];
-  const deckRef = useRef<QuestQuestion[]>([]);
-  const deckIndexRef = useRef(0);
+  const deckRef = useRef<SessionDeck<QuestQuestion> | null>(null);
   const endsAtRef = useRef(0);
   const timerRef = useRef<number | null>(null);
   const toastRef = useRef<number | null>(null);
@@ -185,17 +185,17 @@ export function KarmaQuestGame({
     }
 
     const deck = deckRef.current;
-    if (deck.length === 0) {
+    if (!deck) {
       finishGame();
       return;
     }
 
-    if (deckIndexRef.current >= deck.length) {
-      deckIndexRef.current = 0;
+    const question = deck.drawNext();
+    if (!question) {
+      finishGame();
+      return;
     }
 
-    const question = deck[deckIndexRef.current];
-    deckIndexRef.current += 1;
     setRound(buildRound(question));
   }, [finishGame]);
 
@@ -226,8 +226,7 @@ export function KarmaQuestGame({
   const startGame = useCallback(() => {
     resumeAudio();
     endedRef.current = false;
-    deckRef.current = buildQuestDeck();
-    deckIndexRef.current = 0;
+    deckRef.current = new SessionDeck(buildQuestDeck(), (question) => question.id);
     endsAtRef.current = Date.now() + GAME_DURATION_MS;
     setGrading(false);
     setScore(0);

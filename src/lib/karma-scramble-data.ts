@@ -1,5 +1,6 @@
 import { KARMA_DATASET } from "@/lib/karma-chakra-data";
 import { buildScrambleDescription } from "@/lib/karma-scramble-descriptions";
+import { dedupeByKey, shuffleItems } from "@/lib/session-deck";
 import { splitTextUnits } from "@/lib/text-units";
 import type { Lang } from "@/lib/language";
 
@@ -83,22 +84,14 @@ function buildItems(): ScrambleItem[] {
 
 const ALL_ITEMS = buildItems();
 
-function shuffle<T>(list: T[]): T[] {
-  const copy = [...list];
-  for (let i = copy.length - 1; i > 0; i--) {
-    const j = (Math.random() * (i + 1)) | 0;
-    [copy[i], copy[j]] = [copy[j], copy[i]];
-  }
-  return copy;
-}
-
 /** Easy → hard deck for a 90s round (English length tiers). */
 export function buildSessionDeck(): ScrambleItem[] {
-  const easy = shuffle(ALL_ITEMS.filter((item) => item.difficulty <= 7));
-  const medium = shuffle(
-    ALL_ITEMS.filter((item) => item.difficulty >= 8 && item.difficulty <= 14),
+  const unique = dedupeByKey(ALL_ITEMS, (item) => item.id);
+  const easy = shuffleItems(unique.filter((item) => item.difficulty <= 7));
+  const medium = shuffleItems(
+    unique.filter((item) => item.difficulty >= 8 && item.difficulty <= 14),
   );
-  const hard = shuffle(ALL_ITEMS.filter((item) => item.difficulty >= 15));
+  const hard = shuffleItems(unique.filter((item) => item.difficulty >= 15));
 
   return [...easy, ...medium, ...hard];
 }
