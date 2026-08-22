@@ -165,19 +165,31 @@ export function applyManualHint(puzzle: PuzzleState): PuzzleState | null {
     [targetIndex]: { char, kind: "hint" as const },
   };
 
+  let workingSelection = puzzle.selection;
+  if (tileIndex < 0) {
+    const dropFrom = workingSelection.findLastIndex((tile) => tile.char === char);
+    if (dropFrom < 0) {
+      return null;
+    }
+    workingSelection = workingSelection.filter((_, index) => index !== dropFrom);
+  }
+
   const nextTiles =
     tileIndex >= 0
       ? puzzle.tiles.filter((_, index) => index !== tileIndex)
       : puzzle.tiles;
 
+  const previousFillable = buildFillableIndices(
+    puzzle.answer.length,
+    puzzle.locked,
+  );
   const nextFillable = buildFillableIndices(puzzle.answer.length, nextLocked);
   const nextSelection = nextFillable
     .map((index) => {
-      const previousIndex = buildFillableIndices(
-        puzzle.answer.length,
-        puzzle.locked,
-      ).indexOf(index);
-      return previousIndex >= 0 ? puzzle.selection[previousIndex] : undefined;
+      const previousIndex = previousFillable.indexOf(index);
+      return previousIndex >= 0
+        ? workingSelection[previousIndex]
+        : undefined;
     })
     .filter((tile): tile is LetterTile => Boolean(tile));
 

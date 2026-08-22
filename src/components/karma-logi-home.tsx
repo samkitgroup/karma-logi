@@ -13,7 +13,7 @@ import { KarmaChakraGame } from "@/games/karma-chakra/karma-chakra-game";
 import { KarmaQuestGame } from "@/games/karma-quest/karma-quest-game";
 import { KarmaScrambleGame } from "@/games/karma-scramble/karma-scramble-game";
 import { getGameById, karmaGames } from "@/lib/games";
-import type { Lang } from "@/lib/language";
+import { DEFAULT_LANG, type Lang } from "@/lib/language";
 import { fetchPlayerMe, submitPlayerScore } from "@/lib/player-api";
 import { verifyVenueLocation } from "@/lib/location-access";
 import type { PlayerScoreMap, PlayerSession } from "@/lib/player-types";
@@ -24,7 +24,7 @@ type KarmaLogiHomeProps = {
 
 export function KarmaLogiHome({ locationRequired = false }: KarmaLogiHomeProps) {
   const [showIntro, setShowIntro] = useState(true);
-  const [lang, setLang] = useState<Lang>("en");
+  const [lang, setLang] = useState<Lang>(DEFAULT_LANG);
   const [activeGameId, setActiveGameId] = useState<string | null>(null);
   const [player, setPlayer] = useState<PlayerSession | null>(null);
   const [scores, setScores] = useState<PlayerScoreMap>({});

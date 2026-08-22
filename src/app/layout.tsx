@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Cinzel, Inter, Sahitya, Hind_Vadodara } from "next/font/google";
+import { DEFAULT_LANG } from "@/lib/language";
 import "./globals.css";
 
 const display = Cinzel({
@@ -41,7 +42,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${display.variable} ${inter.variable} ${sahitya.variable} ${hindVadodara.variable} h-full`}>
+    <html lang={DEFAULT_LANG} className={`${display.variable} ${inter.variable} ${sahitya.variable} ${hindVadodara.variable} h-full lang-${DEFAULT_LANG}`}>
       <body className="min-h-full flex flex-col antialiased">{children}</body>
     </html>
   );
